@@ -43,6 +43,7 @@ const FormInput = ({
             id={id}
             {...field}
             value={value ? value : field.value}
+            required
           />
         )}
       />

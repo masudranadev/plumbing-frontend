@@ -2,6 +2,7 @@
 import Form from "@/components/forms/Form";
 import FormInput from "@/components/forms/FormInput";
 import { useUserSignupMutation } from "@/redux/api/authApi";
+import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import Swal from "sweetalert2";
@@ -61,7 +62,7 @@ const SignupPage = () => {
     );
   }
   return (
-    <div className="container xl:w-[40%] px-20 py-5 mt-5 border">
+    <div className="container xl:w-[40%] px-20 py-5 mt-5 ring rounded">
       <Form submitHandler={handleSubmit}>
         <div className="space-y-12">
           <div className="border-b border-gray-900/10 pb-12">
@@ -79,6 +80,7 @@ const SignupPage = () => {
                   accept="image/*"
                   onChange={handleImageChange}
                   className="file-input file-input-bordered w-full"
+                  required
                 />
               </div>
             </div>
@@ -108,18 +110,6 @@ const SignupPage = () => {
               <div className="sm:col-span-3">
                 <div className="mt-2">
                   <FormInput
-                    name="password"
-                    type="password"
-                    placeholder="*****"
-                    label="your password"
-                    className="block w-full rounded-md border-0 py-1.5 px-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                  />
-                </div>
-              </div>
-
-              <div className="sm:col-span-4">
-                <div className="mt-2">
-                  <FormInput
                     name="email"
                     type="email"
                     label="Your email"
@@ -128,7 +118,7 @@ const SignupPage = () => {
                   />
                 </div>
               </div>
-              <div className="col-span-full">
+              <div className="col-span-3">
                 <div className="mt-2">
                   <FormInput
                     name="address"
@@ -140,13 +130,25 @@ const SignupPage = () => {
                 </div>
               </div>
 
-              <div className="sm:col-span-2">
+              <div className="sm:col-span-3">
                 <div className="mt-2">
                   <FormInput
                     name="contactNo"
                     type="text"
                     label="Number"
                     placeholder="Your number"
+                    className="block w-full rounded-md border-0 py-1.5 px-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                  />
+                </div>
+              </div>
+
+              <div className="sm:col-span-3">
+                <div className="mt-2">
+                  <FormInput
+                    name="password"
+                    type="password"
+                    placeholder="*****"
+                    label="your password"
                     className="block w-full rounded-md border-0 py-1.5 px-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                   />
                 </div>
@@ -164,6 +166,15 @@ const SignupPage = () => {
           </button>
         </div>
       </Form>
+      <p className="mt-10 text-center text-sm text-gray-500">
+        do you have an account?{" "}
+        <Link
+          href="/login"
+          className="font-semibold leading-6 text-indigo-600 hover:text-indigo-500"
+        >
+          login
+        </Link>
+      </p>
     </div>
   );
 };
