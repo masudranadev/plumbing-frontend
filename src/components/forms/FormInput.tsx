@@ -1,13 +1,14 @@
 "use client";
 
-// import { getErrorMessageByPropertyName } from "@/utils/schema-validator";
-import { Controller, useForm, useFormContext } from "react-hook-form";
+import { getErrorMessageByPropertyName } from "@/utils/schema-validator";
+import { Controller, useFormContext } from "react-hook-form";
 
 interface IInput {
   type?: string;
   name: string;
   value?: string | string[] | undefined;
   placeholder?: string;
+  id?: string;
   label?: string;
   className?: string;
 }
@@ -17,15 +18,16 @@ const FormInput = ({
   value,
   placeholder,
   label,
+  id,
   className,
 }: IInput) => {
-  const { control, formState: errors } = useForm();
+  const { control, formState: errors } = useFormContext();
 
-  //   const errorMessage = getErrorMessageByPropertyName(errors, name);
+    const errorMessage = getErrorMessageByPropertyName(errors, name);
   return (
     <>
       <label
-        htmlFor="fullName"
+        htmlFor={id}
         className="block text-sm font-medium leading-6 text-gray-900"
       >
         {label ? label : null}
@@ -35,14 +37,16 @@ const FormInput = ({
         name={name}
         render={({ field }) => (
           <input
-            value={value ? value : field.value}
             type={type}
             placeholder={placeholder}
             className={className}
+            id={id}
+            {...field}
+            value={value ? value : field.value}
           />
         )}
       />
-      {/* <small style={{ color: "red" }}>{errorMessage}</small> */}
+      <small style={{ color: "red" }}>{errorMessage}</small>
     </>
   );
 };
