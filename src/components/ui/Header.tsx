@@ -33,13 +33,13 @@ const Header = () => {
     },
   ];
   return (
-    <AwesomeSlider
-      animation="foldOutAnimation"
+      <AwesomeSlider
       className="h-[270px] md:h-[70vh] lg:h-[80vh] w-[100vw]" // You can add a custom class for styling
     >
       {bannars.map((banner) => (
         <>
           <div
+          key={banner.id}
             className="hero min-w-[100vw] min-h-[100vh]"
             style={{
               backgroundImage: `url(${banner?.image})`,

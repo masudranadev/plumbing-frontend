@@ -8,7 +8,7 @@ const LatestNews = () => {
   const arg = {};
   const { data, isLoading } = useBlogsQuery({ ...arg });
   return (
-    <section className="py-20">
+    <section className="py-3 md:py-10 lg:py-20">
       <div className="flex flex-wrap">
         <div className="w-full px-4">
           <div className="mx-auto mb-12 max-w-[510px] text-center lg:mb-20">
@@ -35,17 +35,18 @@ const LatestNews = () => {
         ) : (
           data?.blogs.map((blog) => (
             <>
-              <div className="card bg-base-100 shadow-xl">
+              <div key={blog.id} className="card rounded bg-base-100 shadow hover:shadow-xl">
                 <figure>
                   <Image
                     src={blog?.thumbnail}
                     alt="Shoes"
                     width={500}
                     height={500}
+                    className="hover:scale-110 transition-all duration-200"
                   />
                 </figure>
                 <div className="card-body">
-                  <h2 className="card-title">{blog?.title}</h2>
+                  <h2 className="card-title"><Link href={`/blog/${blog?.id}`}>{blog?.title}</Link></h2>
                   <p>
                     {blog?.content.length > 100
                       ? blog?.content.slice(0, 100)
@@ -53,7 +54,7 @@ const LatestNews = () => {
                   </p>
                   <div className="card-actions justify-end">
                     <div className="badge badge-outline">
-                      {blog?.author?.fullName}
+                      <Link href={`/blog/${blog?.id}`}>{blog?.author?.fullName}</Link>
                     </div>
                     <div className="badge badge-outline">Fashion</div>
                     <div className="badge badge-outline">Products</div>
