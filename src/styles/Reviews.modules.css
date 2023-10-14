@@ -1,0 +1,21 @@
+.testimonal .swiper-slide-next .blockquote {
+  background: black;
+  color: white !important;
+  border-radius: 15px;
+  box-shadow: rgba(0, 0, 0, 0.45) 0px 25px 20px -20px;
+}
+
+.testimonal .blockqoute{
+   background-color: #F5F8FE;
+}
+
+.testimonal .swiper-slide {
+  border-radius: 15px !important;
+}
+
+.testimonal .swiper-slide .blockqoute {
+  border-radius: 15px !important;
+}
+.testimonal .swiper-slide-next .quote {
+  color: rgb(251, 253, 253) !important;
+}
