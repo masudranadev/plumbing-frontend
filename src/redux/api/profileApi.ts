@@ -1,4 +1,4 @@
-import { IMeta } from "@/types";
+import { IMeta, IUserProfile } from "@/types";
 import { baseApi } from "./baseApi";
 import { tagTypes } from "../tag-types";
 
@@ -14,7 +14,7 @@ export const profileApi = baseApi.injectEndpoints({
           method: "GET",
         };
       },
-      transformResponse: (response, meta: IMeta) => {
+      transformResponse: (response: IUserProfile, meta: IMeta) => {
         return {
           profile: response,
           meta,

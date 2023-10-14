@@ -2,6 +2,7 @@
 import { authKey } from "@/constants/storageKey";
 import { useProfileQuery } from "@/redux/api/profileApi";
 import { getToken, getUserInfo, removeUserInfo } from "@/services/auth.service";
+import { IUserProfile } from "@/types";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
@@ -9,21 +10,14 @@ import React from "react";
 
 const Navbar = () => {
   const router = useRouter();
-  const user = getUserInfo() as any;
-  const {
-    data,
-    isLoading,
-    isError,
-    error,
-  } = useProfileQuery(user?.userId); // No need to pass the token h
-  console.log(data?.profile);
-  
-
+  const { userId } = getUserInfo() as any;
+  const { data, isLoading, isError, error } = useProfileQuery(userId);
 
   const logout = () => {
     removeUserInfo(authKey);
     router.push("/login");
   };
+
   return (
     <div className="container">
       <div className="navbar bg-base-100">
@@ -93,12 +87,16 @@ const Navbar = () => {
           <div className="dropdown dropdown-end">
             <div className="avatar" tabIndex={0}>
               <div className="w-8 rounded-full ring ring-primary ring-offset-base-100 ring-offset-2">
-                <Image
-                  width={32}
-                  height={32}
-                  alt="avater"
-                  src="/images/stock/photo-1534528741775-53994a69daeb.jpg"
-                />
+                {isLoading ? (
+                  <span className="loading loading-dots loading-lg"></span>
+                ) : (
+                  <Image
+                    width={32}
+                    height={32}
+                    alt="avater"
+                    src={data?.profile?.profileImg as string}
+                  />
+                )}
               </div>
             </div>
             <ul
