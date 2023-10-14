@@ -1,3 +1,7 @@
-export default function Home() {
-  return <main></main>;
-}
+import { redirect } from "next/navigation";
+
+const HomePage = () => {
+  return redirect("/home");
+};
+
+export default HomePage;

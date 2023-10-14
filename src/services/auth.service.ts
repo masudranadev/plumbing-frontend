@@ -16,6 +16,15 @@ export const getUserInfo = () => {
   }
 };
 
+export const getToken = () => {
+  const authToken = getFromLocalStorage(authKey);
+  if(authToken){
+    return authToken
+  }else{
+    return ""
+  }
+}
+
 export const isLoggedin = () => {
   const authToken = getFromLocalStorage(authKey);
   return !!authToken;

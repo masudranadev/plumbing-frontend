@@ -18,7 +18,7 @@ const LoginPage = () => {
       const res = await userSignin(data).unwrap();
       console.log(res?.token);
       if (res?.token) {
-        router.push("/");
+        router.push("/home");
         Swal.fire("User Login successfully!");
         storeUserInfo({ accessToken: res?.token });
       }
