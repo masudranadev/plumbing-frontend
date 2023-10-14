@@ -18,7 +18,7 @@ const GetInTouch = () => {
     <div className="">
       <div className="bg-[#F4F5F8] h-[250px]">
         <div className="container  relative space-y-5 flex flex-col h-full justify-center">
-          <h3 className="text-3xl font-bold">
+          <h3 className="text-xl md:text-3xl font-bold">
             Cant find your desired service? Let us know 24/7 in +88063456364
           </h3>
           <div className="flex flex-col lg:flex-row gap-5">
