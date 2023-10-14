@@ -7,10 +7,11 @@ const Footer = () => {
         <footer className="footer container text-base-content">
           <nav>
             <header className="footer-title">Services</header>
-            <a className="link link-hover">Branding</a>
-            <a className="link link-hover">Design</a>
-            <a className="link link-hover">Marketing</a>
-            <a className="link link-hover">Advertisement</a>
+            <a className="link link-hover">Kitchen Plumbing</a>
+            <a className="link link-hover">Gas Line Services</a>
+            <a className="link link-hover">Water Line Repair</a>
+            <a className="link link-hover">Bathroom Plumbing</a>
+            <a className="link link-hover">Basement Plumbing</a>
           </nav>
           <nav>
             <header className="footer-title">Company</header>
