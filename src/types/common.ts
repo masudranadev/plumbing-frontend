@@ -44,4 +44,28 @@ export type IService = {
   updatedAt: string;
 };
 
+export type IBlogPost = {
+  id: string;
+  title: string;
+  content: string;
+  thumbnail: string;
+  published: boolean;
+  authorId: string;
+  createdAt: string;
+  updatedAt: string;
+  author: {
+    id: string;
+    fullName: string;
+    email: string;
+    password: string;
+    role: string;
+    contactNo: string;
+    address: string;
+    profileImg: string;
+    createdAt: string;
+    updatedAt: string;
+  };
+};
+
+
 
