@@ -1,5 +1,3 @@
-"use client";
-
 import { useFormContext, Controller } from "react-hook-form";
 
 export type SelectOptions = {
@@ -14,6 +12,7 @@ type SelectFieldProps = {
   label?: string;
   handleChange?: (el: string) => void;
   id?: string;
+  className?: string;
 };
 
 const SelectFormField = ({
@@ -22,6 +21,7 @@ const SelectFormField = ({
   options,
   label,
   id,
+  className
 }: SelectFieldProps) => {
   const { control } = useFormContext();
 
@@ -35,14 +35,14 @@ const SelectFormField = ({
       </label>
       <Controller
         control={control}
-        name={name}
-        render={({ field: { value, onChange } }) => (
-          <select name={name} className="select select-bordered">
-            <option disabled selected>
+        name={name} // Specify the name only here
+        render={({ field }) => (
+          <select className={className} required {...field}>
+            <option value="">
               {placeholder}
             </option>
             {options.map((option, index) => (
-              <option value={value ? value : onChange} key={index}>
+              <option value={option.value} key={index}>
                 {option.label}
               </option>
             ))}
