@@ -1,32 +1,19 @@
 "use client";
 import FormInput from "./FormInput";
 import Form from "./Form";
-import SelectFormField from "./SelectFormField";
+import SelectFormField, { SelectOptions } from "./SelectFormField";
 import FormTextArea from "./FormTextArea";
+import { useServicesQuery } from "@/redux/api/serviceApi";
 
 const ContactForm = () => {
-  const services = [
-    {
-      label: "Kitchen Plumbing",
-      value: "Kitchen Plumbing",
-    },
-    {
-      label: "Gas Line Services",
-      value: "Gas Line Services",
-    },
-    {
-      label: "Water Line Repair",
-      value: "Water Line Repair",
-    },
-    {
-      label: "Bathroom Plumbing",
-      value: "Bathroom Plumbing",
-    },
-    {
-      label: "Basement Plumbing",
-      value: "Basement Plumbing",
-    },
-  ];
+  const arg = {};
+  const { data } = useServicesQuery({ ...arg });
+  const services = data?.services?.map((service: any) => {
+    return {
+      label: service?.title,
+      value: service?.id,
+    };
+  });
 
   const onSubmit = (data: any) => {
     console.log(data);
@@ -83,8 +70,8 @@ const ContactForm = () => {
             </div>
             <div className="w-full md:w-1/2">
               <SelectFormField
-                options={services}
-                name="service"
+                options={services as SelectOptions[]}
+                name="serviceId"
                 label="Select service"
                 id="service"
                 className="select select-none border border-gray-500"

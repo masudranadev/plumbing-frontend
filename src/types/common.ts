@@ -67,5 +67,14 @@ export type IBlogPost = {
   };
 };
 
+export type IFaq = {
+  id: string;
+  question: string;
+  answer: string;
+  createdAt: string;
+  updatedAt: string;
+};
+
+
 
 

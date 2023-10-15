@@ -41,9 +41,9 @@ const SelectFormField = ({
             <option value="">
               {placeholder}
             </option>
-            {options.map((option, index) => (
-              <option value={option.value} key={index}>
-                {option.label}
+            {options?.map((option, index) => (
+              <option value={option?.value} key={index}>
+                {option?.label}
               </option>
             ))}
           </select>

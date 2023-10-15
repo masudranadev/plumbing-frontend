@@ -37,7 +37,7 @@ const Services = () => {
             <ServiceCardLoader />
           </>
         ) : (
-          data?.services.map((service) => (
+          data?.services?.map((service) => (
             <>
               <div
                 key={service.id}
@@ -73,7 +73,7 @@ const Services = () => {
                 </div>
                 <div className="text-center flex flex-col">
                   <Link className="py-2 text-[18px] text-blue-500" href="#">
-                    Read More{" "}
+                    Read More
                     <ArrowRightIcon className="w-6 h-6 inline-block" />
                   </Link>
                 </div>
