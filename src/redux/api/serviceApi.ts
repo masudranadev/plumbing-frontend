@@ -1,7 +1,6 @@
 import { IService, IMeta } from "@/types";
 import { baseApi } from "./baseApi";
 import { tagTypes } from "../tag-types";
-import { getToken } from "@/services/auth.service";
 
 const SERVICE_URL = "/services";
 

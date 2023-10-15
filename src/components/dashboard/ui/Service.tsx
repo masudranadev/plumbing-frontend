@@ -19,7 +19,7 @@ const DashboardServicePage = () => {
   const arg: any = {};
   const { data, isLoading } = useServicesQuery({ ...arg });
   const [deleteService] = useDeleteServiceMutation();
-  
+
   //this function for deleted
   const handleDelete = (id: string) => {
     const swalWithBootstrapButtons = Swal.mixin({
@@ -126,7 +126,9 @@ const DashboardServicePage = () => {
                 </td>
                 <td className="whitespace-nowrap px-4 py-2">
                   <button className="btn inline-block rounded bg-indigo-600 px-4 py-2 text-xs font-medium text-white hover:bg-indigo-700">
-                    <PencilSquareIcon className="w-5 h-5" />
+                    <Link href={`/dashboard/service/edit/${service?.id}`}>
+                      <PencilSquareIcon className="w-5 h-5" />
+                    </Link>
                   </button>
                   <button className="btn inline-block rounded bg-indigo-600 px-4 py-2 text-xs font-medium text-white hover:bg-indigo-700">
                     <EyeIcon className="w-5 h-5" />

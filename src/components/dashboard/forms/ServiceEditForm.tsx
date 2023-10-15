@@ -5,18 +5,28 @@ import SmallSpinner from "@/components/common/SmallSpinner";
 import Form from "@/components/forms/Form";
 import FormInput from "@/components/forms/FormInput";
 import FormTextArea from "@/components/forms/FormTextArea";
-import { useAddServiceMutation } from "@/redux/api/serviceApi";
+import {
+  useServiceQuery,
+  useUpdateServiceMutation,
+} from "@/redux/api/serviceApi";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import Swal from "sweetalert2";
 import { toast } from "react-toastify";
+import Loading from "@/components/common/Loading";
 import Image from "next/image";
 
-const ServiceAddForm = () => {
+const ServiceEditForm = ({ id }: { id: string }) => {
   const [image, setImage] = useState<File | null>(null);
   const [imagePreview, setImagePreview] = useState(null);
   const [loading, setLoading] = useState<boolean>(false);
-  const [addService] = useAddServiceMutation();
+  const { data, isLoading } = useServiceQuery(id);
+  const defaultValues = {
+    price: data?.price,
+    title: data?.title,
+    description: data?.description,
+  };
+  const [updateService] = useUpdateServiceMutation();
   const router = useRouter();
 
   const handleImageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -33,16 +43,17 @@ const ServiceAddForm = () => {
     }
   };
 
-  const handleSubmit = async (data: any) => {
+  const handleSubmit = async (values: any) => {
     setLoading(true);
+    values.price = parseFloat(values.price);
+
     try {
-      if (!image) {
+      if (!data?.image) {
         console.error("Please select an image.");
         return;
       }
-
       const formData = new FormData();
-      formData.append("image", image);
+      formData.append("image", image as File);
 
       const url = `https://api.imgbb.com/1/upload?key=${process.env.NEXT_PUBLIC_IMBB_KEY}`;
       const response = await fetch(url, {
@@ -53,19 +64,7 @@ const ServiceAddForm = () => {
       if (response.ok) {
         const responseData = await response.json();
         if (responseData.data) {
-          data.image = responseData.data.display_url;
-          data.price = Number(data.price);
-          //akhane api call hobe
-          console.log(data);
-
-          const res: any = await addService(data);
-          if (res.data as any) {
-            Swal.fire("service added Successfully!");
-            router.push("/dashboard/service");
-            setLoading(false);
-          } else {
-            toast.error("There was an error!");
-          }
+          values.image = responseData.data.display_url;
         }
       } else {
         console.error("Image upload failed");
@@ -73,19 +72,34 @@ const ServiceAddForm = () => {
     } catch (error) {
       console.error("Error uploading image:", error);
     }
+    
+    const res: any = await updateService({ id, body: values });
+    console.log(res);
+        
+    if (res.data as any) {
+      Swal.fire("service updated Successfully!");
+      router.push("/dashboard/service");
+      setLoading(false);
+    } else {
+      toast.error("There was an error!");
+    }
   };
+
+  if (isLoading) {
+    return <Loading />;
+  }
   return (
     <div className="bg-white max-w-[1020px] mx-auto my-24">
       <div className="flex flex-wrap">
         <div className="w-full px-4">
           <div className="mx-auto mb-12 max-w-[510px] text-center lg:mb-20">
             <h2 className="mb-4 text-3xl font-bold text-dark sm:text-4xl md:text-[40px]">
-              Service add
+              Service updated
             </h2>
           </div>
         </div>
       </div>
-      <Form submitHandler={handleSubmit}>
+      <Form submitHandler={handleSubmit} defaultValues={defaultValues}>
         <div className="p-10 shadow-md">
           <label
             htmlFor="image"
@@ -93,27 +107,25 @@ const ServiceAddForm = () => {
           >
             Image
           </label>
-          <div className="mt-2 flex w-1/2 gap-5 items-center justify-center rounded-lg border border-dashed border-gray-900/25 px-6 py-10">
+
+          <div className="mt-2 flex items-center w-1/2 justify-between gap-5 rounded-lg border border-dashed border-gray-900/25 px-6 py-10">
             <input
               type="file"
               accept="image/*"
               id="image"
               onChange={handleImageChange}
               className="file-input file-input-bordered w-full"
-              required
             />
-            {imagePreview && (
-              <div className="avatar">
-                <div className="w-24 rounded-xl">
-                  <Image
-                    width={100}
-                    height={100}
-                    alt="image"
-                    src={imagePreview}
-                  />
-                </div>
+            <div className="avatar">
+              <div className="w-24 rounded-xl">
+                <Image
+                  width={100}
+                  height={100}
+                  alt={data?.title}
+                  src={imagePreview ? imagePreview : data?.image}
+                />
               </div>
-            )}
+            </div>
           </div>
           <div className="flex gap-3 pt-5">
             <div className="w-full md:w-1/2 mb-6 md:mb-0">
@@ -152,7 +164,7 @@ const ServiceAddForm = () => {
               className="btn btn-accent mt-3 w-full"
               value="Login"
             >
-              {loading ? <SmallSpinner /> : "Add Service"}
+              {loading ? <SmallSpinner /> : "update Service"}
             </LoadingButton>
           </div>
         </div>
@@ -161,4 +173,4 @@ const ServiceAddForm = () => {
   );
 };
 
-export default ServiceAddForm;
+export default ServiceEditForm;
