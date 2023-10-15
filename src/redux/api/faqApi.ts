@@ -34,7 +34,7 @@ export const faqApi = baseApi.injectEndpoints({
     // create a new building
     addFaq: build.mutation({
       query: (data) => ({
-        url: FAQ_URL,
+        url: `${FAQ_URL}/create-faq`,
         method: "POST",
         data,
       }),
