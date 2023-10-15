@@ -1,4 +1,6 @@
 "use client";
+import LoadingButton from "@/components/common/LoadingButton";
+import SmallSpinner from "@/components/common/SmallSpinner";
 import Form from "@/components/forms/Form";
 import FormInput from "@/components/forms/FormInput";
 import { useUserSigninMutation } from "@/redux/api/authApi";
@@ -10,19 +12,22 @@ import { useState } from "react";
 import Swal from "sweetalert2";
 
 const LoginPage = () => {
-  const [check, setCheck] = useState<boolean>(false);
+  const [check, setCheck] = useState<boolean>(true);
+  const [loading, setLoading] = useState<boolean>(false);
   const [userSignin] = useUserSigninMutation();
   const router = useRouter();
   const handleSubmit = async (data: any) => {
+    setLoading(true);
     try {
       const res = await userSignin(data).unwrap();
-      console.log(res?.token);
       if (res?.token) {
+        setLoading(false);
         router.push("/home");
         Swal.fire("User Login successfully!");
         storeUserInfo({ accessToken: res?.token });
       }
     } catch (error: any) {
+      setLoading(false);
       console.error(error.message);
     }
   };
@@ -72,7 +77,7 @@ const LoginPage = () => {
                     <label className="label cursor-pointer">
                       <input
                         type="checkbox"
-                        checked={check}
+                        checked={!check}
                         onChange={() => setCheck(!check)}
                         className="checkbox"
                       />
@@ -91,14 +96,15 @@ const LoginPage = () => {
               </div>
             </div>
 
-            <div>
-              <button
+            <div className="mt-4">
+              <LoadingButton
                 type="submit"
-                className="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
-                disabled={!check}
+                className="btn btn-accent mt-3 w-full"
+                value="Login"
+                disabled={check}
               >
-                Sign in
-              </button>
+                {loading ? <SmallSpinner /> : "Login"}
+              </LoadingButton>
             </div>
           </Form>
 

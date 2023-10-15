@@ -1,6 +1,7 @@
 import { IService, IMeta } from "@/types";
 import { baseApi } from "./baseApi";
 import { tagTypes } from "../tag-types";
+import { getToken } from "@/services/auth.service";
 
 const SERVICE_URL = "/services";
 
@@ -34,7 +35,7 @@ export const buildingApi = baseApi.injectEndpoints({
     // create a new building
     addService: build.mutation({
       query: (data) => ({
-        url: SERVICE_URL,
+        url: `${SERVICE_URL}/create-service`,
         method: "POST",
         data,
       }),
@@ -61,9 +62,9 @@ export const buildingApi = baseApi.injectEndpoints({
 });
 
 export const {
-useAddServiceMutation,
-useServicesQuery,
-useServiceQuery,
-useDeleteServiceMutation,
-useUpdateServiceMutation
+  useAddServiceMutation,
+  useServicesQuery,
+  useServiceQuery,
+  useDeleteServiceMutation,
+  useUpdateServiceMutation,
 } = buildingApi;

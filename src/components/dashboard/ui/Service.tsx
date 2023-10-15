@@ -1,12 +1,74 @@
 "use client";
 import Loading from "@/components/common/Loading";
-import { useServicesQuery } from "@/redux/api/serviceApi";
+import {
+  useDeleteServiceMutation,
+  useServicesQuery,
+} from "@/redux/api/serviceApi";
 import Image from "next/image";
 import Link from "next/link";
+import { format, parseISO } from "date-fns";
+import { TrashIcon } from "@heroicons/react/20/solid";
+import {
+  EyeIcon,
+  PencilIcon,
+  PencilSquareIcon,
+} from "@heroicons/react/24/solid";
+import Swal from "sweetalert2";
 
 const DashboardServicePage = () => {
   const arg: any = {};
   const { data, isLoading } = useServicesQuery({ ...arg });
+  const [deleteService] = useDeleteServiceMutation();
+  
+  //this function for deleted
+  const handleDelete = (id: string) => {
+    const swalWithBootstrapButtons = Swal.mixin({
+      customClass: {
+        confirmButton: "btn btn-success",
+        cancelButton: "btn btn-danger",
+      },
+      buttonsStyling: false,
+    });
+
+    swalWithBootstrapButtons
+      .fire({
+        title: "Are you sure?",
+        text: "You won't be able to revert this!",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonText: "Yes, delete it!",
+        cancelButtonText: "No, cancel!",
+        reverseButtons: true,
+      })
+      .then((result) => {
+        if (result.isConfirmed) {
+          const res = deleteService(id);
+          if (res.arg.track) {
+            swalWithBootstrapButtons.fire(
+              "Deleted!",
+              "Your file has been deleted.",
+              "success"
+            );
+          } else {
+            swalWithBootstrapButtons.fire(
+              "Not Deleted!",
+              "Something is wrong!!!",
+              "error"
+            );
+          }
+        } else if (
+          /* Read more about handling dismissals below */
+          result.dismiss === Swal.DismissReason.cancel
+        ) {
+          swalWithBootstrapButtons.fire(
+            "Cancelled",
+            "Your imaginary file is safe :)",
+            "error"
+          );
+        }
+      });
+  };
+
   if (isLoading) {
     return <Loading />;
   }
@@ -29,7 +91,7 @@ const DashboardServicePage = () => {
                 Title
               </th>
               <th className="whitespace-nowrap px-4 py-2 font-medium text-gray-900">
-                Date
+                Created Date
               </th>
               <th className="whitespace-nowrap px-4 py-2 font-medium text-gray-900">
                 Price
@@ -57,18 +119,24 @@ const DashboardServicePage = () => {
                   {service?.title}
                 </td>
                 <td className="whitespace-nowrap px-4 py-2 text-gray-700">
-                  jfkldhfh
+                  {format(parseISO(service?.createdAt), "PP")}
                 </td>
                 <td className="whitespace-nowrap px-4 py-2 text-primary">
                   {service?.price} ৳
                 </td>
                 <td className="whitespace-nowrap px-4 py-2">
-                  <a
-                    href="#"
-                    className="inline-block rounded bg-indigo-600 px-4 py-2 text-xs font-medium text-white hover:bg-indigo-700"
+                  <button className="btn inline-block rounded bg-indigo-600 px-4 py-2 text-xs font-medium text-white hover:bg-indigo-700">
+                    <PencilSquareIcon className="w-5 h-5" />
+                  </button>
+                  <button className="btn inline-block rounded bg-indigo-600 px-4 py-2 text-xs font-medium text-white hover:bg-indigo-700">
+                    <EyeIcon className="w-5 h-5" />
+                  </button>
+                  <button
+                    onClick={() => handleDelete(service?.id)}
+                    className="btn btn-error inline-block rounded px-4 py-2 text-xs font-medium text-white "
                   >
-                    View
-                  </a>
+                    <TrashIcon className="w-5 h-5" />
+                  </button>
                 </td>
               </tr>
             ))}

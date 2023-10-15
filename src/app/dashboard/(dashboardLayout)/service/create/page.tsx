@@ -1,10 +1,11 @@
+import ServiceAddForm from "@/components/dashboard/forms/ServiceAddForm";
 
 const ServiceCreatePage = () => {
-    return (
-        <div>
-            <h1>Service create page</h1>
-        </div>
-    );
+  return (
+    <>
+      <ServiceAddForm />
+    </>
+  );
 };
 
 export default ServiceCreatePage;

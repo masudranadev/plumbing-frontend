@@ -1,4 +1,6 @@
 "use client";
+import LoadingButton from "@/components/common/LoadingButton";
+import SmallSpinner from "@/components/common/SmallSpinner";
 import Form from "@/components/forms/Form";
 import FormInput from "@/components/forms/FormInput";
 import { useUserSignupMutation } from "@/redux/api/authApi";
@@ -54,13 +56,6 @@ const SignupPage = () => {
       console.error("Error uploading image:", error);
     }
   };
-  if (loading) {
-    return (
-      <div className="flex justify-center items-center h-screen">
-        <div className="w-16 h-16 border-4 border-dashed rounded-full animate-spin dark:border-violet-400"></div>
-      </div>
-    );
-  }
   return (
     <div className="container xl:w-[40%] px-20 py-5 mt-5 ring rounded">
       <Form submitHandler={handleSubmit}>
@@ -158,12 +153,15 @@ const SignupPage = () => {
         </div>
 
         <div className="mt-6 flex items-center justify-end gap-x-6">
-          <button
-            type="submit"
-            className="rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
-          >
-            Signup
-          </button>
+          <div className="mt-4">
+            <LoadingButton
+              type="submit"
+              className="btn btn-accent mt-3 w-full"
+              value="Login"
+            >
+              {loading ? <SmallSpinner /> : "Signup"}
+            </LoadingButton>
+          </div>
         </div>
       </Form>
       <p className="mt-10 text-center text-sm text-gray-500">
