@@ -1,6 +1,7 @@
 import {
   HomeIcon,
   QuestionMarkCircleIcon,
+  UserPlusIcon,
   WrenchScrewdriverIcon,
 } from "@heroicons/react/24/solid";
 import Link from "next/link";
@@ -44,6 +45,11 @@ const Sidebar = () => {
         <li>
           <Link href="/dashboard/booking">
             <RiReservedFill className="w-5 h-5 inline-block" /> Booking
+          </Link>
+        </li>
+        <li>
+          <Link href="/dashboard/booking">
+            <UserPlusIcon className="w-5 h-5 inline-block" /> Add Admin
           </Link>
         </li>
       </ul>

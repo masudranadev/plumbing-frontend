@@ -1,16 +1,10 @@
 "use client";
 import Loading from "@/components/common/Loading";
-import {
-  useDeleteServiceMutation,
-  useServicesQuery,
-} from "@/redux/api/serviceApi";
 import Image from "next/image";
 import Link from "next/link";
 import { format, parseISO } from "date-fns";
 import { TrashIcon } from "@heroicons/react/20/solid";
 import {
-  EyeIcon,
-  PencilIcon,
   PencilSquareIcon,
 } from "@heroicons/react/24/solid";
 import Swal from "sweetalert2";
@@ -57,10 +51,7 @@ const DashBoardBlog = () => {
               "error"
             );
           }
-        } else if (
-          /* Read more about handling dismissals below */
-          result.dismiss === Swal.DismissReason.cancel
-        ) {
+        } else if (result.dismiss === Swal.DismissReason.cancel) {
           swalWithBootstrapButtons.fire(
             "Cancelled",
             "Your imaginary file is safe :)",

@@ -1,6 +1,10 @@
 "use client";
 import { useServicesQuery } from "@/redux/api/serviceApi";
-import { ArrowRightIcon } from "@heroicons/react/24/solid";
+import {
+  ArrowRightIcon,
+  ClipboardDocumentCheckIcon,
+  ShoppingBagIcon,
+} from "@heroicons/react/24/solid";
 import Image from "next/image";
 import Link from "next/link";
 import ServiceCardLoader from "../common/ServiceCardLoader";
@@ -8,6 +12,9 @@ import ServiceCardLoader from "../common/ServiceCardLoader";
 const Services = () => {
   const arg = {};
   const { data, isLoading } = useServicesQuery({ ...arg });
+  const handleAddToCart = (id: string) => {
+    console.log(id);
+  };
   return (
     <section className="py-20">
       <div className="flex flex-wrap">
@@ -40,7 +47,7 @@ const Services = () => {
           data?.services?.map((service) => (
             <>
               <div
-                key={service.id}
+                key={service?.id}
                 className="border group border-gray-200 rounded p-3 shadow hover:shadow hover:shadow-primaryColor text-center"
               >
                 <div className="relative rounded overflow-hidden inline-block w-full">
@@ -49,8 +56,8 @@ const Services = () => {
                     width={250}
                     height={250}
                     className="h-[200px] md:h-[250px] lg:h-[300px] w-full object-cover object-top rounded"
-                    src={service.image}
-                    alt={service.title}
+                    src={service?.image}
+                    alt={service?.title}
                   />
                   <span className="absolute bottom-0 left-0 flex w-full h-0 mb-0 transition-all duration-300 ease-out transform translate-y-0 bg-gray-900 group-hover:h-[50%] opacity-80"></span>
                 </div>
@@ -62,19 +69,28 @@ const Services = () => {
                     height={250}
                     className="w-[50px] h-[50px] mx-auto z-10"
                     src="/assets/images/2.jpg"
-                    alt={service.title}
+                    alt={service?.title}
                   />
                 </div>
                 <div className="p-1 md:p-2 lg:p-4 mt-1 md:mt-3 space-y-2">
                   <h2 className="text-xl md:text-2xl lg:text-3xl font-bold text-gray-800">
-                    {service.title}
+                    {service?.title}
                   </h2>
-                  <p className="text-xs md:text-base">{service.description}</p>
+                  <p className="text-xs md:text-base">{service?.description}</p>
                 </div>
-                <div className="text-center flex flex-col">
-                  <Link className="py-2 text-[18px] text-blue-500" href="#">
-                    Read More
-                    <ArrowRightIcon className="w-6 h-6 inline-block" />
+                <div className="flex justify-center gap-3">
+                  <button
+                    onClick={() => handleAddToCart(service?.id)}
+                    className="btn btn-outline btn-accent"
+                  >
+                    <ShoppingBagIcon className="w-6 h-6 inline-block" /> Add To
+                    Cart
+                  </button>
+                  <Link href="#">
+                    <button className="btn btn-outline btn-accent">
+                      <ClipboardDocumentCheckIcon className="w-6 h-6 inline-block" />{" "}
+                      Booking
+                    </button>
                   </Link>
                 </div>
               </div>

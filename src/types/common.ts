@@ -64,7 +64,6 @@ export type IFaq = {
   updatedAt: string;
 };
 
-
 export type IFeedbackData = {
   id: string;
   userId: string;
@@ -73,10 +72,16 @@ export type IFeedbackData = {
   suggestion: string;
   createdAt: string;
   updatedAt: string;
-  user: IUserProfile; 
-  service: IService; 
+  user: IUserProfile;
+  service: IService;
 };
 
-
-
-
+export type IAddToCartData = {
+  id: string;
+  userId: string;
+  serviceId: string;
+  createdAt: string;
+  updatedAt: string;
+  user: IUserProfile;
+  service: IService;
+};
