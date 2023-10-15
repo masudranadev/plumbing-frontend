@@ -53,18 +53,7 @@ export type IBlogPost = {
   authorId: string;
   createdAt: string;
   updatedAt: string;
-  author: {
-    id: string;
-    fullName: string;
-    email: string;
-    password: string;
-    role: string;
-    contactNo: string;
-    address: string;
-    profileImg: string;
-    createdAt: string;
-    updatedAt: string;
-  };
+  author: IUserProfile;
 };
 
 export type IFaq = {
@@ -73,6 +62,19 @@ export type IFaq = {
   answer: string;
   createdAt: string;
   updatedAt: string;
+};
+
+
+export type IFeedbackData = {
+  id: string;
+  userId: string;
+  serviceId: string;
+  comments: string;
+  suggestion: string;
+  createdAt: string;
+  updatedAt: string;
+  user: IUserProfile; 
+  service: IService; 
 };
 
 

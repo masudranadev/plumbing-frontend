@@ -58,8 +58,11 @@ const Navbar = () => {
                   <Link href="/feedback">FeedBack</Link>
                 </li>
                 <li>
-                <Link href="/contact">Contact</Link>
-              </li>
+                  <Link href="/contact">Contact</Link>
+                </li>
+                <li>
+                  <Link href="/dashboard">Dashboard</Link>
+                </li>
               </ul>
             </div>
             <Link href="/home" className="btn btn-ghost normal-case text-xl">
@@ -85,6 +88,9 @@ const Navbar = () => {
               </li>
               <li>
                 <Link href="/contact">Contact</Link>
+              </li>
+              <li>
+                <Link href="/dashboard">Dashboard</Link>
               </li>
             </ul>
           </div>

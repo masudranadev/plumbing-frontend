@@ -1,7 +1,14 @@
+import Sidebar from "@/components/ui/Sidebar";
+
 export default function DashboardLayout({
-  children, // will be a page or nested layout
+  children,
 }: {
   children: React.ReactNode;
 }) {
-  return <section>{children}</section>;
+  return (
+    <section className="flex">
+      <Sidebar />
+      <div className="flex-1">{children}</div>
+    </section>
+  );
 }

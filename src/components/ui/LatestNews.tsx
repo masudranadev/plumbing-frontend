@@ -33,9 +33,9 @@ const LatestNews = () => {
             <ServiceCardLoader />
           </>
         ) : (
-          data?.blogs.map((blog) => (
-            <>
-              <div key={blog.id} className="card rounded bg-base-100 shadow hover:shadow-xl">
+          data?.blogs?.map((blog) => (
+            <div key={blog?.id}>
+              <div className="card rounded bg-base-100 shadow hover:shadow-xl">
                 <figure>
                   <Image
                     src={blog?.thumbnail}
@@ -46,7 +46,9 @@ const LatestNews = () => {
                   />
                 </figure>
                 <div className="card-body">
-                  <h2 className="card-title"><Link href={`/blog/${blog?.id}`}>{blog?.title}</Link></h2>
+                  <h2 className="card-title">
+                    <Link href={`/blog/${blog?.id}`}>{blog?.title}</Link>
+                  </h2>
                   <p>
                     {blog?.content.length > 100
                       ? blog?.content.slice(0, 100)
@@ -54,14 +56,16 @@ const LatestNews = () => {
                   </p>
                   <div className="card-actions justify-end">
                     <div className="badge badge-outline">
-                      <Link href={`/blog/${blog?.id}`}>{blog?.author?.fullName}</Link>
+                      <Link href={`/blog/${blog?.id}`}>
+                        {blog?.author?.fullName}
+                      </Link>
                     </div>
                     <div className="badge badge-outline">Fashion</div>
                     <div className="badge badge-outline">Products</div>
                   </div>
                 </div>
               </div>
-            </>
+            </div>
           ))
         )}
       </div>

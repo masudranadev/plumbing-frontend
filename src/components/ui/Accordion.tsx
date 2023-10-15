@@ -1,11 +1,14 @@
 "use client";
 
 import { useFaqsQuery } from "@/redux/api/faqApi";
+import Loading from "../common/Loading";
 
 const Accordion = () => {
   const arg: any = {};
-  const { data } = useFaqsQuery({ ...arg });
-
+  const { data, isLoading } = useFaqsQuery({ ...arg });
+  if (isLoading) {
+    return <Loading />;
+  }
   return (
     <div className="w-full lg:w-[1020px] mx-auto px-3 py-24">
       <div className="flex flex-wrap">

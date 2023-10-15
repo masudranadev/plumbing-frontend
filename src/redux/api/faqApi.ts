@@ -4,7 +4,7 @@ import { tagTypes } from "../tag-types";
 
 const FAQ_URL = "/faqs";
 
-export const blogApi = baseApi.injectEndpoints({
+export const faqApi = baseApi.injectEndpoints({
   endpoints: (build) => ({
     // get all building
     faqs: build.query({
@@ -66,4 +66,4 @@ export const {
   useAddFaqMutation,
   useDeleteFaqMutation,
   useUpdateFaqMutation,
-} = blogApi;
+} = faqApi;

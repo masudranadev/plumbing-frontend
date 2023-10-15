@@ -7,12 +7,12 @@ import React from 'react';
 const ContactPage = () => {
 
     return (
-        <div>
+        <>
             <Banner />
             <ContactCards />
             <ContactForm />
             <MapContainer />
-        </div>
+        </>
     );
 };
 
