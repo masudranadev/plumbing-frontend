@@ -27,7 +27,7 @@ const FormInput = ({
 
     const errorMessage = getErrorMessageByPropertyName(errors, name);
   return (
-    <>
+    <div>
       <label
         htmlFor={id}
         className="block text-sm font-medium leading-6 text-gray-900"
@@ -51,7 +51,7 @@ const FormInput = ({
         )}
       />
       <small style={{ color: "red" }}>{errorMessage}</small>
-    </>
+    </div>
   );
 };
 

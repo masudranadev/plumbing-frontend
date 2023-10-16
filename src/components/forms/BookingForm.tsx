@@ -1,21 +1,26 @@
 "use client";
 import FormInput from "./FormInput";
 import Form from "./Form";
-import FormTextArea from "./FormTextArea";
-import { useServiceQuery, useServicesQuery } from "@/redux/api/serviceApi";
+import { useServiceQuery } from "@/redux/api/serviceApi";
 import { useProfileQuery } from "@/redux/api/profileApi";
 import { getUserInfo } from "@/services/auth.service";
 import LoadingButton from "../common/LoadingButton";
 import SmallSpinner from "../common/SmallSpinner";
-import {useState} from "react";
+import { useState } from "react";
+import { format } from "date-fns";
+import DatePicker from "./DatePickerField";
+import DatePickerField from "./DatePickerField";
+import Loading from "../common/Loading";
 
 const BookingForm = ({ serviceId }: { serviceId: string }) => {
-    const [loading, setLoading] = useState<boolean>(false);
-  const { data: service } = useServiceQuery(serviceId);
+  const [startDate, setStartDate] = useState(new Date());
+  const [loading, setLoading] = useState<boolean>(false);
+  const { data: service, isLoading: serviceLoading } = useServiceQuery(serviceId);
   const { userId } = getUserInfo() as any;
-  const { data: user } = useProfileQuery(userId);
+  const { data: user, isLoading: profileLoading  } = useProfileQuery(userId);
+  const date = format(startDate, "PP");
   console.log({ user, service });
-  console.log(service?.title)
+  console.log(date);
 
   const defaultValues = {
     fullName: user?.profile?.fullName,
@@ -25,9 +30,22 @@ const BookingForm = ({ serviceId }: { serviceId: string }) => {
     title: service?.title,
   };
 
-  const onSubmit = (data: any) => {
-    console.log(data);
+  const handleDateChange = (newDate: Date) => {
+    setStartDate(newDate);
   };
+
+  const onSubmit = (values: any) => {
+    const bookingData = {
+        serviceId: service?.id,
+        date
+    };
+    console.log(bookingData);
+    
+  };
+
+  if(serviceLoading || profileLoading){
+    return <Loading />
+  }
   return (
     <div className="bg-white max-w-[1020px] mx-auto my-24">
       <div className="flex flex-wrap">
@@ -91,7 +109,7 @@ const BookingForm = ({ serviceId }: { serviceId: string }) => {
           </div>
           <div className="flex gap-3 pt-5">
             <div className="w-full md:w-1/2">
-            <FormInput
+              <FormInput
                 name="title"
                 label="Service"
                 type="text"
@@ -99,6 +117,19 @@ const BookingForm = ({ serviceId }: { serviceId: string }) => {
                 id="title"
                 readonly={true}
                 className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-500 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white"
+              />
+            </div>
+            <div className="w-full md:w-1/2">
+              <label
+                htmlFor="date"
+                className="block text-sm font-medium leading-6 text-gray-900"
+              >
+                Date
+              </label>
+              <DatePickerField
+                className="appearance-none block cursor-pointer w-full bg-gray-200 text-gray-700 border border-gray-500 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white"
+                selectedDate={startDate as Date}
+                onChange={(date) => handleDateChange(date as Date)}
               />
             </div>
           </div>
