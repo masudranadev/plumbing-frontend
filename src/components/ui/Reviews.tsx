@@ -137,7 +137,7 @@ const Reviews = () => {
           }}
           className="testimonal"
         >
-          {reviews.map((review, i) => (
+          {reviews?.map((review, i) => (
             <SwiperSlide className="pt-3" key={i}>
               <div className="mb-10">
                 <figure className="cursor-pointer">

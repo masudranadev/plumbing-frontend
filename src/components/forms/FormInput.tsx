@@ -11,6 +11,7 @@ interface IInput {
   id?: string;
   label?: string;
   className?: string;
+  readonly?: boolean;
 }
 const FormInput = ({
   name,
@@ -20,6 +21,7 @@ const FormInput = ({
   label,
   id,
   className,
+  readonly
 }: IInput) => {
   const { control, formState: errors } = useFormContext();
 
@@ -43,6 +45,7 @@ const FormInput = ({
             id={id}
             {...field}
             value={value ? value : field.value}
+            readOnly={readonly}
             required
           />
         )}

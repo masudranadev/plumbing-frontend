@@ -13,6 +13,7 @@ type SelectFieldProps = {
   handleChange?: (el: string) => void;
   id?: string;
   className?: string;
+  value?: string | string[] | undefined;
 };
 
 const SelectFormField = ({
@@ -21,6 +22,7 @@ const SelectFormField = ({
   options,
   label,
   id,
+  value,
   className
 }: SelectFieldProps) => {
   const { control } = useFormContext();
