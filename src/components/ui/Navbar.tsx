@@ -1,7 +1,10 @@
 "use client";
 import { authKey } from "@/constants/storageKey";
+import { useGetCartsQuery } from "@/redux/api/addToCartApi";
 import { useProfileQuery } from "@/redux/api/profileApi";
 import { getUserInfo, removeUserInfo } from "@/services/auth.service";
+import { BellAlertIcon } from "@heroicons/react/24/outline";
+import { ShoppingCartIcon } from "@heroicons/react/24/solid";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
@@ -10,6 +13,8 @@ const Navbar = () => {
   const router = useRouter();
   const { userId } = getUserInfo() as any;
   const { data, isLoading, isError, error } = useProfileQuery(userId);
+  const arg: any = {};
+  const { data: getCarts } = useGetCartsQuery({ ...arg });
 
   const logout = () => {
     removeUserInfo(authKey);
@@ -94,47 +99,88 @@ const Navbar = () => {
               </li>
             </ul>
           </div>
-          <div className="navbar-end">
-            <div className="dropdown dropdown-end">
-              <div className="avatar" tabIndex={0}>
-                <div className="w-8 rounded-full ring ring-primary ring-offset-base-100 ring-offset-2">
-                  {isLoading ? (
-                    <span className="loading loading-dots loading-lg"></span>
-                  ) : (
-                    <Image
-                      width={32}
-                      height={32}
-                      alt="avater"
-                      src={data?.profile?.profileImg as string}
-                    />
-                  )}
+          <div className="navbar-end pr-5">
+            <div className="flex space-x-2">
+              <div className="dropdown dropdown-end">
+                <label tabIndex={0} className="btn btn-ghost btn-circle">
+                  <div className="indicator">
+                    <ShoppingCartIcon className="w-6 h-6" />
+                    {getCarts?.carts && (
+                      <span className="badge badge-sm indicator-item bg-red-500 text-white">
+                        {getCarts?.carts?.length}
+                      </span>
+                    )}
+                  </div>
+                </label>
+                <div
+                  tabIndex={0}
+                  className="mt-3 z-[1] card card-compact dropdown-content w-52 bg-base-100 shadow"
+                >
+                  <div className="card-body">
+                    <span className="font-bold text-lg">
+                      {getCarts?.carts?.length}{" "}
+                      {getCarts?.carts && getCarts?.carts?.length >= 2
+                        ? "Items"
+                        : "Item"}
+                    </span>
+                    <div className="card-actions">
+                      <Link href="/carts" className="btn btn-primary btn-block">
+                        View cart
+                      </Link>
+                    </div>
+                  </div>
                 </div>
               </div>
-              <ul
-                tabIndex={0}
-                className="dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box w-52"
-              >
-                <li>
-                  <strong>{data?.profile?.fullName}</strong>
-                </li>
-                <li>
-                  <Link href="/profile">Profile</Link>
-                </li>
-                {!userId ? (
-                  <>
-                    <li>
-                      <Link href="/signup">Signup</Link>
-                    </li>
-                    <li>
-                      <Link href="/login">Login</Link>
-                    </li>
-                  </>
-                ) : (
-                  <li onClick={logout} className="btn btn-outline btn-error">
-                    Logout
+              <button className="btn btn-ghost btn-circle">
+                <div className="indicator">
+                  <BellAlertIcon className="w-6 h-6" />
+                  <span className="badge badge-xs badge-primary indicator-item"></span>
+                </div>
+              </button>
+              <div className="dropdown dropdown-end pt-2">
+                <div className="avatar" tabIndex={0}>
+                  <div className="w-8 rounded-full ring ring-primary ring-offset-base-100 ring-offset-2">
+                    {isLoading ? (
+                      <span className="loading loading-dots loading-lg"></span>
+                    ) : (
+                      <Image
+                        width={32}
+                        height={32}
+                        alt={data?.profile?.fullName as string}
+                        src={data?.profile?.profileImg as string}
+                      />
+                    )}
+                  </div>
+                </div>
+                <ul
+                  tabIndex={0}
+                  className="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52"
+                >
+                  <li>
+                    <strong>{data?.profile?.fullName}</strong>
                   </li>
-                )}
-              </ul>
+                  <li>
+                    <Link href="/profile">Profile</Link>
+                  </li>
+                  {!userId ? (
+                    <>
+                      <li>
+                        <Link href="/signup">Signup</Link>
+                      </li>
+                      <li>
+                        <Link href="/login">Login</Link>
+                      </li>
+                    </>
+                  ) : (
+                    <li
+                      onClick={logout}
+                      className="btn mt-2 hover:text-white btn-outline btn-error"
+                    >
+                      Logout
+                    </li>
+                  )}
+                </ul>
+              </div>
             </div>
           </div>
         </div>

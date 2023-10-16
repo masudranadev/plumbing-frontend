@@ -12,6 +12,7 @@ import Swal from "sweetalert2";
 import { getUserInfo, isLoggedin } from "@/services/auth.service";
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";
+import { ENUM_USER_ROLE } from "@/enums/user";
 
 const Services = () => {
   const { role, userId } = getUserInfo() as any;
@@ -115,6 +116,10 @@ const Services = () => {
                 <button
                   onClick={() => handleAddToCart(service?.id)}
                   className="btn btn-outline btn-accent"
+                  disabled={
+                    role === ENUM_USER_ROLE.ADMIN ||
+                    role === ENUM_USER_ROLE.SUPER_ADMIN
+                  }
                 >
                   <ShoppingBagIcon className="w-6 h-6 inline-block" /> Add To
                   Cart
@@ -122,6 +127,10 @@ const Services = () => {
                 <button
                   onClick={() => handleBook(service?.id)}
                   className="btn btn-outline btn-accent"
+                  disabled={
+                    role === ENUM_USER_ROLE.ADMIN ||
+                    role === ENUM_USER_ROLE.SUPER_ADMIN
+                  }
                 >
                   <ClipboardDocumentCheckIcon className="w-6 h-6 inline-block" />{" "}
                   Book now

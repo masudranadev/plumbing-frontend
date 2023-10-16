@@ -17,7 +17,7 @@ export const addToCartApi = baseApi.injectEndpoints({
       },
       transformResponse: (response: IAddToCartData[], meta: IMeta) => {
         return {
-          addToCarts: response,
+          carts: response,
           meta,
         };
       },
@@ -33,7 +33,7 @@ export const addToCartApi = baseApi.injectEndpoints({
     }),
     // create a new building
     addToCart: build.mutation({
-      query: (data) => ({        
+      query: (data) => ({
         url: `${ADD_TO_CART_URL}/add-to-cart`,
         method: "POST",
         data,

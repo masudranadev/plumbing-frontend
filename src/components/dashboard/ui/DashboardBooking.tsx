@@ -114,6 +114,53 @@ const DashboardBooking = () => {
         }
       });
   };
+  const handleReject = (id: string) => {
+    const swalWithBootstrapButtons = Swal.mixin({
+      customClass: {
+        confirmButton: "btn btn-success",
+        cancelButton: "btn btn-danger",
+      },
+      buttonsStyling: false,
+    });
+
+    swalWithBootstrapButtons
+      .fire({
+        title: "Are you sure?",
+        text: "Do you want to reject booking?",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonText: "Yes, Reject it!",
+        cancelButtonText: "No, Reject!",
+        reverseButtons: true,
+      })
+      .then((result) => {
+        if (result.isConfirmed) {
+          const res = deleteBooking(id);
+          if (res.arg.track) {
+            swalWithBootstrapButtons.fire(
+              "Rejected!",
+              "This Booking is Rejected.",
+              "success"
+            );
+          } else {
+            swalWithBootstrapButtons.fire(
+              "Not Rejected!",
+              "Something is wrong!!!",
+              "error"
+            );
+          }
+        } else if (
+          /* Read more about handling dismissals below */
+          result.dismiss === Swal.DismissReason.cancel
+        ) {
+          swalWithBootstrapButtons.fire(
+            "Not Rejected",
+            "Please confirm then rejected :)",
+            "error"
+          );
+        }
+      });
+  };
 
   if (isLoading) {
     return <Loading />;
@@ -161,10 +208,17 @@ const DashboardBooking = () => {
                 <td className="whitespace-nowrap px-4 py-2">
                   {role !== ENUM_USER_ROLE.USER ? (
                     <>
-                      <button onClick={() => handleAccept(booking?.id)}  className="btn inline-block rounded bg-indigo-600 px-4 py-2 text-xs font-medium text-white hover:bg-indigo-700">
+                      <button
+                        onClick={() => handleAccept(booking?.id)}
+                        className="btn inline-block rounded bg-indigo-600 px-4 py-2 text-xs font-medium text-white hover:bg-indigo-700"
+                      >
                         accept
                       </button>
-                      <button className="btn btn-error inline-block rounded px-4 py-2 text-xs font-medium text-white mx-2">
+                      <button
+                        onClick={() => handleReject(booking?.id)}
+                        disabled={booking?.status === ENUM_STATUS.APPROVED}
+                        className="btn btn-error inline-block rounded px-4 py-2 text-xs font-medium text-white mx-2"
+                      >
                         Reject
                       </button>
                     </>

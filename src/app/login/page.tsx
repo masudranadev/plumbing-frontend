@@ -23,7 +23,13 @@ const LoginPage = () => {
       if (res?.token) {
         setLoading(false);
         router.push("/home");
-        Swal.fire("User Login successfully!");
+        Swal.fire({
+          position: 'top-end',
+          icon: 'success',
+          title: 'Login Successfully',
+          showConfirmButton: false,
+          timer: 1500
+        })
         storeUserInfo({ accessToken: res?.token });
       }
     } catch (error: any) {
