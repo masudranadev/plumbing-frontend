@@ -85,3 +85,14 @@ export type IAddToCartData = {
   user: IUserProfile;
   service: IService;
 };
+export type IBookingData = {
+  id: string;
+  userId: string;
+  serviceId: string;
+  status: string;
+  date: string;
+  createdAt: string;
+  updatedAt: string;
+  user: IUserProfile;
+  service: IService;
+};

@@ -11,13 +11,17 @@ import { format } from "date-fns";
 import DatePicker from "./DatePickerField";
 import DatePickerField from "./DatePickerField";
 import Loading from "../common/Loading";
+import { useAddBookingMutation } from "@/redux/api/bookingApi";
+import Swal from "sweetalert2";
 
 const BookingForm = ({ serviceId }: { serviceId: string }) => {
   const [startDate, setStartDate] = useState(new Date());
   const [loading, setLoading] = useState<boolean>(false);
-  const { data: service, isLoading: serviceLoading } = useServiceQuery(serviceId);
+  const { data: service, isLoading: serviceLoading } =
+    useServiceQuery(serviceId);
   const { userId } = getUserInfo() as any;
-  const { data: user, isLoading: profileLoading  } = useProfileQuery(userId);
+  const { data: user, isLoading: profileLoading } = useProfileQuery(userId);
+  const [addBooking] = useAddBookingMutation();
   const date = format(startDate, "PP");
   console.log({ user, service });
   console.log(date);
@@ -34,17 +38,37 @@ const BookingForm = ({ serviceId }: { serviceId: string }) => {
     setStartDate(newDate);
   };
 
-  const onSubmit = (values: any) => {
+  const onSubmit = async () => {
+    setLoading(true)
     const bookingData = {
-        serviceId: service?.id,
-        date
+      serviceId: service?.id,
+      date,
     };
-    console.log(bookingData);
+    const res: any = await addBooking(bookingData);
     
+    if (res.data) {
+        Swal.fire({
+          position: "top-end",
+          icon: "success",
+          title: "Service is booking Successfull!",
+          showConfirmButton: false,
+          timer: 1500,
+        });
+        setLoading(false)
+      } else {
+        Swal.fire({
+          position: "top-end",
+          icon: "error",
+          title: "This service Already Bookded!",
+          showConfirmButton: false,
+          timer: 1500,
+        });
+        setLoading(false)
+      }
   };
 
-  if(serviceLoading || profileLoading){
-    return <Loading />
+  if (serviceLoading || profileLoading) {
+    return <Loading />;
   }
   return (
     <div className="bg-white max-w-[1020px] mx-auto my-24">
@@ -139,7 +163,7 @@ const BookingForm = ({ serviceId }: { serviceId: string }) => {
               className="btn btn-accent mt-3 w-full"
               value="Login"
             >
-              {loading ? <SmallSpinner /> : "Book"}
+              {loading ? <SmallSpinner /> : "Book now"}
             </LoadingButton>
           </div>
         </div>
