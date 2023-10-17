@@ -1,38 +1,46 @@
-import { IMeta } from "@/types";
+import { IMeta, IUserProfile } from "@/types";
 import { baseApi } from "./baseApi";
 import { tagTypes } from "../tag-types";
 
-const ADMIN_URL = "/profile";
+const USER_URL = "/users";
 
 export const userApi = baseApi.injectEndpoints({
   endpoints: (build) => ({
-    addAdminWithFormData: build.mutation({
-      query: (data) => ({
-        url: "/users/create-admin",
-        method: "POST",
-        data,
-        contentType: "multipart/form-data",
-      }),
-      invalidatesTags: [tagTypes.admin],
-    }),
-
-    admins: build.query({
+    users: build.query({
       query: (arg: Record<string, any>) => {
         return {
-          url: ADMIN_URL,
+          url: USER_URL,
           method: "GET",
           params: arg,
         };
       },
-      transformResponse: (response, meta: IMeta) => {
+      transformResponse: (response: IUserProfile[], meta: IMeta) => {
         return {
-          admins: response,
+          users: response,
           meta,
         };
       },
-      providesTags: [tagTypes.admin],
+      providesTags: [tagTypes.user],
+    }),
+
+    // get single user profile
+    user: build.query({
+      query: (id: string | string[] | undefined) => ({
+        url: `${USER_URL}/${id}`,
+        method: "GET",
+      }),
+      providesTags: [tagTypes.user],
+    }),
+    // update existing user role
+    makeAdmin: build.mutation({
+      query: (data) => ({
+        url: `${USER_URL}/${data.id}`,
+        method: "PATCH",
+        data: data.body,
+      }),
+      invalidatesTags: [tagTypes.user],
     }),
   }),
 });
 
-export const { useAdminsQuery, useAddAdminWithFormDataMutation } = userApi;
+export const { useUsersQuery, useMakeAdminMutation, useUserQuery } = userApi;

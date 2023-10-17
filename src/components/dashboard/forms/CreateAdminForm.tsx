@@ -35,6 +35,7 @@ const CreateAdminForm = () => {
       setImagePreview(null);
     }
   };
+
   const handleSubmit = async (data: any) => {
     setLoading(true);
     try {
@@ -214,4 +215,5 @@ const CreateAdminForm = () => {
     </div>
   );
 };
+
 export default CreateAdminForm;

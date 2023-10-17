@@ -5,6 +5,7 @@ import {
   HomeIcon,
   QuestionMarkCircleIcon,
   UserPlusIcon,
+  UsersIcon,
   WrenchScrewdriverIcon,
 } from "@heroicons/react/24/solid";
 import Link from "next/link";
@@ -65,16 +66,24 @@ const Sidebar = () => {
               </Link>
             </li>
             <li>
-              <Link href="/dashboard/admin/create">
-                <UserPlusIcon className="w-5 h-5 inline-block" /> Add Admin
-              </Link>
-            </li>
-            <li>
               <Link href="/dashboard/booking">
                 <RiReservedFill className="w-5 h-5 inline-block" /> Booking
               </Link>
             </li>
+            <li>
+            <Link href="/dashboard/users">
+              <UsersIcon className="w-5 h-5 inline-block" /> Users
+            </Link>
+          </li>
           </>
+        )}
+        {role === ENUM_USER_ROLE.SUPER_ADMIN && (
+          <li>
+            <Link href="/dashboard/admin/create">
+              <UserPlusIcon className="w-5 h-5 inline-block" /> Add Admin
+            </Link>
+          </li>
+          
         )}
       </ul>
     </div>
