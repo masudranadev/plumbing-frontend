@@ -19,5 +19,5 @@ export enum tagTypes {
     tagTypes.faq,
     tagTypes.feedback,
     tagTypes.addToCart,
-    tagTypes.booking
+    tagTypes.booking,
   ];
