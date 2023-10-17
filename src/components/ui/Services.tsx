@@ -17,34 +17,38 @@ import { ENUM_USER_ROLE } from "@/enums/user";
 const Services = () => {
   const { role, userId } = getUserInfo() as any;
   const router = useRouter();
-  const userloggedIn = isLoggedin();
+  const isLoggedIn = isLoggedin();
   const arg = {};
   const { data, isLoading } = useServicesQuery({ ...arg });
   const [addToCart] = useAddToCartMutation();
   const handleAddToCart = async (id: string) => {
-    if (id) {
-      const res: any = await addToCart({ serviceId: id });
-      if (res.data) {
-        Swal.fire({
-          position: "top-end",
-          icon: "success",
-          title: "Service is Added!",
-          showConfirmButton: false,
-          timer: 1500,
-        });
-      } else {
-        Swal.fire({
-          position: "top-end",
-          icon: "error",
-          title: "This service Already Added!",
-          showConfirmButton: false,
-          timer: 1500,
-        });
+    if (!isLoggedIn) {
+      router.push("/login");
+    } else {
+      if (id) {
+        const res: any = await addToCart({ serviceId: id });
+        if (res.data) {
+          Swal.fire({
+            position: "top-end",
+            icon: "success",
+            title: "Service is Added!",
+            showConfirmButton: false,
+            timer: 1500,
+          });
+        } else {
+          Swal.fire({
+            position: "top-end",
+            icon: "error",
+            title: "This service Already Added!",
+            showConfirmButton: false,
+            timer: 1500,
+          });
+        }
       }
     }
   };
   const handleBook = (id: string) => {
-    if (!userloggedIn) {
+    if (!isLoggedIn) {
       router.push("/login");
     } else {
       router.push(`/booking/${id}`);

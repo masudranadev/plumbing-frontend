@@ -8,14 +8,10 @@ import Image from "next/image";
 import Link from "next/link";
 import { format, parseISO } from "date-fns";
 import { TrashIcon } from "@heroicons/react/20/solid";
-import {
-  EyeIcon,
-  PencilIcon,
-  PencilSquareIcon,
-} from "@heroicons/react/24/solid";
+import { EyeIcon, PencilSquareIcon } from "@heroicons/react/24/solid";
 import Swal from "sweetalert2";
 
-const DashboardServicePage = () => {
+const DashboardService = () => {
   const arg: any = {};
   const { data, isLoading } = useServicesQuery({ ...arg });
   const [deleteService] = useDeleteServiceMutation();
@@ -101,7 +97,7 @@ const DashboardServicePage = () => {
           </thead>
 
           <tbody className="divide-y divide-gray-200">
-            {data?.services?.map((service) => (
+            {data?.services?.map((service: any) => (
               <tr key={service?.id}>
                 <td className="whitespace-nowrap px-4 py-2 font-medium text-gray-900">
                   <div className="avatar">
@@ -124,7 +120,7 @@ const DashboardServicePage = () => {
                 <td className="whitespace-nowrap px-4 py-2 text-primary">
                   {service?.price} ৳
                 </td>
-                <td className="whitespace-nowrap px-4 py-2">
+                <td className="whitespace-nowrap px-4 py-2 space-x-1">
                   <button className="btn inline-block rounded bg-indigo-600 px-4 py-2 text-xs font-medium text-white hover:bg-indigo-700">
                     <Link href={`/dashboard/service/edit/${service?.id}`}>
                       <PencilSquareIcon className="w-5 h-5" />
@@ -149,4 +145,4 @@ const DashboardServicePage = () => {
   );
 };
 
-export default DashboardServicePage;
+export default DashboardService;

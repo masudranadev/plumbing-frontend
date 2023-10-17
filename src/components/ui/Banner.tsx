@@ -18,12 +18,10 @@ const Banner = () => {
         <div className="max-w-md">
           <h1 className="mb-5 text-5xl font-bold">Contact Page</h1>
           <div className="text-base breadcrumbs">
-            <ul>
-              <li>
-                <Link href="/home">Home</Link>
-              </li>
-              <li>Contact</li>
-            </ul>
+            <div>
+              <Link href="/home">Home</Link>
+              <button>Contact</button>
+            </div>
           </div>
         </div>
       </div>

@@ -5,6 +5,7 @@ import Form from "@/components/forms/Form";
 import FormInput from "@/components/forms/FormInput";
 import { useUserSigninMutation } from "@/redux/api/authApi";
 import { storeUserInfo } from "@/services/auth.service";
+import { ArrowLeftIcon } from "@heroicons/react/24/solid";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
@@ -114,7 +115,7 @@ const LoginPage = () => {
             </div>
           </Form>
 
-          <p className="mt-10 text-center text-sm text-gray-500">
+          <div className="mt-10 text-center text-sm text-gray-500">
             not have your account?{" "}
             <Link
               href="/signup"
@@ -122,8 +123,13 @@ const LoginPage = () => {
             >
               signup
             </Link>
-          </p>
+          </div>
         </div>
+      </div>
+      <div className="fixed left-10 top-10">
+        <Link className="btn" href={"/"}>
+          <ArrowLeftIcon className="w-6 h-5"/>
+        </Link>
       </div>
     </div>
   );

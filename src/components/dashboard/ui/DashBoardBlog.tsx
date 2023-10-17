@@ -90,7 +90,7 @@ const DashBoardBlog = () => {
           </thead>
 
           <tbody className="divide-y divide-gray-200">
-            {data?.blogs?.map((blog) => (
+            {data?.blogs?.map((blog: any) => (
               <tr key={blog?.id}>
                 <td className="whitespace-nowrap px-4 py-2 font-medium text-gray-900">
                   <div className="avatar">
@@ -110,7 +110,7 @@ const DashBoardBlog = () => {
                 <td className="whitespace-nowrap px-4 py-2 text-gray-700">
                   {format(parseISO(blog?.createdAt), "PP")}
                 </td>
-                <td className="whitespace-nowrap px-4 py-2">
+                <td className="whitespace-nowrap px-4 py-2 space-x-1">
                   <button className="btn inline-block rounded bg-indigo-600 px-4 py-2 text-xs font-medium text-white hover:bg-indigo-700">
                     <Link href={`/dashboard/blog/edit/${blog?.id}`}>
                       <PencilSquareIcon className="w-5 h-5" />

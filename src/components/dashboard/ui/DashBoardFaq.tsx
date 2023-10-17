@@ -1,9 +1,5 @@
 "use client";
 import Loading from "@/components/common/Loading";
-import {
-  useDeleteServiceMutation,
-  useServicesQuery,
-} from "@/redux/api/serviceApi";
 import Image from "next/image";
 import Link from "next/link";
 import { format, parseISO } from "date-fns";
@@ -95,7 +91,7 @@ const DashboardFaq = () => {
           </thead>
 
           <tbody className="divide-y divide-gray-200">
-            {data?.faqs?.map((faq) => (
+            {data?.faqs?.map((faq: any) => (
               <tr key={faq?.id}>
                 <td className="whitespace-nowrap px-4 py-2 text-gray-700">
                   {faq?.question}
@@ -106,7 +102,7 @@ const DashboardFaq = () => {
                 <td className="whitespace-nowrap px-4 py-2 text-gray-700">
                   {format(parseISO(faq?.updatedAt), "PP")}
                 </td>
-                <td className="whitespace-nowrap px-4 py-2">
+                <td className="whitespace-nowrap px-4 py-2 space-x-1">
                   <button className="btn inline-block rounded bg-indigo-600 px-4 py-2 text-xs font-medium text-white hover:bg-indigo-700">
                     <Link href={`/dashboard/faq/edit/${faq?.id}`}>
                       <PencilSquareIcon className="w-5 h-5" />

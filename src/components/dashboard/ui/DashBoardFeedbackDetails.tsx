@@ -3,7 +3,7 @@ import Loading from "@/components/common/Loading";
 import { useFeedbackQuery } from "@/redux/api/feedbackApi";
 import Image from "next/image";
 
-const DashBoardFeedbackCard = ({ id }: { id: string }) => {
+const DashBoardFeedbackDetails = ({ id }: { id: string }) => {
   const { data, isLoading } = useFeedbackQuery(id);
   if (isLoading) {
     return <Loading />;
@@ -82,4 +82,4 @@ const DashBoardFeedbackCard = ({ id }: { id: string }) => {
   );
 };
 
-export default DashBoardFeedbackCard;
+export default DashBoardFeedbackDetails;

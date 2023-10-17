@@ -20,7 +20,7 @@ export const profileApi = baseApi.injectEndpoints({
           meta,
         };
       },
-      providesTags: [tagTypes.profile],
+      providesTags: [tagTypes.profile, tagTypes.user],
     }),
   }),
 });

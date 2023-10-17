@@ -1,11 +1,7 @@
-import LatestNews from '@/components/ui/LatestNews';
+import LatestNews from "@/components/ui/LatestNews";
 
 const BlogPage = () => {
-    return (
-        <>
-            <LatestNews />
-        </>
-    );
+  return <LatestNews  />;
 };
 
 export default BlogPage;

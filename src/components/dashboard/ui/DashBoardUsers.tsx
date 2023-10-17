@@ -21,7 +21,6 @@ const DashboardUsers = () => {
     role: string;
   };
   const handleMakeAdmin = (values: IValues) => {
-    console.log(values);
 
     const swalWithBootstrapButtons = Swal.mixin({
       customClass: {
@@ -50,7 +49,7 @@ const DashboardUsers = () => {
           if (res.arg.track) {
             swalWithBootstrapButtons.fire(
               "Confirm!",
-              "User successfully update role Admin.",
+              "User successfully update role.",
               "success"
             );
           } else {
@@ -102,7 +101,7 @@ const DashboardUsers = () => {
           </thead>
 
           <tbody className="divide-y divide-gray-200">
-            {data?.users?.map((user) => (
+            {data?.users?.map((user: any) => (
               <tr key={user?.id}>
                 <td className="whitespace-nowrap px-4 py-2 font-medium text-gray-900">
                   <div className="avatar">

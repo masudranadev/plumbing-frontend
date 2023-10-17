@@ -1,3 +1,4 @@
+"use client";
 import React, { useEffect } from "react";
 import { AiOutlineClose } from "react-icons/ai";
 type RequestModalProps = {

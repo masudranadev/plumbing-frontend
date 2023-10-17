@@ -164,7 +164,7 @@ const SignupPage = () => {
           </div>
         </div>
       </Form>
-      <p className="mt-10 text-center text-sm text-gray-500">
+      <div className="mt-10 text-center text-sm text-gray-500">
         do you have an account?{" "}
         <Link
           href="/login"
@@ -172,7 +172,7 @@ const SignupPage = () => {
         >
           login
         </Link>
-      </p>
+      </div>
     </div>
   );
 };

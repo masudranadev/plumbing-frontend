@@ -1,9 +1,9 @@
-import DashboardServicePage from "@/components/dashboard/ui/Service";
+import DashboardService from "@/components/dashboard/ui/DashboardService";
 
 const ServicePage = () => {
   return (
     <>
-      <DashboardServicePage />
+      <DashboardService />
     </>
   );
 };

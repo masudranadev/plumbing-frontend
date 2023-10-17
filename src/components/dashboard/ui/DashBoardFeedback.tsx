@@ -93,7 +93,7 @@ const DashboardFeedback = () => {
           </thead>
 
           <tbody className="divide-y divide-gray-200">
-            {data?.feedbacks?.map((feedback) => (
+            {data?.feedbacks?.map((feedback: any) => (
               <tr key={feedback?.id}>
                 <td className="whitespace-nowrap px-4 py-2 text-gray-700">
                   {feedback?.user?.fullName}
@@ -107,12 +107,12 @@ const DashboardFeedback = () => {
                 <td className="whitespace-nowrap px-4 py-2 text-primary">
                   {feedback?.comments}
                 </td>
-                <td className="whitespace-nowrap px-4 py-2">
-                  <Link href={`/dashboard/feedback/${feedback?.id}`}>
+                <td className="whitespace-nowrap px-4 py-2 space-x-1">
                   <button className="btn inline-block rounded bg-indigo-600 px-4 py-2 text-xs font-medium text-white hover:bg-indigo-700">
-                    <EyeIcon className="w-5 h-5" />
+                    <Link href={`/dashboard/feedback/${feedback?.id}`}>
+                      <EyeIcon className="w-5 h-5" />
+                    </Link>
                   </button>
-                  </Link>
                   <button
                     onClick={() => handleDelete(feedback?.id)}
                     className="btn btn-error inline-block rounded px-4 py-2 text-xs font-medium text-white "
