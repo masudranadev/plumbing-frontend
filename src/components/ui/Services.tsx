@@ -1,6 +1,7 @@
 "use client";
 import { useServicesQuery } from "@/redux/api/serviceApi";
 import {
+  ArrowPathIcon,
   ClipboardDocumentCheckIcon,
   ShoppingBagIcon,
 } from "@heroicons/react/24/solid";
@@ -11,16 +12,39 @@ import { useAddToCartMutation } from "@/redux/api/addToCartApi";
 import Swal from "sweetalert2";
 import { getUserInfo, isLoggedin } from "@/services/auth.service";
 import { useRouter } from "next/navigation";
-import { useEffect } from "react";
+import { useState } from "react";
 import { ENUM_USER_ROLE } from "@/enums/user";
+import { useDebounced } from "@/redux/hooks";
 
 const Services = () => {
-  const { role, userId } = getUserInfo() as any;
+  const [searchTerm, setSearchTerm] = useState<string>("");
+  const [minPrice, setMinPrice] = useState<string>("");
+  const [maxPrice, setMaxPrice] = useState<string>("");
+  const { role } = getUserInfo() as any;
   const router = useRouter();
   const isLoggedIn = isLoggedin();
-  const arg = {};
-  const { data, isLoading } = useServicesQuery({ ...arg });
+  const query: Record<string, any> = {};
+  if (!!minPrice && !!maxPrice) {
+    query["minPrice"] = minPrice;
+    query["maxPrice"] = maxPrice;
+  }
+
+  const debouncedTerm = useDebounced({
+    searchQuery: searchTerm,
+    delay: 600,
+  });
+
+  if (!!debouncedTerm) {
+    query["searchTerm"] = debouncedTerm;
+  }
+  const { data, isLoading } = useServicesQuery({ ...query });
   const [addToCart] = useAddToCartMutation();
+
+  const resetFilters = () => {
+    setSearchTerm("");
+    setMinPrice("");
+    setMaxPrice("");
+  };
   const handleAddToCart = async (id: string) => {
     if (!isLoggedIn) {
       router.push("/login");
@@ -69,6 +93,53 @@ const Services = () => {
               There are many variations of passages of Lorem Ipsum available but
               the majority have suffered alteration in some form
             </p>
+          </div>
+        </div>
+      </div>
+      <div className="container flex justify-between my-5">
+        <div className=" flex gap-x-4">
+          <div className="form-control">
+            <input
+              type="text"
+              value={searchTerm}
+              placeholder="Search by any keyword..."
+              className="input input-bordered w-24 md:w-auto block"
+              onChange={(e) => {
+                setSearchTerm(e.target.value);
+              }}
+            />
+          </div>
+          {(!!searchTerm || !!minPrice || !!maxPrice) && (
+            <button
+              onClick={resetFilters}
+              className="btn btn-circle btn-accent"
+            >
+              <ArrowPathIcon className="w-6 h-6" />
+            </button>
+          )}
+        </div>
+        <div className="flex">
+          <div className="form-control">
+            <input
+              type="number"
+              value={minPrice}
+              placeholder="min price"
+              className="input input-bordered w-24 md:w-auto block"
+              onChange={(e) => {
+                setMinPrice(e.target.value);
+              }}
+            />
+          </div>
+          <div className="form-control">
+            <input
+              type="number"
+              value={maxPrice}
+              placeholder="max price"
+              className="input input-bordered w-24 md:w-auto block"
+              onChange={(e) => {
+                setMaxPrice(e.target.value);
+              }}
+            />
           </div>
         </div>
       </div>
