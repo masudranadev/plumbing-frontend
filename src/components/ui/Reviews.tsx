@@ -87,7 +87,7 @@ const Reviews = () => {
   ];
   return (
     <div className="bg-[#F5F8FE]">
-      <div className="container relative py-20">
+      <div className="container relative py-8 m:py-20">
         <div className="flex flex-wrap">
           <div className="w-full px-4">
             <div className="mx-auto mb-12 max-w-[510px] text-center lg:mb-20">
@@ -143,7 +143,7 @@ const Reviews = () => {
                         width={100}
                         height={100}
                         src="https://images.pexels.com/photos/220453/pexels-photo-220453.jpeg?auto=compress&amp;cs=tinysrgb&amp;dpr=3&amp;h=120&amp;w=120"
-                        alt=""
+                        alt="user_photo"
                         className="w-[140px] lg:-mb-16 p-2 mx-auto object-cover h-[140px] rounded-full ring"
                       />
                     </figure>

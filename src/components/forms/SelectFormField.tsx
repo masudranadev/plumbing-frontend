@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import { useFormContext, Controller } from "react-hook-form";
 
 export type SelectOptions = {
@@ -23,9 +24,12 @@ const SelectFormField = ({
   label,
   id,
   value,
-  className
+  className,
 }: SelectFieldProps) => {
-  const { control } = useFormContext();
+  const { control, reset } = useFormContext();
+  useEffect(() => {
+    reset({ [name]: "" });
+  }, [name, reset]);
 
   return (
     <div className="form-control w-full">
@@ -40,9 +44,7 @@ const SelectFormField = ({
         name={name} // Specify the name only here
         render={({ field }) => (
           <select className={className} required {...field}>
-            <option value="">
-              {placeholder}
-            </option>
+            <option value="">{placeholder}</option>
             {options?.map((option, index) => (
               <option value={option?.value} key={index}>
                 {option?.label}

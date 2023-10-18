@@ -11,6 +11,8 @@ import Swal from "sweetalert2";
 import { getUserInfo, isLoggedin } from "@/services/auth.service";
 import { useRouter } from "next/navigation";
 import { ENUM_USER_ROLE } from "@/enums/user";
+import Link from "next/link";
+import { EyeIcon } from "@heroicons/react/24/outline";
 
 const CategoryService = ({id}: {id: string}) => {
   const { role } = getUserInfo() as any;
@@ -85,7 +87,7 @@ const CategoryService = ({id}: {id: string}) => {
           data?.map((service: any) => (
             <div
               key={service?.id}
-              className="border group border-gray-200 rounded p-3 shadow hover:shadow hover:shadow-primaryColor text-center"
+              className="border group border-gray-200 rounded p-3 shadow hover:shadow hover:shadow-primaryColor text-center relative overflow-hidden"
             >
               <div className="relative rounded overflow-hidden inline-block w-full">
                 <span className="absolute top-0 left-0 flex w-full h-0 mb-0 transition-all duration-300 ease-out transform translate-y-0 bg-gray-900 group-hover:h-[50%] opacity-80"></span>
@@ -139,6 +141,14 @@ const CategoryService = ({id}: {id: string}) => {
                   Book now
                 </button>
               </div>
+              <Link
+                href={`/service/${service?.id}`}
+                className="absolute top-3 -right-14 group-hover:right-3 transition-all duration-500 ease-in-out"
+              >
+                <button className="btn inline-block rounded bg-indigo-600 px-4 py-2 text-xs font-medium text-white hover:bg-indigo-700">
+                  <EyeIcon className="w-5 h-5" />
+                </button>
+              </Link>
             </div>
           ))
         )}

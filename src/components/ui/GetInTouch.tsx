@@ -37,7 +37,7 @@ const GetInTouch = () => {
             height={400}
             className="absolute -top-[92px] right-0 hidden lg:block"
             src="/assets/images/service-request.png"
-            alt=""
+            alt="service-request"
           />
         </div>
       </div>

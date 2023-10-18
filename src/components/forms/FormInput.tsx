@@ -1,6 +1,7 @@
 "use client";
 
 import { getErrorMessageByPropertyName } from "@/utils/schema-validator";
+import { useEffect } from "react";
 import { Controller, useFormContext } from "react-hook-form";
 
 interface IInput {
@@ -21,11 +22,14 @@ const FormInput = ({
   label,
   id,
   className,
-  readonly
+  readonly,
 }: IInput) => {
-  const { control, formState: errors } = useFormContext();
+  const { control, formState: errors, reset } = useFormContext();
+  useEffect(() => {
+    reset({ [name]: "" });
+  }, [name, reset]);
 
-    const errorMessage = getErrorMessageByPropertyName(errors, name);
+  const errorMessage = getErrorMessageByPropertyName(errors, name);
   return (
     <div>
       <label

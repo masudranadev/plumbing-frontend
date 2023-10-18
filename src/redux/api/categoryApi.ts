@@ -1,4 +1,4 @@
-import { IMeta, IFaq, ICategory } from "@/types";
+import { IMeta, ICategory } from "@/types";
 import { baseApi } from "./baseApi";
 import { tagTypes } from "../tag-types";
 

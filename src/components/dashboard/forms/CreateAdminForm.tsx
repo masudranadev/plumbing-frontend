@@ -6,6 +6,7 @@ import FormInput from "@/components/forms/FormInput";
 import SelectFormField, { SelectOptions } from "@/components/forms/SelectFormField";
 import { useCreateAdminMutation } from "@/redux/api/adminApi";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { toast } from "react-toastify";
 import Swal from "sweetalert2";
@@ -15,6 +16,7 @@ const CreateAdminForm = () => {
   const [imagePreview, setImagePreview] = useState(null);
   const [loading, setLoading] = useState<boolean>(false);
   const [createAdmin] = useCreateAdminMutation();
+  const router = useRouter();
   const roles = [
     {
       label: "অ্যাডমিন",
@@ -60,6 +62,7 @@ const CreateAdminForm = () => {
           //akhane api call hobe
           const res: any = await createAdmin(data);
           if (res.data as any) {
+            router.push("/dashboard/users")
             Swal.fire({
               position: "top-end",
               icon: "success",

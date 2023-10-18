@@ -14,13 +14,13 @@ const Profile = () => {
 
   return (
     <div className="min-h-screen">
-      <div className="w-full lg:w-[700px] mx-auto flex flex-col lg:flex-row space-x-10 my-10 ring p-5 rounded">
+      <div className="w-full lg:w-[700px] mx-auto flex flex-col lg:flex-row my-10 ring p-5 rounded">
         <Image
           src={profile?.profileImg as string}
           alt={profile?.fullName}
           width={200}
           height={250}
-          className="w-[200px] h-[250px] rounded p-1 border-2"
+          className="w-full md:w-[200px] h-[250px] rounded p-1 border-2"
         />
         <div className="space-y-2">
           <h1 className="flex">

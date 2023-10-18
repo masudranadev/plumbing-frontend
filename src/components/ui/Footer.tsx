@@ -8,7 +8,7 @@ const Footer = () => {
   
   return (
     <>
-      <div className="bg-base-200 p-10">
+      <div className="bg-base-200 py-5">
         <footer className="footer container text-base-content">
           <nav>
             <header className="footer-title">Services</header>
@@ -32,7 +32,7 @@ const Footer = () => {
             <a className="link link-hover">Cookie policy</a>
           </nav>
         </footer>
-        <footer className="footer container px-10 py-4 border-t bg-base-200 text-base-content border-base-300 items-center">
+        <footer className="footer container py-4 border-t bg-base-200 text-base-content border-base-300 items-center">
           <aside className="items-center grid-flow-col">
             <svg
               width="24"

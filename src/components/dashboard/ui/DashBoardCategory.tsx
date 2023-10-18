@@ -1,10 +1,9 @@
 "use client";
 import Loading from "@/components/common/Loading";
-import Image from "next/image";
 import Link from "next/link";
 import { format, parseISO } from "date-fns";
 import { TrashIcon } from "@heroicons/react/20/solid";
-import { EyeIcon, PencilSquareIcon } from "@heroicons/react/24/solid";
+import { PencilSquareIcon } from "@heroicons/react/24/solid";
 import Swal from "sweetalert2";
 import {
   useCategoriesQuery,

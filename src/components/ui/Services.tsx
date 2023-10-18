@@ -3,6 +3,7 @@ import { useServicesQuery } from "@/redux/api/serviceApi";
 import {
   ArrowPathIcon,
   ClipboardDocumentCheckIcon,
+  EyeIcon,
   ShoppingBagIcon,
 } from "@heroicons/react/24/solid";
 import Image from "next/image";
@@ -79,7 +80,7 @@ const Services = () => {
     }
   };
   return (
-    <section className="py-20">
+    <section className="py-10 md:py-20">
       <div className="flex flex-wrap">
         <div className="w-full px-4">
           <div className="mx-auto mb-12 max-w-[510px] text-center lg:mb-20">
@@ -96,14 +97,14 @@ const Services = () => {
           </div>
         </div>
       </div>
-      <div className="container flex justify-between my-5">
+      <div className="container flex flex-col md:flex-row gap-3 justify-between my-5">
         <div className=" flex gap-x-4">
           <div className="form-control">
             <input
               type="text"
               value={searchTerm}
               placeholder="Search by any keyword..."
-              className="input input-bordered w-24 md:w-auto block"
+              className="input input-bordered w-full md:w-auto block"
               onChange={(e) => {
                 setSearchTerm(e.target.value);
               }}
@@ -118,13 +119,13 @@ const Services = () => {
             </button>
           )}
         </div>
-        <div className="flex">
+        <div className="flex gap-1">
           <div className="form-control">
             <input
               type="number"
               value={minPrice}
               placeholder="min price"
-              className="input input-bordered w-24 md:w-auto block"
+              className="input input-bordered w-full md:w-auto block"
               onChange={(e) => {
                 setMinPrice(e.target.value);
               }}
@@ -135,7 +136,7 @@ const Services = () => {
               type="number"
               value={maxPrice}
               placeholder="max price"
-              className="input input-bordered w-24 md:w-auto block"
+              className="input input-bordered w-full md:w-auto block"
               onChange={(e) => {
                 setMaxPrice(e.target.value);
               }}
@@ -154,10 +155,10 @@ const Services = () => {
             <ServiceCardLoader />
           </>
         ) : (
-          data?.services?.map((service) => (
+          data?.services?.map((service: any) => (
             <div
               key={service?.id}
-              className="border group border-gray-200 rounded p-3 shadow hover:shadow hover:shadow-primaryColor text-center"
+              className="border overflow-hidden group border-gray-200 rounded p-3 shadow hover:shadow hover:shadow-primaryColor text-center relative"
             >
               <div className="relative rounded overflow-hidden inline-block w-full">
                 <span className="absolute top-0 left-0 flex w-full h-0 mb-0 transition-all duration-300 ease-out transform translate-y-0 bg-gray-900 group-hover:h-[50%] opacity-80"></span>
@@ -187,7 +188,7 @@ const Services = () => {
                 </h2>
                 <p className="text-xs md:text-base">{service?.description}</p>
               </div>
-              <div className="flex justify-center gap-3">
+              <div className="flex flex-col md:flex-row justify-center gap-3">
                 <button
                   onClick={() => handleAddToCart(service?.id)}
                   className="btn btn-outline btn-accent"
@@ -211,6 +212,14 @@ const Services = () => {
                   Book now
                 </button>
               </div>
+              <Link
+                href={`/service/${service?.id}`}
+                className="absolute top-3 -right-14 group-hover:right-3 transition-all duration-500 ease-in-out"
+              >
+                <button className="btn inline-block rounded bg-indigo-600 px-4 py-2 text-xs font-medium text-white hover:bg-indigo-700">
+                  <EyeIcon className="w-5 h-5" />
+                </button>
+              </Link>
             </div>
           ))
         )}

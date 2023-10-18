@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import { Controller, useFormContext } from "react-hook-form";
 
 type TextAreaProps = {
@@ -19,7 +20,11 @@ const FormTextArea = ({
   className,
   id,
 }: TextAreaProps) => {
-  const { control } = useFormContext();
+  const { control, reset } = useFormContext(); // Destructure the reset function
+  useEffect(() => {
+    reset({ [name]: "" }); // Reset the specific textarea field by name
+  }, [name, reset]);
+
   return (
     <div className={`flex flex-col w-full`}>
       <label

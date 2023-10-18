@@ -24,7 +24,7 @@ const DigitalClock = () => {
   }, []);
 
   return (
-    <div className="text-4xl font-bold text-center">
+    <div className="text-xl md:text-2xl lg:text-3xl font-bold text-center">
       {time} {ampm}
     </div>
   );

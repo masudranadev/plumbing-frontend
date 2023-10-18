@@ -9,7 +9,7 @@ const LatestNews = () => {
   const arg = {};
   const { data, isLoading } = useBlogsQuery({ ...arg });
   return (
-    <section className="py-10 md:py-10 lg:py-20">
+    <section className="py-5 md:py-10 lg:py-20">
       <div className="flex flex-wrap">
         <div className="w-full px-4">
           <div className="mx-auto mb-12 max-w-[510px] text-center lg:mb-20">

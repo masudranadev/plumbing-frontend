@@ -36,7 +36,7 @@ const ServiceProvide = () => {
                 <Image
                   width={60}
                   height={50}
-                  alt=""
+                  alt="image"
                   src="/assets/images/9.png"
                 />
                 <div>
@@ -50,7 +50,7 @@ const ServiceProvide = () => {
                 <Image
                   width={60}
                   height={50}
-                  alt=""
+                  alt="image"
                   src="/assets/images/10.png"
                 />
                 <div>
@@ -64,7 +64,7 @@ const ServiceProvide = () => {
                 <Image
                   width={60}
                   height={50}
-                  alt=""
+                  alt="image"
                   src="/assets/images/11.png"
                 />
                <div>
@@ -78,7 +78,7 @@ const ServiceProvide = () => {
                 <Image
                   width={60}
                   height={50}
-                  alt=""
+                  alt="image"
                   src="/assets/images/12.png"
                 />
                 <div>
