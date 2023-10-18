@@ -63,6 +63,12 @@ export type IFaq = {
   createdAt: string;
   updatedAt: string;
 };
+export type ICategory = {
+  id: string;
+  title: string;
+  createdAt: string;
+  updatedAt: string;
+};
 
 export type IFeedbackData = {
   id: string;

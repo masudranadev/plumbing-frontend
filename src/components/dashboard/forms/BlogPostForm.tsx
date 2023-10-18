@@ -189,6 +189,4 @@ const BlogPostForm = () => {
 };
 
 export default BlogPostForm;
-function preventDefault() {
-  throw new Error("Function not implemented.");
-}
+

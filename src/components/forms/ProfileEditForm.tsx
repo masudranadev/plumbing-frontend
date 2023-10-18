@@ -4,14 +4,9 @@ import LoadingButton from "@/components/common/LoadingButton";
 import SmallSpinner from "@/components/common/SmallSpinner";
 import Form from "@/components/forms/Form";
 import FormInput from "@/components/forms/FormInput";
-import FormTextArea from "@/components/forms/FormTextArea";
-import {
-  useServiceQuery,
-  useUpdateServiceMutation,
-} from "@/redux/api/serviceApi";
+
 import { useRouter } from "next/navigation";
 import { useState } from "react";
-import Swal from "sweetalert2";
 import { toast } from "react-toastify";
 import Loading from "@/components/common/Loading";
 import Image from "next/image";
@@ -47,10 +42,6 @@ const ProfileEditForm = ({ id }: { id: string }) => {
 
   const handleSubmit = async (values: any) => {
     try {
-      if (!data?.profile?.profileImg) {
-        console.error("Please select an image.");
-        return;
-      }
       const formData = new FormData();
       formData.append("image", image as File);
 
@@ -73,7 +64,6 @@ const ProfileEditForm = ({ id }: { id: string }) => {
     }
 
     const res: any = await updateProfile({ id, body: values });
-    console.log(res);
 
     if (res.data as any) {
       toast.success("Profile updated Successfull :)");

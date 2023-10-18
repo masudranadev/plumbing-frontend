@@ -3,6 +3,7 @@ import { authKey } from "@/constants/storageKey";
 import { ENUM_USER_ROLE } from "@/enums/user";
 import { useProfileQuery } from "@/redux/api/profileApi";
 import { getUserInfo, removeUserInfo } from "@/services/auth.service";
+import { Square3Stack3DIcon } from "@heroicons/react/24/outline";
 import {
   HomeIcon,
   QuestionMarkCircleIcon,
@@ -33,7 +34,7 @@ const Sidebar = () => {
         <div className="form-control">
           <input
             type="text"
-            placeholder={`Role: ${data?.profile?.fullName as string}`}
+            placeholder={`Role: ${data?.profile?.role as string}`}
             className="input input-bordered w-full md:w-full"
             readOnly
           />
@@ -71,7 +72,7 @@ const Sidebar = () => {
           <>
             <li>
               <Link href="/home">
-                <HomeIcon className="w-6 h-6" />
+                <HomeIcon className="w-6 h-6" />Home
               </Link>
             </li>
             <li>
@@ -129,6 +130,13 @@ const Sidebar = () => {
                 {" "}
                 <UsersIcon className="w-6 h-6" />
                 Users
+              </Link>
+            </li>
+            <li>
+              <Link href="/dashboard/category">
+                {" "}
+                <Square3Stack3DIcon className="w-6 h-6" />
+                Category
               </Link>
             </li>
           </>

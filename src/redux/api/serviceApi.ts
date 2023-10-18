@@ -6,7 +6,7 @@ const SERVICE_URL = "/services";
 
 export const buildingApi = baseApi.injectEndpoints({
   endpoints: (build) => ({
-    // get all building
+    // get all services
     services: build.query({
       query: (arg: Record<string, any>) => {
         return {
@@ -23,7 +23,7 @@ export const buildingApi = baseApi.injectEndpoints({
       },
       providesTags: [tagTypes.service],
     }),
-    // get single building
+    // get single service
     service: build.query({
       query: (id: string | string[] | undefined) => ({
         url: `${SERVICE_URL}/${id}`,
@@ -31,7 +31,15 @@ export const buildingApi = baseApi.injectEndpoints({
       }),
       providesTags: [tagTypes.service],
     }),
-    // create a new building
+    // get services by category id
+    getServicesByCategoryId: build.query({
+      query: (id: string | string[] | undefined) => ({
+        url: `${SERVICE_URL}/category/${id}`,
+        method: "GET",
+      }),
+      providesTags: [tagTypes.service],
+    }),
+    // create a new service
     addService: build.mutation({
       query: (data) => ({
         url: `${SERVICE_URL}/create-service`,
@@ -40,7 +48,7 @@ export const buildingApi = baseApi.injectEndpoints({
       }),
       invalidatesTags: [tagTypes.service],
     }),
-    // update existing building
+    // update existing service
     updateService: build.mutation({
       query: (data) => ({
         url: `${SERVICE_URL}/${data.id}`,
@@ -49,7 +57,7 @@ export const buildingApi = baseApi.injectEndpoints({
       }),
       invalidatesTags: [tagTypes.service],
     }),
-    // delete existing building
+    // delete existing service
     deleteService: build.mutation({
       query: (id) => ({
         url: `${SERVICE_URL}/${id}`,
@@ -66,4 +74,6 @@ export const {
   useServiceQuery,
   useDeleteServiceMutation,
   useUpdateServiceMutation,
+
+  useGetServicesByCategoryIdQuery
 } = buildingApi;
