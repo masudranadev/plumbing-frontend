@@ -10,8 +10,8 @@ const CategoryAddForm = () => {
   const [addCategory, { isLoading: loading }] = useAddCategoryMutation();
 
   const handleSubmit = async (data: any) => {
-    const res = await addCategory(data);
-    if (res.data as any) {
+    const res: any = await addCategory(data);
+    if (res.data) {
       Swal.fire({
         position: "top-end",
         icon: "success",

@@ -1,4 +1,5 @@
 "use client";
+import CategoryPage from "@/components/ui/CategoryPage";
 import GetInTouch from "@/components/ui/GetInTouch";
 import Header from "@/components/ui/Header";
 import LatestNews from "@/components/ui/LatestNews";
@@ -11,6 +12,7 @@ const Home = () => {
   return (
     <div>
       <Header />
+      <CategoryPage />
       <Services />
       <Upcoming />
       <ServiceProvide />

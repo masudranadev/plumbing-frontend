@@ -11,13 +11,27 @@ import { useState } from "react";
 import Swal from "sweetalert2";
 import { toast } from "react-toastify";
 import Image from "next/image";
+import SelectFormField, {
+  SelectOptions,
+} from "@/components/forms/SelectFormField";
+import { useCategoriesQuery } from "@/redux/api/categoryApi";
+import Loading from "@/components/common/Loading";
 
 const ServiceAddForm = () => {
   const [image, setImage] = useState<File | null>(null);
   const [imagePreview, setImagePreview] = useState(null);
   const [loading, setLoading] = useState<boolean>(false);
   const [addService] = useAddServiceMutation();
+  const query: Record<string, any> = {};
+  const { data, isLoading } = useCategoriesQuery({ ...query });
   const router = useRouter();
+
+  const options = data?.categories?.map((category) => {
+    return {
+      label: category.title,
+      value: category.id,
+    };
+  });
 
   const handleImageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files && event.target.files[0];
@@ -60,7 +74,13 @@ const ServiceAddForm = () => {
 
           const res: any = await addService(data);
           if (res.data as any) {
-            Swal.fire("service added Successfully!");
+            Swal.fire({
+              position: "top-end",
+              icon: "success",
+              title: "Service Created Successfully :)",
+              showConfirmButton: false,
+              timer: 1500,
+            });
             router.push("/dashboard/service");
             setLoading(false);
           } else {
@@ -74,6 +94,10 @@ const ServiceAddForm = () => {
       console.error("Error uploading image:", error);
     }
   };
+
+  if (isLoading) {
+    return <Loading />;
+  }
   return (
     <div className="bg-white max-w-[1020px] mx-auto my-24">
       <div className="flex flex-wrap">
@@ -136,6 +160,14 @@ const ServiceAddForm = () => {
                 className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-500 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white"
               />
             </div>
+          </div>
+          <div className="w-full md:w-1/2">
+            <SelectFormField
+              name="categoryId"
+              options={options as SelectOptions[]}
+              label="Category"
+              className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-500 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white"
+            />
           </div>
 
           <FormTextArea
