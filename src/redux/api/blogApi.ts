@@ -1,4 +1,4 @@
-import { IService, IMeta, IBlogPost } from "@/types";
+import { IMeta, IBlogPost } from "@/types";
 import { baseApi } from "./baseApi";
 import { tagTypes } from "../tag-types";
 
@@ -32,9 +32,9 @@ export const blogApi = baseApi.injectEndpoints({
       providesTags: [tagTypes.blog],
     }),
     // create a new building
-    addBlog: build.mutation({
+    blogPost: build.mutation({
       query: (data) => ({
-        url: BLOG_URL,
+        url: `${BLOG_URL}/create-blog`,
         method: "POST",
         data,
       }),
@@ -61,7 +61,7 @@ export const blogApi = baseApi.injectEndpoints({
 });
 
 export const {
-  useAddBlogMutation,
+  useBlogPostMutation,
   useBlogsQuery,
   useBlogQuery,
   useDeleteBlogMutation,

@@ -4,9 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { format, parseISO } from "date-fns";
 import { TrashIcon } from "@heroicons/react/20/solid";
-import {
-  PencilSquareIcon,
-} from "@heroicons/react/24/solid";
+import { PencilSquareIcon } from "@heroicons/react/24/solid";
 import Swal from "sweetalert2";
 import { useBlogsQuery, useDeleteBlogMutation } from "@/redux/api/blogApi";
 
@@ -68,8 +66,8 @@ const DashBoardBlog = () => {
     <div className="pr-20 pl-5 py-10">
       <div className="flex justify-between border-b-2 pb-1">
         <h1 className="text-4xl font-bold">Blog List</h1>
-        <Link href="/dashboard/blog/create" className="btn btn-accent">
-          Add Blog
+        <Link href="/dashboard/blog/post" className="btn btn-accent">
+          Blog Post
         </Link>
       </div>
       <div className="overflow-x-auto mt-10">

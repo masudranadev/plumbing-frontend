@@ -3,6 +3,7 @@ import Image from "next/image";
 import Link from "next/link";
 import ServiceCardLoader from "../common/ServiceCardLoader";
 import { useBlogsQuery } from "@/redux/api/blogApi";
+import { format, parseISO } from "date-fns";
 
 const LatestNews = () => {
   const arg = {};
@@ -34,38 +35,48 @@ const LatestNews = () => {
           </>
         ) : (
           data?.blogs?.map((blog) => (
-            <div key={blog?.id}>
-              <div className="card rounded bg-base-100 shadow hover:shadow-xl">
+            <Link href={`/blog/${blog?.id}`} key={blog?.id}>
+              <div className="group card rounded bg-base-100 shadow hover:shadow-md">
                 <figure>
                   <Image
                     src={blog?.thumbnail}
                     alt="Shoes"
                     width={500}
                     height={500}
-                    className="hover:scale-110 transition-all duration-200"
+                    className="group-hover:scale-110 h-[300px] transition-all duration-200"
                   />
                 </figure>
                 <div className="card-body">
-                  <h2 className="card-title">
-                    <Link href={`/blog/${blog?.id}`}>{blog?.title}</Link>
-                  </h2>
-                  <p>
-                    {blog?.content.length > 100
-                      ? blog?.content.slice(0, 100)
-                      : blog?.content}
+                  <p className="font-semibold text-primary">
+                    {format(parseISO(blog?.createdAt), "PP")}
                   </p>
-                  <div className="card-actions justify-end">
-                    <div className="badge badge-outline">
-                      <Link href={`/blog/${blog?.id}`}>
-                        {blog?.author?.fullName}
-                      </Link>
+                  <h2 className="card-title">
+                    <span>{blog?.title}</span>
+                  </h2>
+                  <div className="flex gap-8 my-3 items-center">
+                    <div className="avatar">
+                      <div className="w-[50px] rounded-full ring ring-primary ring-offset-base-100 ring-offset-2">
+                        <Image
+                          src={blog?.author?.profileImg as string}
+                          alt="Shoes"
+                          width={50}
+                          height={50}
+                        />
+                      </div>
                     </div>
-                    <div className="badge badge-outline">Fashion</div>
-                    <div className="badge badge-outline">Products</div>
+                    <div>
+                      <h1>{blog?.author?.fullName}</h1>
+                      <address>{blog?.author?.address}</address>
+                    </div>
+                  </div>
+                  <div className="flex justify-end">
+                    <div className="">Comments</div>
+                    <div className="divider divider-horizontal"></div> 
+                    <div className="">Likes</div>
                   </div>
                 </div>
               </div>
-            </div>
+            </Link>
           ))
         )}
       </div>
