@@ -28,7 +28,7 @@ const Sidebar = () => {
   };
 
   return (
-    <div className="p-4 w-80 min-h-full bg-base-200 ">
+    <div className="p-4 w-[80vw] md:w-80 min-h-full bg-base-200 ">
       <Link href={"/dashboard"} role="button" className="btn text-2xl btn-accent my-3">Dashboard</Link>
       <div className="flex gap-2 mb-4">
         <div className="form-control">

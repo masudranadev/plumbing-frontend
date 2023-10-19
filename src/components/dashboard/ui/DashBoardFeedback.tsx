@@ -68,7 +68,7 @@ const DashboardFeedback = () => {
     return <Loading />;
   }
   return (
-    <div className="pr-20 pl-5 py-10">
+    <div className="px-5 py-10">
       <div className="flex justify-between border-b-2 pb-1">
         <h1 className="text-4xl font-bold">Feedback List</h1>
       </div>

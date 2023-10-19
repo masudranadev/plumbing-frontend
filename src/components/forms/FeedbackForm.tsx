@@ -54,10 +54,10 @@ const FeedbackForm = () => {
     return <Loading />;
   }
   return (
-      <div className="bg-white max-w-[1020px] mx-auto my-24">
+      <div className="bg-white max-w-[1020px] mx-auto my-5 lg:my-24">
         <div className="flex flex-wrap">
           <div className="w-full px-4">
-            <div className="mx-auto mb-12 max-w-[510px] text-center lg:mb-20">
+            <div className="mx-auto mb-2 md:mb-12 max-w-[510px] text-center lg:mb-20">
               <h2 className="mb-4 text-3xl font-bold text-dark sm:text-4xl md:text-[40px]">
                 Write your any feedback for us!!!
               </h2>
@@ -69,7 +69,7 @@ const FeedbackForm = () => {
           </div>
         </div>
         <Form submitHandler={onSubmit}>
-          <div className="p-10 shadow-md">
+          <div className="px-2 md:p-10 pb-5 shadow-md">
             <div className="flex gap-3 pt-5">
               <div className="w-full md:w-1/2">
                 <SelectFormField

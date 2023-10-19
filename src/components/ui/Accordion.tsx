@@ -10,7 +10,7 @@ const Accordion = () => {
     return <Loading />;
   }
   return (
-    <div className="w-full lg:w-[1020px] mx-auto px-3 py-24">
+    <div className="w-full lg:w-[1020px] mx-auto px-3 py-5 lg:py-24">
       <div className="flex flex-wrap">
         <div className="w-full px-4">
           <div className="mx-auto mb-12 max-w-[510px] text-center lg:mb-20">

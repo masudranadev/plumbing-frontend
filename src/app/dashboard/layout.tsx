@@ -2,7 +2,8 @@
 import React, { useEffect } from "react";
 import { isLoggedin } from "@/services/auth.service";
 import dynamic from "next/dynamic";
-import {useRouter} from "next/navigation";
+import { useRouter } from "next/navigation";
+import DashBoardNavbar from "@/components/dashboard/ui/DashBoardNavbar";
 
 export default function DashboardLayout({
   children,
@@ -22,27 +23,26 @@ export default function DashboardLayout({
   }, [router]);
 
   return (
-    <div className="drawer lg:drawer-open">
-      <input id="my-drawer-2" type="checkbox" className="drawer-toggle" />
-      <div className="drawer-content">
-        {/* Page content here */}
-        <label
-          htmlFor="my-drawer-2"
-          className="btn btn-primary drawer-button lg:hidden"
-        >
-          Open drawer
-        </label>
-        {children}
+      <div className="drawer lg:drawer-open">
+        <input
+          id="dashboard-drawer"
+          type="checkbox"
+          className="drawer-toggle"
+        />
+        <div className="drawer-content">
+          <DashBoardNavbar />
+          {/* Page content here */}
+          {children}
+        </div>
+        <div className="drawer-side">
+          <label
+            htmlFor="dashboard-drawer"
+            aria-label="close sidebar"
+            className="drawer-overlay"
+          ></label>
+          {/* Sidebar content here */}
+          <Sidebar />
+        </div>
       </div>
-      <div className="drawer-side">
-        <label
-          htmlFor="my-drawer-2"
-          aria-label="close sidebar"
-          className="drawer-overlay"
-        ></label>
-        {/* Sidebar content here */}
-        <Sidebar />
-      </div>
-    </div>
   );
 }

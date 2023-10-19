@@ -77,18 +77,18 @@ const ProfileEditForm = ({ id }: { id: string }) => {
     return <Loading />;
   }
   return (
-    <div className="bg-white max-w-[1020px] mx-auto my-24">
+    <div className="bg-white w-full lg:max-w-[1020px] mx-auto my-5 lg:my-24">
       <div className="flex flex-wrap">
         <div className="w-full px-4">
-          <div className="mx-auto mb-12 max-w-[510px] text-center lg:mb-20">
-            <h2 className="mb-4 text-3xl font-bold text-dark sm:text-4xl md:text-[40px]">
+          <div className="mx-auto mb-4 max-w-[510px] text-center lg:mb-20">
+            <h2 className="text-3xl font-bold text-dark sm:text-4xl md:text-[40px]">
               Profile update
             </h2>
           </div>
         </div>
       </div>
       <Form submitHandler={handleSubmit} defaultValues={defaultValues}>
-        <div className="p-10 shadow-md">
+        <div className="px-2 lg:p-10 shadow-md pb-5">
           <label
             htmlFor="image"
             className="block text-sm font-medium leading-6 text-gray-900"
@@ -96,7 +96,7 @@ const ProfileEditForm = ({ id }: { id: string }) => {
             Image
           </label>
 
-          <div className="mt-2 flex items-center w-1/2 justify-between gap-5 rounded-lg border border-dashed border-gray-900/25 px-6 py-10">
+          <div className="mt-2 flex items-center w-full lg:w-1/2 justify-between gap-x-5 rounded-lg border border-dashed border-gray-900/25 px-6 py-5 lg:py-10">
             <input
               type="file"
               accept="image/*"
@@ -119,8 +119,8 @@ const ProfileEditForm = ({ id }: { id: string }) => {
               </div>
             </div>
           </div>
-          <div className="flex gap-3 pt-5">
-            <div className="w-full md:w-1/2 mb-6 md:mb-0">
+          <div className="flex flex-col md:flex-row gap-x-3 pt-5">
+            <div className="w-full md:w-1/2 lg:mb-6 md:mb-0">
               <FormInput
                 name="fullName"
                 label="Fullname"
@@ -141,8 +141,8 @@ const ProfileEditForm = ({ id }: { id: string }) => {
               />
             </div>
           </div>
-          <div className="flex gap-3 pt-5">
-            <div className="w-full md:w-1/2 mb-6 md:mb-0">
+          <div className="flex flex-col md:flex-row gap-x-3">
+            <div className="w-full md:w-1/2 lg:mb-6 md:mb-0">
               <FormInput
                 name="address"
                 label="Address"

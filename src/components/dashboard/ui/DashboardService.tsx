@@ -69,14 +69,14 @@ const DashboardService = () => {
     return <Loading />;
   }
   return (
-    <div className="pr-20 pl-5 py-10">
+    <div className="px-5 py-10 ">
       <div className="flex justify-between border-b-2 pb-1">
         <h1 className="text-4xl font-bold">Service List</h1>
         <Link href="/dashboard/service/create" className="btn btn-accent">
           Add Service
         </Link>
       </div>
-      <div className="overflow-x-auto mt-10">
+      <div className="mt-10 overflow-x-auto">
         <table className="min-w-full divide-y-2 divide-gray-200 bg-white text-sm">
           <thead className="text-left">
             <tr>

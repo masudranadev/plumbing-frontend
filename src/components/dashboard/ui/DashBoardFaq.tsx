@@ -66,7 +66,7 @@ const DashboardFaq = () => {
     return <Loading />;
   }
   return (
-    <div className="pr-20 pl-5 py-10">
+    <div className="px-5 py-10">
       <div className="flex justify-between border-b-2 pb-1">
         <h1 className="text-4xl font-bold">Faq List</h1>
         <Link href="/dashboard/faq/create" className="btn btn-accent">

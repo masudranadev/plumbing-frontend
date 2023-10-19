@@ -17,11 +17,15 @@ const Banner = () => {
       <div className="hero-content text-center text-neutral-content">
         <div className="max-w-md">
           <h1 className="mb-5 text-5xl font-bold">Contact Page</h1>
-          <div className="text-base breadcrumbs">
-            <div>
-              <Link href="/home">Home</Link>
-              <button>Contact</button>
-            </div>
+          <div className="text-base breadcrumbs flex justify-center">
+            <ul>
+              <li>
+                <Link href="/home">Home</Link>
+              </li>
+              <li>
+                <button>Contact</button>
+              </li>
+            </ul>
           </div>
         </div>
       </div>
