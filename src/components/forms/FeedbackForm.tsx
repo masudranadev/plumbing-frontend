@@ -35,6 +35,8 @@ const FeedbackForm = () => {
   });
 
   const onSubmit = async (data: any) => {
+    console.log(data);
+    
     if (userId) {
       data.userId = userId;
     }
@@ -82,7 +84,7 @@ const FeedbackForm = () => {
               </div>
             </div>
             <FormTextArea
-              name="comment"
+              name="comments"
               placeholder="Write your comments"
               id="comments"
               rows={2}

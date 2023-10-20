@@ -49,6 +49,15 @@ export const userApi = baseApi.injectEndpoints({
       }),
       invalidatesTags: [tagTypes.user, tagTypes.profile],
     }),
+    // update existing user role
+    updatePassword: build.mutation({
+      query: (data) => ({
+        url: `${USER_URL}/reset/password`,
+        method: "PATCH",
+        data: data.body,
+      }),
+      invalidatesTags: [tagTypes.user, tagTypes.profile],
+    }),
   }),
 });
 
@@ -57,4 +66,5 @@ export const {
   useMakeAdminMutation,
   useUserQuery,
   useUpdateProfileMutation,
+  useUpdatePasswordMutation,
 } = userApi;

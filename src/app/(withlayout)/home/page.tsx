@@ -1,4 +1,3 @@
-"use client";
 import CategoryPage from "@/components/ui/CategoryPage";
 import GetInTouch from "@/components/ui/GetInTouch";
 import Header from "@/components/ui/Header";

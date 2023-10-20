@@ -24,13 +24,14 @@ const Form = ({
 
   const { handleSubmit } = methods;
 
-  const onSubmit = (data: any) => {
+  const onSubmit: SubmitHandler<any> = (data: any) => {
     submitHandler(data);
-    methods.reset(defaultValues); // Reset the form using methods.reset
+    methods.reset(defaultValues);
+    methods.reset();
   };
 
   useEffect(() => {
-    methods.reset(defaultValues); // Ensure the form is reset when defaultValues change
+    methods.reset(defaultValues);
   }, [defaultValues, methods]);
 
   return (

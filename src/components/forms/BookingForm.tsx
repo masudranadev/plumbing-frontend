@@ -13,18 +13,18 @@ import DatePickerField from "./DatePickerField";
 import Loading from "../common/Loading";
 import { useAddBookingMutation } from "@/redux/api/bookingApi";
 import Swal from "sweetalert2";
+import { useRouter } from "next/navigation";
 
 const BookingForm = ({ serviceId }: { serviceId: string }) => {
   const [startDate, setStartDate] = useState(new Date());
-  const [loading, setLoading] = useState<boolean>(false);
   const { data: service, isLoading: serviceLoading } =
     useServiceQuery(serviceId);
   const { userId } = getUserInfo() as any;
   const { data: user, isLoading: profileLoading } = useProfileQuery(userId);
-  const [addBooking] = useAddBookingMutation();
+  const [addBooking, {isLoading: loading}] = useAddBookingMutation();
   const date = format(startDate, "PP");
-  console.log({ user, service });
-  console.log(date);
+  const router = useRouter();
+
 
   const defaultValues = {
     fullName: user?.profile?.fullName,
@@ -39,7 +39,6 @@ const BookingForm = ({ serviceId }: { serviceId: string }) => {
   };
 
   const onSubmit = async () => {
-    setLoading(true)
     const bookingData = {
       serviceId: service?.id,
       date,
@@ -54,7 +53,7 @@ const BookingForm = ({ serviceId }: { serviceId: string }) => {
           showConfirmButton: false,
           timer: 1500,
         });
-        setLoading(false)
+        router.push("/dashboard/booking")
       } else {
         Swal.fire({
           position: "top-end",
@@ -63,7 +62,6 @@ const BookingForm = ({ serviceId }: { serviceId: string }) => {
           showConfirmButton: false,
           timer: 1500,
         });
-        setLoading(false)
       }
   };
 

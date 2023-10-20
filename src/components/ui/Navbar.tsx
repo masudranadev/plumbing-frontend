@@ -3,13 +3,14 @@ import { authKey } from "@/constants/storageKey";
 import { useGetCartsQuery } from "@/redux/api/addToCartApi";
 import { useProfileQuery } from "@/redux/api/profileApi";
 import { getUserInfo, removeUserInfo } from "@/services/auth.service";
-import { BellAlertIcon } from "@heroicons/react/24/outline";
-import { ShoppingCartIcon } from "@heroicons/react/24/solid";
+import { ShoppingCartIcon, UserIcon } from "@heroicons/react/24/solid";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import { useState } from "react";
 
 const Navbar = () => {
+  const [active, setActive] = useState<string>("");
   const router = useRouter();
   const { userId } = getUserInfo() as any;
   const { data, isLoading } = useProfileQuery(userId);
@@ -18,30 +19,49 @@ const Navbar = () => {
 
   const logout = () => {
     removeUserInfo(authKey);
-    router.push("/");
+    router.push("/login");
+  };
+
+  const handleActive = (value: string) => {
+    setActive(value);
   };
 
   const menu = (
     <>
-      <li>
-        <Link href="/home">Home</Link>
+      <li onClick={() => handleActive("home")}>
+        <Link className={`${active === "home" && "active"}`} href="/home">
+          Home
+        </Link>
       </li>
-      <li>
-        <Link href="/service">Services</Link>
+      <li onClick={() => handleActive("service")}>
+        <Link className={`${active === "service" && "active"}`} href="/service">
+          Services
+        </Link>
       </li>
-      <li>
-        <Link href="/blog">Blog</Link>
+      <li onClick={() => handleActive("blog")}>
+        <Link className={`${active === "blog" && "active"}`} href="/blog">
+          Blog
+        </Link>
       </li>
-      <li>
-        <Link href="/faq">FAQ</Link>
+      <li onClick={() => handleActive("faq")}>
+        <Link className={`${active === "faq" && "active"}`} href="/faq">
+          FAQ
+        </Link>
       </li>
-      <li>
-        <Link href="/feedback">FeedBack</Link>
+      <li onClick={() => handleActive("feedback")}>
+        <Link
+          className={`${active === "feedback" && "active"}`}
+          href="/feedback"
+        >
+          FeedBack
+        </Link>
       </li>
-      <li>
-        <Link href="/contact">Contact</Link>
+      <li onClick={() => handleActive("contact")}>
+        <Link className={`${active === "contact" && "active"}`} href="/contact">
+          Contact
+        </Link>
       </li>
-      <li>
+      <li onClick={() => handleActive("dashboard")}>
         <Link href="/dashboard">Dashboard</Link>
       </li>
     </>
@@ -75,7 +95,13 @@ const Navbar = () => {
               {menu}
             </ul>
           </div>
-          <a className="btn btn-ghost normal-case text-xl">Plubming</a>
+          <Link
+            href={"/"}
+            onClick={() => handleActive("home")}
+            className="btn btn-ghost normal-case text-xl"
+          >
+            Plubming
+          </Link>
         </div>
         <div className="navbar-center hidden lg:flex">
           <ul className="menu menu-horizontal px-1">{menu}</ul>
@@ -103,27 +129,35 @@ const Navbar = () => {
                       : "Item"}
                   </span>
                   <div className="card-actions">
-                    <Link href={"/carts"} className="btn btn-primary btn-block">
+                    <Link
+                      onClick={() => handleActive("")}
+                      href={"/carts"}
+                      className="btn btn-primary btn-block"
+                    >
                       View cart
                     </Link>
                   </div>
                 </div>
               </div>
             </div>
-            <div className="dropdown dropdown-end">
+            <div className="dropdown dropdown-end pr-4">
               <label tabIndex={0} className="btn btn-ghost btn-circle avatar">
-                <div className="w-10 rounded-full ring">
-                  {isLoading ? (
-                    <span className="loading loading-dots loading-lg"></span>
-                  ) : (
-                    <Image
-                      width={32}
-                      height={32}
-                      alt={data?.profile?.fullName as string}
-                      src={data?.profile?.profileImg as string}
-                    />
-                  )}
-                </div>
+                {!data?.profile?.profileImg ? (
+                  <UserIcon className="w-10 h-10 block ring rounded-full" />
+                ) : (
+                  <div className="w-10 rounded-full ring">
+                    {isLoading ? (
+                      <span className="loading loading-dots loading-lg"></span>
+                    ) : (
+                      <Image
+                        width={32}
+                        height={32}
+                        alt={data?.profile?.fullName as string}
+                        src={data?.profile?.profileImg as string}
+                      />
+                    )}
+                  </div>
+                )}
               </label>
               <ul
                 tabIndex={0}
@@ -139,7 +173,7 @@ const Navbar = () => {
                   </a>
                 </li>
                 {userId && (
-                  <li>
+                  <li onClick={() => handleActive("")}>
                     <Link href={"/profile"} className="justify-between">
                       My Profile
                     </Link>
@@ -147,10 +181,10 @@ const Navbar = () => {
                 )}
                 {!userId ? (
                   <>
-                    <li>
+                    <li onClick={() => handleActive("")}>
                       <Link href={"/signup"}>Signup</Link>
                     </li>
-                    <li>
+                    <li onClick={() => handleActive("")}>
                       <Link href={"/login"}>Login</Link>
                     </li>
                   </>

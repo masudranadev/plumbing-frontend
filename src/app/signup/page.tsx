@@ -11,8 +11,7 @@ import Swal from "sweetalert2";
 
 const SignupPage = () => {
   const [image, setImage] = useState<File | null>(null);
-  const [loading, setLoading] = useState<boolean>(false);
-  const [userSignup] = useUserSignupMutation();
+  const [userSignup, { isLoading: loading }] = useUserSignupMutation();
   const router = useRouter();
 
   const handleImageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -21,7 +20,6 @@ const SignupPage = () => {
   };
 
   const handleSubmit = async (data: any) => {
-    setLoading(true);
     try {
       if (!image) {
         console.error("Please select an image.");
@@ -44,9 +42,14 @@ const SignupPage = () => {
           //akhane api call hobe
           const res = await userSignup(data);
           if (res) {
-            Swal.fire("user Signup Successfully!");
+            Swal.fire({
+              position: "top-end",
+              icon: "success",
+              title: "account created!",
+              showConfirmButton: false,
+              timer: 1500,
+            });
             router.push("/login");
-            setLoading(false);
           }
         }
       } else {
@@ -65,7 +68,7 @@ const SignupPage = () => {
               Profile
             </h2>
             <p className="mt-1 text-sm leading-6 text-gray-600">
-              আপনি আপনার সকল তথ্য সঠিক ভাবে দিন ।
+              Your all Information provide carefully!
             </p>
 
             <div className="col-span-2">
@@ -159,13 +162,13 @@ const SignupPage = () => {
               className="btn btn-accent mt-3 w-full"
               value="Login"
             >
-              {loading ? <SmallSpinner /> : "Signup"}
+              {loading ? <SmallSpinner /> : "Create"}
             </LoadingButton>
           </div>
         </div>
       </Form>
       <div className="mt-10 text-center text-sm text-gray-500">
-        do you have an account?{" "}
+        If you have an account!
         <Link
           href="/login"
           className="font-semibold leading-6 text-indigo-600 hover:text-indigo-500"

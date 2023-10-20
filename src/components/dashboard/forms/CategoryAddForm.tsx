@@ -4,14 +4,17 @@ import SmallSpinner from "@/components/common/SmallSpinner";
 import Form from "@/components/forms/Form";
 import FormInput from "@/components/forms/FormInput";
 import { useAddCategoryMutation } from "@/redux/api/categoryApi";
+import { useRouter } from "next/navigation";
 import Swal from "sweetalert2";
 
 const CategoryAddForm = () => {
   const [addCategory, { isLoading: loading }] = useAddCategoryMutation();
+  const router = useRouter();
 
   const handleSubmit = async (data: any) => {
     const res: any = await addCategory(data);
     if (res.data) {
+      router.push("/dashboard/category")
       Swal.fire({
         position: "top-end",
         icon: "success",

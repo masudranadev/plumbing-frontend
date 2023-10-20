@@ -28,7 +28,6 @@ const FormInput = ({
   useEffect(() => {
     reset({ [name]: "" });
   }, [name, reset]);
-
   const errorMessage = getErrorMessageByPropertyName(errors, name);
   return (
     <div>

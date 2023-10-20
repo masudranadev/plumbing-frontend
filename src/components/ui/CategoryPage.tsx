@@ -1,5 +1,5 @@
+"use client";
 import { useCategoriesQuery } from "@/redux/api/categoryApi";
-import Loading from "../common/Loading";
 import { ICategory } from "@/types";
 import { useRouter } from "next/navigation";
 import { PiBuildingsFill } from "react-icons/pi";
@@ -10,12 +10,8 @@ const CategoryPage = () => {
   const { data, isLoading } = useCategoriesQuery({ ...query });
   const router = useRouter();
   const handleService = (id: string) => {
-    console.log(id);
     router.push(`/category/service/${id}`);
   };
-  if (isLoading) {
-    return <Loading />;
-  }
   return (
     <div className="container pt-16 md:pt-32 pb-5">
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8">

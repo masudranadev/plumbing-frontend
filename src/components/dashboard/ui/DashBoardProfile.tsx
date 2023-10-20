@@ -4,7 +4,7 @@ import { getUserInfo } from "@/services/auth.service";
 import { IUserProfile } from "@/types";
 import Image from "next/image";
 
-const Profile = () => {
+const DashBoardProfile = () => {
   const { userId } = getUserInfo() as any;
   const { data } = useProfileQuery(userId);
 
@@ -47,4 +47,4 @@ const Profile = () => {
   );
 };
 
-export default Profile;
+export default DashBoardProfile;

@@ -19,14 +19,13 @@ import Image from "next/image";
 const ServiceEditForm = ({ id }: { id: string }) => {
   const [image, setImage] = useState<File | null>(null);
   const [imagePreview, setImagePreview] = useState(null);
-  const [loading, setLoading] = useState<boolean>(false);
   const { data, isLoading } = useServiceQuery(id);
   const defaultValues = {
     price: data?.price,
     title: data?.title,
     description: data?.description,
   };
-  const [updateService] = useUpdateServiceMutation();
+  const [updateService, {isLoading: loading}] = useUpdateServiceMutation();
   const router = useRouter();
 
   const handleImageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -44,7 +43,6 @@ const ServiceEditForm = ({ id }: { id: string }) => {
   };
 
   const handleSubmit = async (values: any) => {
-    setLoading(true);
     values.price = parseFloat(values.price);
 
     try {
@@ -79,7 +77,6 @@ const ServiceEditForm = ({ id }: { id: string }) => {
     if (res.data as any) {
       Swal.fire("service updated Successfully!");
       router.push("/dashboard/service");
-      setLoading(false);
     } else {
       toast.error("There was an error!");
     }

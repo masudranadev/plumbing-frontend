@@ -1,15 +1,23 @@
-"use client"
+"use client";
 
+import { EnvelopeIcon, MapPinIcon, PhoneIcon } from "@heroicons/react/24/solid";
 import DigitalClock from "../common/DigitalClock";
 
 const Footer = () => {
   const date = new Date();
   const year = date.getFullYear();
-  
+
   return (
     <>
       <div className="bg-base-200 py-5">
         <footer className="footer container text-base-content">
+          <nav>
+            <header className="footer-title">Plumbing</header>
+            <p className="w-full px-2 md:px-0 md:max-w-md ">
+              Management Plumbing includes a broad range of activities, and the
+              many firms and their members often define these practices.
+            </p>
+          </nav>
           <nav>
             <header className="footer-title">Services</header>
             <a className="link link-hover">Kitchen Plumbing</a>
@@ -19,17 +27,19 @@ const Footer = () => {
             <a className="link link-hover">Basement Plumbing</a>
           </nav>
           <nav>
-            <header className="footer-title">Company</header>
-            <a className="link link-hover">About us</a>
-            <a className="link link-hover">Contact</a>
-            <a className="link link-hover">Jobs</a>
-            <a className="link link-hover">Press kit</a>
-          </nav>
-          <nav>
-            <header className="footer-title">Legal</header>
-            <a className="link link-hover">Terms of use</a>
-            <a className="link link-hover">Privacy policy</a>
-            <a className="link link-hover">Cookie policy</a>
+            <header className="footer-title">Contact</header>
+            <address className="link link-hover">
+              <MapPinIcon className="w-5 h-5 inline-block mr-2" />7 Green Lake
+              Street Crawfordsville, BD 47933
+            </address>
+            <a className="link link-hover">
+              <PhoneIcon className="w-5 h-5 inline-block mr-2" />
+              +880 1796-682951
+            </a>
+            <a className="link link-hover">
+              <EnvelopeIcon className="w-5 h-5 inline-block mr-2" />
+              masudranadev51@gmail.com
+            </a>
           </nav>
         </footer>
         <footer className="footer container py-4 border-t bg-base-200 text-base-content border-base-300 items-center">

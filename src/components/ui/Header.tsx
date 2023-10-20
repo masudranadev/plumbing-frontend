@@ -1,34 +1,39 @@
 "use client";
+import { useState } from "react";
 import AwesomeSlider from "react-awesome-slider";
 import "react-awesome-slider/dist/styles.css";
+import RequestModal from "../common/RequestModal";
 
 const Header = () => {
+  const [isOpen, setIsOpen] = useState<boolean>(false);
+  const openModal = () => {
+    setIsOpen(true);
+  };
+
+  const closeModal = () => {
+    setIsOpen(false);
+  };
+
   const bannars = [
     {
       id: 1,
-      title: "Expert Plumbing Service You Can Trust.",
-      subTitle1: "We Provide World Class",
-      subTitle2: "House shifting services in Dhaka",
+      title: "Residential Plumbing",
       descripttion:
-        "Welcome to PACK & SHIFT Removal group, Professional House Shifting Service to anywhere in Bangladesh from Dhaka City. AlsoInternational movers and packers Any country of the world",
+        "The residential plumbing system starts with the supply of clean, potable water. This water is delivered to your home from a municipal water source or a well. It is essential that this water is free from contaminants and safe for consumption.",
       image: "/assets/images/slide-2.jpg",
     },
     {
       id: 2,
-      title: "Expert Plumbing Service You Can Trust.",
-      subTitle1: "We Provide World Class",
-      subTitle2: "House shifting services in Dhaka",
+      title: "Basement Plumbing",
       descripttion:
-        "Welcome to PACK & SHIFT Removal group, Professional House Shifting Service to anywhere in Bangladesh from Dhaka City. AlsoInternational movers and packers Any country of the world",
+        "Water heaters are another critical component of residential plumbing. They ensure you have hot water for bathing, washing dishes, and doing laundry. Common types include tankless water heaters and traditional storage tanks.",
       image: "/assets/images/slide-3.jpg",
     },
     {
       id: 3,
-      title: "Expert Plumbing Service You Can Trust.",
-      subTitle1: "We Provide World Class",
-      subTitle2: "House shifting services in Dhaka",
+      title: "Commercial Plumbing",
       descripttion:
-        "Welcome to PACK & SHIFT Removal group, Professional House Shifting Service to anywhere in Bangladesh from Dhaka City. AlsoInternational movers and packers Any country of the world",
+        "Plumbing emergencies, such as burst pipes, need immediate attention to prevent water damage to your home. Knowing how to shut off the main water supply and having a reliable plumber's contact information are essential in such situations.",
       image: "/assets/images/slide-2.jpg",
     },
   ];
@@ -49,16 +54,17 @@ const Header = () => {
         >
           <div className="hero-overlay bg-opacity-60"></div>
           <div className="hero-content w-full text-center text-neutral-content">
-            <div className="max-w-md">
-              <h1 className="mb-5 text-5xl font-bold">Hello there</h1>
+            <div className="max-w-xl">
+              <h1 className="mb-5 text-5xl font-bold">{banner?.title}</h1>
               <p className="mb-5">
-                Provident cupiditate voluptatem et in. Quaerat fugiat ut
-                assumenda excepturi exercitationem quasi. In deleniti eaque aut
-                repudiandae et a id nisi.
+                {banner?.descripttion}
               </p>
-              <button className="btn btn-primary">Get Started</button>
+              <button onClick={openModal} className="btn btn-primary">
+                Online Book
+              </button>
             </div>
           </div>
+          <RequestModal isOpen={isOpen} onClose={closeModal} />
         </div>
       ))}
     </AwesomeSlider>

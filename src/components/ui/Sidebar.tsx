@@ -5,6 +5,7 @@ import { useProfileQuery } from "@/redux/api/profileApi";
 import { getUserInfo, removeUserInfo } from "@/services/auth.service";
 import { Square3Stack3DIcon } from "@heroicons/react/24/outline";
 import {
+  Bars4Icon,
   HomeIcon,
   QuestionMarkCircleIcon,
   UserPlusIcon,
@@ -14,22 +15,36 @@ import {
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import { useState} from "react";
 import { FaBlogger } from "react-icons/fa";
 import { FcFeedback } from "react-icons/fc";
 import { RiReservedFill } from "react-icons/ri";
 
 const Sidebar = () => {
+  const [active, setActive] = useState<string>("");
   const { role, userId } = getUserInfo() as any;
   const { data, isLoading } = useProfileQuery(userId);
   const router = useRouter();
+  const handleActive = (value: string) => {
+    setActive(value)
+  };
+
   const logout = () => {
     removeUserInfo(authKey);
-    router.push("/");
+    router.push("/login");
   };
 
   return (
-    <div className="p-4 w-[80vw] md:w-80 min-h-full bg-base-200 ">
-      <Link href={"/dashboard"} role="button" className="btn text-2xl btn-accent my-3">Dashboard</Link>
+    <div className={`p-4 w-[80vw] md:w-80 min-h-full bg-base-200`}>
+      <Link
+        onClick={() => handleActive("home")}
+        href={"/"}
+        role="button"
+        className="btn text-2xl btn-accent my-3"
+      >
+        <HomeIcon className="w-6 h-6" />
+        Home
+      </Link>
       <div className="flex gap-2 mb-4">
         <div className="form-control">
           <input
@@ -70,13 +85,20 @@ const Sidebar = () => {
       <ul className="menu text-base-content">
         {role === ENUM_USER_ROLE.USER ? (
           <>
-            <li>
-              <Link href="/home">
-                <HomeIcon className="w-6 h-6" />Home
+            <li onClick={() => handleActive("dashboard")}>
+              <Link
+                className={`${active === "dashboard" && "active"}`}
+                href="/dashboard"
+              >
+                <Bars4Icon className="w-6 h-6" />
+                Dashboard
               </Link>
             </li>
-            <li>
-              <Link href="/dashboard/booking">
+            <li onClick={() => handleActive("booking")}>
+              <Link
+                className={`${active === "booking" && "active"}`}
+                href="/dashboard/booking"
+              >
                 <RiReservedFill className="w-6 h-6" />
                 Booking
               </Link>
@@ -84,56 +106,80 @@ const Sidebar = () => {
           </>
         ) : (
           <>
-            <li>
-              <Link href="/home">
-                <HomeIcon className="w-6 h-6" />
-                Home
+            <li onClick={() => handleActive("dashboard")}>
+              <Link
+                className={`${active === "dashboard" && "active"}`}
+                href="/dashboard"
+              >
+                <Bars4Icon className="w-6 h-6" />
+                Dashboard
               </Link>
             </li>
-            <li>
-              <Link href="/dashboard/service">
+            <li onClick={() => handleActive("service")}>
+              <Link
+                className={`${active === "service" && "active"}`}
+                href="/dashboard/service"
+              >
                 {" "}
                 <WrenchScrewdriverIcon className="w-6 h-6" />
                 Service
               </Link>
             </li>
-            <li>
-              <Link href="/dashboard/blog">
+            <li onClick={() => handleActive("blog")}>
+              <Link
+                className={`${active === "blog" && "active"}`}
+                href="/dashboard/blog"
+              >
                 {" "}
                 <FaBlogger className="w-6 h-6" />
                 Blog
               </Link>
             </li>
-            <li>
-              <Link href="/dashboard/faq">
+            <li onClick={() => handleActive("faq")}>
+              <Link
+                className={`${active === "faq" && "active"}`}
+                href="/dashboard/faq"
+              >
                 {" "}
                 <QuestionMarkCircleIcon className="w-6 h-6" />
                 FAQ
               </Link>
             </li>
-            <li>
-              <Link href="/dashboard/feedback">
+            <li onClick={() => handleActive("feedback")}>
+              <Link
+                className={`${active === "feedback" && "active"}`}
+                href="/dashboard/feedback"
+              >
                 {" "}
                 <FcFeedback className="w-6 h-6" />
                 Feedback
               </Link>
             </li>
-            <li>
-              <Link href="/dashboard/booking">
+            <li onClick={() => handleActive("booking")}>
+              <Link
+                className={`${active === "booking" && "active"}`}
+                href="/dashboard/booking"
+              >
                 {" "}
                 <RiReservedFill className="w-6 h-6" />
                 Booking
               </Link>
             </li>
-            <li>
-              <Link href="/dashboard/users">
+            <li onClick={() => handleActive("users")}>
+              <Link
+                className={`${active === "users" && "active"}`}
+                href="/dashboard/users"
+              >
                 {" "}
                 <UsersIcon className="w-6 h-6" />
                 Users
               </Link>
             </li>
-            <li>
-              <Link href="/dashboard/category">
+            <li onClick={() => handleActive("category")}>
+              <Link
+                className={`${active === "category" && "active"}`}
+                href="/dashboard/category"
+              >
                 {" "}
                 <Square3Stack3DIcon className="w-6 h-6" />
                 Category
@@ -142,8 +188,11 @@ const Sidebar = () => {
           </>
         )}
         {role === ENUM_USER_ROLE.SUPER_ADMIN && (
-          <li>
-            <Link href="/dashboard/admin/create">
+          <li onClick={() => handleActive("admin")}>
+            <Link
+              className={`${active === "admin" && "active"}`}
+              href="/dashboard/admin/create"
+            >
               {" "}
               <UserPlusIcon className="w-6 h-6" />
               Create Admin

@@ -22,7 +22,17 @@ const authApi = baseApi.injectEndpoints({
       }),
       invalidatesTags: [tagTypes.user],
     }),
+
+    //email verify
+    verifyEmail: build.mutation({
+      query: (verifyData) => ({
+        url: `${AUTH_URL}/reset/password`,
+        method: "POST",
+        data: verifyData
+      }),
+      invalidatesTags: [tagTypes.user],
+    }),
   }),
 });
 
-export const { useUserSigninMutation, useUserSignupMutation } = authApi;
+export const { useUserSigninMutation, useUserSignupMutation, useVerifyEmailMutation } = authApi;

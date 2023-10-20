@@ -20,8 +20,7 @@ import Loading from "@/components/common/Loading";
 const ServiceAddForm = () => {
   const [image, setImage] = useState<File | null>(null);
   const [imagePreview, setImagePreview] = useState(null);
-  const [loading, setLoading] = useState<boolean>(false);
-  const [addService] = useAddServiceMutation();
+  const [addService, {isLoading: loading}] = useAddServiceMutation();
   const query: Record<string, any> = {};
   const { data, isLoading } = useCategoriesQuery({ ...query });
   const router = useRouter();
@@ -48,7 +47,6 @@ const ServiceAddForm = () => {
   };
 
   const handleSubmit = async (data: any) => {
-    setLoading(true);
     try {
       if (!image) {
         console.error("Please select an image.");
@@ -70,7 +68,6 @@ const ServiceAddForm = () => {
           data.image = responseData.data.display_url;
           data.price = Number(data.price);
           //akhane api call hobe
-          console.log(data);
 
           const res: any = await addService(data);
           if (res.data as any) {
@@ -82,7 +79,6 @@ const ServiceAddForm = () => {
               timer: 1500,
             });
             router.push("/dashboard/service");
-            setLoading(false);
           } else {
             toast.error("There was an error!");
           }
