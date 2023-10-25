@@ -6,63 +6,86 @@ import { getUserInfo, removeUserInfo } from "@/services/auth.service";
 import { ShoppingCartIcon, UserIcon } from "@heroicons/react/24/solid";
 import Image from "next/image";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { useState } from "react";
 
 const Navbar = () => {
-  const [active, setActive] = useState<string>("");
+  const [open, setOpen] = useState<boolean>(false);
   const router = useRouter();
+  const pathname = usePathname();
+
   const { userId } = getUserInfo() as any;
   const { data, isLoading } = useProfileQuery(userId);
   const arg: any = {};
   const { data: getCarts } = useGetCartsQuery({ ...arg });
+  const handleOpen = () => {
+    setOpen(!open);
+  };
+  const handleClose = () => {
+    setTimeout(() => {
+      setOpen(false);
+    }, 500);
+  };
 
   const logout = () => {
     removeUserInfo(authKey);
     router.push("/login");
   };
 
-  const handleActive = (value: string) => {
-    setActive(value);
-  };
-
   const menu = (
     <>
-      <li onClick={() => handleActive("home")}>
-        <Link className={`${active === "home" && "active"}`} href="/home">
+      <li onClick={handleClose}>
+        <Link
+          className={`${pathname === "/home" ? "active" : ""}`}
+          href="/home"
+        >
           Home
         </Link>
       </li>
-      <li onClick={() => handleActive("service")}>
-        <Link className={`${active === "service" && "active"}`} href="/service">
+      <li onClick={handleClose}>
+        <Link
+          className={`${pathname === "/service" ? "active" : ""}`}
+          href="/service"
+        >
           Services
         </Link>
       </li>
-      <li onClick={() => handleActive("blog")}>
-        <Link className={`${active === "blog" && "active"}`} href="/blog">
+      <li onClick={handleClose}>
+        <Link
+          className={`${pathname === "/blog" ? "active" : ""}`}
+          href="/blog"
+        >
           Blog
         </Link>
       </li>
-      <li onClick={() => handleActive("faq")}>
-        <Link className={`${active === "faq" && "active"}`} href="/faq">
+      <li onClick={handleClose}>
+        <Link className={`${pathname === "/faq" ? "active" : ""}`} href="/faq">
           FAQ
         </Link>
       </li>
-      <li onClick={() => handleActive("feedback")}>
+      <li onClick={handleClose}>
         <Link
-          className={`${active === "feedback" && "active"}`}
+          className={`${pathname === "/feedback" ? "active" : ""}`}
           href="/feedback"
         >
           FeedBack
         </Link>
       </li>
-      <li onClick={() => handleActive("contact")}>
-        <Link className={`${active === "contact" && "active"}`} href="/contact">
+      <li onClick={handleClose}>
+        <Link
+          className={`${pathname === "/contact" ? "active" : ""}`}
+          href="/contact"
+        >
           Contact
         </Link>
       </li>
-      <li onClick={() => handleActive("dashboard")}>
-        <Link href="/dashboard">Dashboard</Link>
+      <li>
+        <Link
+          className={`${pathname === "/dashboard" ? "active" : ""}`}
+          href="/dashboard"
+        >
+          Dashboard
+        </Link>
       </li>
     </>
   );
@@ -72,7 +95,7 @@ const Navbar = () => {
       <div className="navbar bg-base-100 container">
         <div className="navbar-start">
           <div className="dropdown">
-            <label tabIndex={0} className="btn btn-ghost lg:hidden">
+            <label onClick={handleOpen} className="btn btn-ghost lg:hidden">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 className="h-5 w-5"
@@ -89,17 +112,14 @@ const Navbar = () => {
               </svg>
             </label>
             <ul
-              tabIndex={0}
-              className="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52"
+              className={`${
+                open ? "opacity-100" : "opacity-0"
+              } menu menu-sm mt-3 z-[1] p-2 shadow bg-base-100 rounded-sm w-52 absolute top-10`}
             >
               {menu}
             </ul>
           </div>
-          <Link
-            href={"/"}
-            onClick={() => handleActive("home")}
-            className="btn btn-ghost normal-case text-xl"
-          >
+          <Link href={"/"} className="btn btn-ghost normal-case text-xl">
             Plubming
           </Link>
         </div>
@@ -129,11 +149,7 @@ const Navbar = () => {
                       : "Item"}
                   </span>
                   <div className="card-actions">
-                    <Link
-                      onClick={() => handleActive("")}
-                      href={"/carts"}
-                      className="btn btn-primary btn-block"
-                    >
+                    <Link href={"/carts"} className="btn btn-primary btn-block">
                       View cart
                     </Link>
                   </div>
@@ -173,7 +189,7 @@ const Navbar = () => {
                   </a>
                 </li>
                 {userId && (
-                  <li onClick={() => handleActive("")}>
+                  <li>
                     <Link href={"/profile"} className="justify-between">
                       My Profile
                     </Link>
@@ -181,10 +197,10 @@ const Navbar = () => {
                 )}
                 {!userId ? (
                   <>
-                    <li onClick={() => handleActive("")}>
+                    <li>
                       <Link href={"/signup"}>Signup</Link>
                     </li>
-                    <li onClick={() => handleActive("")}>
+                    <li>
                       <Link href={"/login"}>Login</Link>
                     </li>
                   </>

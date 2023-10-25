@@ -14,20 +14,16 @@ import {
 } from "@heroicons/react/24/solid";
 import Image from "next/image";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
-import { useState} from "react";
+import { usePathname, useRouter } from "next/navigation";
 import { FaBlogger } from "react-icons/fa";
 import { FcFeedback } from "react-icons/fc";
 import { RiReservedFill } from "react-icons/ri";
 
 const Sidebar = () => {
-  const [active, setActive] = useState<string>("");
   const { role, userId } = getUserInfo() as any;
   const { data, isLoading } = useProfileQuery(userId);
   const router = useRouter();
-  const handleActive = (value: string) => {
-    setActive(value)
-  };
+  const pathname = usePathname();
 
   const logout = () => {
     removeUserInfo(authKey);
@@ -37,7 +33,6 @@ const Sidebar = () => {
   return (
     <div className={`p-4 w-[80vw] md:w-80 min-h-full bg-base-200`}>
       <Link
-        onClick={() => handleActive("home")}
         href={"/"}
         role="button"
         className="btn text-2xl btn-accent my-3"
@@ -85,18 +80,18 @@ const Sidebar = () => {
       <ul className="menu text-base-content">
         {role === ENUM_USER_ROLE.USER ? (
           <>
-            <li onClick={() => handleActive("dashboard")}>
+            <li>
               <Link
-                className={`${active === "dashboard" && "active"}`}
+              className={`${pathname === "/dashboard" ? "active" : ""}`}
                 href="/dashboard"
               >
                 <Bars4Icon className="w-6 h-6" />
                 Dashboard
               </Link>
             </li>
-            <li onClick={() => handleActive("booking")}>
+            <li>
               <Link
-                className={`${active === "booking" && "active"}`}
+              className={`${pathname === "/dashboard/booking" ? "active" : ""}`}
                 href="/dashboard/booking"
               >
                 <RiReservedFill className="w-6 h-6" />
@@ -106,18 +101,18 @@ const Sidebar = () => {
           </>
         ) : (
           <>
-            <li onClick={() => handleActive("dashboard")}>
+            <li>
               <Link
-                className={`${active === "dashboard" && "active"}`}
+               className={`${pathname === "/dashboard" ? "active" : ""}`}
                 href="/dashboard"
               >
                 <Bars4Icon className="w-6 h-6" />
                 Dashboard
               </Link>
             </li>
-            <li onClick={() => handleActive("service")}>
+            <li>
               <Link
-                className={`${active === "service" && "active"}`}
+               className={`${pathname === "/dashboard/service" ? "active" : ""}`}
                 href="/dashboard/service"
               >
                 {" "}
@@ -125,9 +120,9 @@ const Sidebar = () => {
                 Service
               </Link>
             </li>
-            <li onClick={() => handleActive("blog")}>
+            <li>
               <Link
-                className={`${active === "blog" && "active"}`}
+               className={`${pathname === "/dashboard/blog" ? "active" : ""}`}
                 href="/dashboard/blog"
               >
                 {" "}
@@ -135,9 +130,9 @@ const Sidebar = () => {
                 Blog
               </Link>
             </li>
-            <li onClick={() => handleActive("faq")}>
+            <li>
               <Link
-                className={`${active === "faq" && "active"}`}
+               className={`${pathname === "/dashboard/faq" ? "active" : ""}`}
                 href="/dashboard/faq"
               >
                 {" "}
@@ -145,9 +140,9 @@ const Sidebar = () => {
                 FAQ
               </Link>
             </li>
-            <li onClick={() => handleActive("feedback")}>
+            <li>
               <Link
-                className={`${active === "feedback" && "active"}`}
+               className={`${pathname === "/dashboard/feedback" ? "active" : ""}`}
                 href="/dashboard/feedback"
               >
                 {" "}
@@ -155,9 +150,9 @@ const Sidebar = () => {
                 Feedback
               </Link>
             </li>
-            <li onClick={() => handleActive("booking")}>
+            <li>
               <Link
-                className={`${active === "booking" && "active"}`}
+               className={`${pathname === "/dashboard/booking" ? "active" : ""}`}
                 href="/dashboard/booking"
               >
                 {" "}
@@ -165,9 +160,9 @@ const Sidebar = () => {
                 Booking
               </Link>
             </li>
-            <li onClick={() => handleActive("users")}>
+            <li>
               <Link
-                className={`${active === "users" && "active"}`}
+               className={`${pathname === "/dashboard/users" ? "active" : ""}`}
                 href="/dashboard/users"
               >
                 {" "}
@@ -175,9 +170,9 @@ const Sidebar = () => {
                 Users
               </Link>
             </li>
-            <li onClick={() => handleActive("category")}>
+            <li>
               <Link
-                className={`${active === "category" && "active"}`}
+               className={`${pathname === "/dashboard/category" ? "active" : ""}`}
                 href="/dashboard/category"
               >
                 {" "}
@@ -188,9 +183,9 @@ const Sidebar = () => {
           </>
         )}
         {role === ENUM_USER_ROLE.SUPER_ADMIN && (
-          <li onClick={() => handleActive("admin")}>
+          <li>
             <Link
-              className={`${active === "admin" && "active"}`}
+             className={`${pathname === "/dashboard/admin/create" ? "active" : ""}`}
               href="/dashboard/admin/create"
             >
               {" "}

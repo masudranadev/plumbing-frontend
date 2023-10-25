@@ -1,34 +1,32 @@
 "use client";
-import React, { useState, useEffect } from "react";
+import Loading from "@/components/common/Loading";
 import Footer from "@/components/ui/Footer";
 import dynamic from "next/dynamic";
-import Loading from "@/components/common/Loading";
-
+import { useState, useEffect } from "react";
+const Navbar = dynamic(() => import("../../components/ui/Navbar"), {
+  ssr: false,
+});
 const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
   const [loading, setLoading] = useState(true);
-  const Navbar = dynamic(() => import("../../components/ui/Navbar"), {
-    ssr: false,
-  });
 
   useEffect(() => {
-    // Simulate loading time
+    // Simulate loading for demonstration purposes.
     setTimeout(() => {
       setLoading(false);
-    }, 1000); // Adjust the time as needed
+    }, 1500);
   }, []);
-
   return (
-    <section>
+    <>
       {loading ? (
         <Loading />
       ) : (
-        <>
+        <section>
           <Navbar />
           {children}
           <Footer />
-        </>
+        </section>
       )}
-    </section>
+    </>
   );
 };
 
