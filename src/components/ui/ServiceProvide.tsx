@@ -6,8 +6,8 @@ import Image from "next/image";
 const ServiceProvide = () => {
   return (
     <div className="bg-[#0052DA] py-5 md:py-0">
-      <div className="container ">
-        <div className="grid grid-cols-1 lg:grid-cols-2 justify-between items-center lg:h-[600px] overflow-hidden gap-y-5 ">
+      <div className="container">
+        <div className="grid grid-cols-1 lg:grid-cols-2 justify-between items-center lg:h-[600px] overflow-hidden gap-y-5">
           <div>
             <h1 className="text-xl md:text-2xl lg:text-5xl font-bold text-slate-50 mb-7">
               We Are Provide Always Different From Other Services.
