@@ -15,16 +15,20 @@ import {
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
+import { useState } from "react";
 import { FaBlogger } from "react-icons/fa";
 import { FcFeedback } from "react-icons/fc";
 import { RiReservedFill } from "react-icons/ri";
 
-const Sidebar = () => {
+const Sidebar = ({setClose}: any) => {
+  
   const { role, userId } = getUserInfo() as any;
   const { data, isLoading } = useProfileQuery(userId);
   const router = useRouter();
   const pathname = usePathname();
-
+  const handleClose = () => {
+    setClose(true);
+  };
   const logout = () => {
     removeUserInfo(authKey);
     router.push("/login");
@@ -80,7 +84,7 @@ const Sidebar = () => {
       <ul className="menu text-base-content">
         {role === ENUM_USER_ROLE.USER ? (
           <>
-            <li>
+            <li onClick={handleClose}>
               <Link
               className={`${pathname === "/dashboard" ? "active" : ""}`}
                 href="/dashboard"
@@ -101,7 +105,7 @@ const Sidebar = () => {
           </>
         ) : (
           <>
-            <li>
+            <li onClick={handleClose}>
               <Link
                className={`${pathname === "/dashboard" ? "active" : ""}`}
                 href="/dashboard"

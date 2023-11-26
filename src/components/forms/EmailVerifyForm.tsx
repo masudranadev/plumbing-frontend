@@ -28,15 +28,13 @@ const EmailVerifyForm = () => {
         setError("");
       }
       if (res?.data?.token) {
-        router.push("/reset-password");
         Swal.fire({
           position: "top-end",
           icon: "success",
-          title: "verify email Successfully!",
+          title: "check your email for veriry!",
           showConfirmButton: false,
           timer: 1000,
         });
-        storeUserInfo({ accessToken: res?.data?.token });
       }
     } catch (error: any) {
       console.error(error);
@@ -71,7 +69,9 @@ const EmailVerifyForm = () => {
                   className="block w-full rounded-md border-0 py-1.5 px-4 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                 />
               </div>
-              {error && <small className="text-red-500 block mt-4">{error}</small>}
+              {error && (
+                <small className="text-red-500 block mt-4">{error}</small>
+              )}
             </div>
 
             <div className="mt-4">

@@ -1,5 +1,6 @@
 import { tagTypes } from "../tag-types";
 import { baseApi } from "./baseApi";
+
 const AUTH_URL = "/auth";
 
 const authApi = baseApi.injectEndpoints({
@@ -26,7 +27,7 @@ const authApi = baseApi.injectEndpoints({
     //email verify
     verifyEmail: build.mutation({
       query: (verifyData) => ({
-        url: `${AUTH_URL}/reset/password`,
+        url: `${AUTH_URL}/forgot/password`,
         method: "POST",
         data: verifyData
       }),

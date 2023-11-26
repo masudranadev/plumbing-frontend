@@ -52,7 +52,7 @@ export const userApi = baseApi.injectEndpoints({
     // update existing user role
     updatePassword: build.mutation({
       query: (data) => ({
-        url: `${USER_URL}/reset/password`,
+        url: `${USER_URL}/${data.id}/${data.token}`,
         method: "PATCH",
         data: data.body,
       }),

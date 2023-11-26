@@ -8,7 +8,7 @@ import { useRouter } from "next/navigation";
 import { useState } from "react";
 import Swal from "sweetalert2";
 
-const ResetPasswordForm = () => {
+const ResetPasswordForm = ({ id, token }: { id: string; token: string }) => {
   const [password, setPassword] = useState<string>("");
   const [error, setError] = useState<string>("");
   const [updatePassword, { isLoading: loading }] = useUpdatePasswordMutation();
@@ -21,8 +21,8 @@ const ResetPasswordForm = () => {
         password,
       };
       console.log(data);
-      
-      const res: any = await updatePassword({body: data});
+
+      const res: any = await updatePassword({id, token, body: data });
       if (res.error) {
         setError(res.error);
       } else {

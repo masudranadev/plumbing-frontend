@@ -11,15 +11,16 @@ import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
 import { toast } from "react-toastify";
 import Swal from "sweetalert2";
+import MyCKEditor from "./MyCkEditor";
 
 const BlogPostForm = () => {
   const [image, setImage] = useState<File | null>(null);
+  const [editorData, setEditorData] = useState<string>("");
   const [content, setContent] = useState("");
   const [imagePreview, setImagePreview] = useState(null);
   const [blogPost, { isLoading: loading }] = useBlogPostMutation();
   const router = useRouter();
   console.log(content);
-  
 
   const toolbarOptions = [
     ["bold", "italic", "underline", "strike"],
@@ -62,9 +63,13 @@ const BlogPostForm = () => {
     }
   };
 
+  const handleEditorChange = (data: string) => {
+    setEditorData(data);
+  };
+
   const handleSubmit = async (data: any) => {
-      data.content = content;
-      console.log(data);
+    data.content = content;
+    console.log(data);
 
     try {
       if (!image) {
@@ -88,7 +93,7 @@ const BlogPostForm = () => {
           //akhane api call hobe
           const res: any = await blogPost(data);
           if (res.data as any) {
-            router.push('/dashboard/blog')
+            router.push("/dashboard/blog");
             Swal.fire({
               position: "top-end",
               icon: "success",
@@ -170,6 +175,11 @@ const BlogPostForm = () => {
                   onChange={handleContentChange}
                   className=""
                 />
+                {/* <MyCKEditor onChange={handleEditorChange} /> */}
+                <div>
+                  <h2>Editor Content:</h2>
+                  <div dangerouslySetInnerHTML={{ __html: editorData }} />
+                </div>
               </div>
             </div>
           </div>
@@ -192,4 +202,3 @@ const BlogPostForm = () => {
 };
 
 export default BlogPostForm;
-
