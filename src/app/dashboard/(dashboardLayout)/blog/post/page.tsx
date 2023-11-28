@@ -8,7 +8,7 @@ const BlogPostPage = () => {
   const BlogPostForm = dynamic(
     () => import("@/components/dashboard/forms/BlogPostForm"),
     {
-      ssr: false, // This ensures the component is not server-rendered
+      ssr: false,
     }
   );
 

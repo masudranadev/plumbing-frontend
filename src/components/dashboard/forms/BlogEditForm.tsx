@@ -3,21 +3,31 @@ import LoadingButton from "@/components/common/LoadingButton";
 import SmallSpinner from "@/components/common/SmallSpinner";
 import Form from "@/components/forms/Form";
 import FormInput from "@/components/forms/FormInput";
-import { useBlogPostMutation } from "@/redux/api/blogApi";
+import {
+  useBlogPostMutation,
+  useBlogQuery,
+  useUpdateBlogMutation,
+} from "@/redux/api/blogApi";
 import { modules } from "@/utils/modules";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
-import { toast } from "react-toastify";
 import Swal from "sweetalert2";
 
-const BlogPostForm = () => {
+const BlogEditForm = ({ id }: { id: string }) => {
+  const [loading, setLoading] = useState<boolean>(false);
+  const { data, isLoading: blogLoading } = useBlogQuery(id);
+
+  const defaultValues = {
+    title: data?.title,
+  };
+
   const [image, setImage] = useState<File | null>(null);
   const [content, setContent] = useState("");
   const [imagePreview, setImagePreview] = useState(null);
-  const [blogPost, { isLoading: loading }] = useBlogPostMutation();
+  const [updateBlog, { isLoading }] = useUpdateBlogMutation();
   const router = useRouter();
 
   const handleContentChange = (value: string) => {
@@ -39,58 +49,58 @@ const BlogPostForm = () => {
   };
 
   const handleSubmit = async (data: any) => {
-    data.content = content;
-    console.log(data);
-
     try {
-      if (!image) {
-        console.error("Please select an image.");
-        return;
+      setLoading(true);
+      let thumbnail;
+      if (image) {
+        const formData = new FormData();
+        formData.append("image", image);
+
+        const url = `https://api.imgbb.com/1/upload?key=${process.env.NEXT_PUBLIC_IMBB_KEY}`;
+        const response = await fetch(url, {
+          method: "POST",
+          body: formData,
+        });
+        if (response.ok) {
+          const responseData = await response.json();
+          thumbnail = responseData.data.display_url;
+        } else {
+          console.error("Image upload failed");
+        }
       }
 
-      const formData = new FormData();
-      formData.append("image", image);
+      data["content"] = content;
+      data["thumbnail"] = thumbnail ? thumbnail : data?.thumbnail;
+      console.log(data);
 
-      const url = `https://api.imgbb.com/1/upload?key=${process.env.NEXT_PUBLIC_IMBB_KEY}`;
-      const response = await fetch(url, {
-        method: "POST",
-        body: formData,
-      });
+      //akhane api call hobe
+      const res: any = await updateBlog({ id, body: data });
+      console.log(res);
 
-      if (response.ok) {
-        const responseData = await response.json();
-        if (responseData.data) {
-          data.thumbnail = responseData.data.display_url;
-          //akhane api call hobe
-          const res: any = await blogPost(data);
-          if (res.data as any) {
-            router.push("/dashboard/blog");
-            Swal.fire({
-              position: "top-end",
-              icon: "success",
-              title: "Blog Post Successfully :)",
-              showConfirmButton: false,
-              timer: 1500,
-            });
-          } else {
-            toast.error("There was an error!");
-          }
-        }
-      } else {
-        console.error("Image upload failed");
+      if (res.data as any) {
+        router.push("/dashboard/blog");
+        Swal.fire({
+          position: "top-end",
+          icon: "success",
+          title: "Blog Updated Successfully :)",
+          showConfirmButton: false,
+          timer: 1500,
+        });
       }
     } catch (error) {
       console.error("Error uploading image:", error);
+    } finally {
+      setLoading(false);
     }
   };
-
+  if (blogLoading) return null;
   return (
     <div className="container w-full xl:w-[80%] md:px-20 py-5 mt-5 ring rounded">
-      <Form submitHandler={handleSubmit}>
+      <Form submitHandler={handleSubmit} defaultValues={defaultValues}>
         <div className="space-y-12">
           <div className="border-b border-gray-900/10 pb-6">
             <h2 className="text-base font-semibold leading-7 text-gray-900">
-              Blog Post
+              Update Blog Post
             </h2>
             <p className="mt-1 text-sm leading-6 text-gray-600">
               Provide all information for blog
@@ -104,16 +114,15 @@ const BlogPostForm = () => {
                   id="image"
                   onChange={handleImageChange}
                   className="file-input file-input-bordered w-full"
-                  required
                 />
-                {imagePreview && (
+                {data?.thumbnail && (
                   <div className="avatar">
                     <div className="w-24 rounded-xl">
                       <Image
                         width={100}
                         height={100}
                         alt="image"
-                        src={imagePreview}
+                        src={imagePreview ? imagePreview : data?.thumbnail}
                       />
                     </div>
                   </div>
@@ -139,11 +148,12 @@ const BlogPostForm = () => {
             </h2>
 
             <div className="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6 h-auto">
-              <div className="col-span-6">
+              <div className="col-span-6 min-h-[300px]">
                 <ReactQuill
                   modules={modules}
                   theme="snow"
                   onChange={handleContentChange}
+                  defaultValue={data?.content}
                 />
               </div>
             </div>
@@ -151,19 +161,17 @@ const BlogPostForm = () => {
         </div>
 
         <div className="flex items-center justify-end gap-x-6">
-          <div className="">
-            <LoadingButton
-              type="submit"
-              className="btn btn-accent mt-3 w-full"
-              value="Login"
-            >
-              {loading ? <SmallSpinner /> : "Post"}
-            </LoadingButton>
-          </div>
+          <LoadingButton
+            type="submit"
+            className="btn btn-accent mt-3 w-full"
+            value="updating..."
+          >
+            {loading || isLoading ? <SmallSpinner /> : "Update"}
+          </LoadingButton>
         </div>
       </Form>
     </div>
   );
 };
 
-export default BlogPostForm;
+export default BlogEditForm;

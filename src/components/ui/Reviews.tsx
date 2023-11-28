@@ -9,15 +9,73 @@ import {
   Scrollbar,
 } from "swiper/modules";
 
-// Import Swiper styles
 import "swiper/css";
-// import "swiper/css/pagination";
 import { useEffect, useState } from "react";
 import { FaQuoteLeft, FaQuoteRight } from "react-icons/fa";
 import { AiOutlineLeft, AiOutlineRight } from "react-icons/ai";
 
 import Image from "next/image";
 import { StarIcon } from "@heroicons/react/20/solid";
+
+const reviews = [
+  {
+    id: 1,
+    name: "Masud Rana",
+    rating: 5,
+    description:
+      "Moving to a new house can be an exciting milestone in life but the process",
+  },
+  {
+    id: 2,
+    name: "Rifat Hossain",
+    rating: 5,
+    description:
+      "Moving to a new house can be an exciting milestone in life but the process",
+  },
+  {
+    id: 3,
+    name: "Sazzad Hossain",
+    rating: 5,
+    description:
+      "Moving to a new house can be an exciting milestone in life but the process",
+  },
+  {
+    id: 4,
+    name: "Munna Raj",
+    rating: 5,
+    title: "International Move",
+    description:
+      "Moving to a new house can be an exciting milestone in life but the process",
+  },
+  {
+    id: 5,
+    name: "Sannot Sarkar",
+    rating: 5,
+    description:
+      "Moving to a new house can be an exciting milestone in life but the process",
+  },
+  {
+    id: 6,
+    name: "Rakib Mollah",
+    rating: 5,
+    description:
+      "Moving to a new house can be an exciting milestone in life but the process",
+  },
+  {
+    id: 7,
+    name: "Alomgir Zahid",
+    rating: 5,
+    description:
+      "Moving to a new house can be an exciting milestone in life but the process",
+  },
+  {
+    id: 8,
+    name: "Ujjal Shah",
+    rating: 5,
+    description:
+      "Moving to a new house can be an exciting milestone in life but the process",
+  },
+];
 
 const Reviews = () => {
   const [domLoaded, setDomLoaded] = useState(false);
@@ -26,65 +84,6 @@ const Reviews = () => {
     setDomLoaded(true);
   }, []);
 
-  const reviews = [
-    {
-      id: 1,
-      name: "Masud Rana",
-      rating: 5,
-      description:
-        "Moving to a new house can be an exciting milestone in life but the process",
-    },
-    {
-      id: 2,
-      name: "Rifat Hossain",
-      rating: 5,
-      description:
-        "Moving to a new house can be an exciting milestone in life but the process",
-    },
-    {
-      id: 3,
-      name: "Sazzad Hossain",
-      rating: 5,
-      description:
-        "Moving to a new house can be an exciting milestone in life but the process",
-    },
-    {
-      id: 4,
-      name: "Munna Raj",
-      rating: 5,
-      title: "International Move",
-      description:
-        "Moving to a new house can be an exciting milestone in life but the process",
-    },
-    {
-      id: 5,
-      name: "Sannot Sarkar",
-      rating: 5,
-      description:
-        "Moving to a new house can be an exciting milestone in life but the process",
-    },
-    {
-      id: 6,
-      name: "Rakib Mollah",
-      rating: 5,
-      description:
-        "Moving to a new house can be an exciting milestone in life but the process",
-    },
-    {
-      id: 7,
-      name: "Alomgir Zahid",
-      rating: 5,
-      description:
-        "Moving to a new house can be an exciting milestone in life but the process",
-    },
-    {
-      id: 8,
-      name: "Ujjal Shah",
-      rating: 5,
-      description:
-        "Moving to a new house can be an exciting milestone in life but the process",
-    },
-  ];
   return (
     <div className="bg-[#F5F8FE]">
       <div className="container relative py-8 m:py-20">
@@ -174,7 +173,7 @@ const Reviews = () => {
             </Swiper>
           )}
         </div>
-        <div className="absolute right-20 bottom-10 hidden md:flex gap-5">
+        <div className="absolute right-20 bottom-3 hidden md:flex gap-5">
           <button className="prev z-10 w-10 h-10 rounded-full bg-blue-500 shadow-xl flex items-center hover:-translate-x-1 transition-all duration-300 justify-center group">
             <AiOutlineLeft className="w-6 h-6 text-white" />
           </button>
@@ -182,8 +181,6 @@ const Reviews = () => {
             <AiOutlineRight className="w-6 h-6 text-white" />
           </button>
         </div>
-
-        {/* <ReviewModal isOpen={isModalOpen} onClose={closeModal}></ReviewModal> */}
       </div>
     </div>
   );

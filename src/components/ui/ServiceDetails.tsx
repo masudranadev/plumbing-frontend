@@ -41,19 +41,19 @@ const ServiceDetails = ({ id }: { id: string }) => {
           className="group-hover:scale-110 h-full transition-all duration-200"
         />
       </figure>
-      <div className="tabs">
-        <a
+      <div>
+        <div
           onClick={() => setTab("details")}
           className={`tab tab-lifted ${tab === "details" && "tab-active"}`}
         >
           Details
-        </a>
-        <a
+        </div>
+        <button
           onClick={() => setTab("review")}
           className={`tab tab-lifted ${tab === "review" && "tab-active"}`}
         >
           Review
-        </a>
+        </button>
       </div>
       <div>
         {tab === "details" ? (

@@ -11,23 +11,25 @@ const BlogDetailsPage = ({ params }: { params: any }) => {
     {
       label: "Home",
       link: "/",
-      active: "home"
+      active: "home",
     },
     {
       label: "Blog",
       link: "/blog",
-      active: "blog"
+      active: "blog",
     },
     {
       label: "Blog Details",
       link: "#",
-      active: ""
+      active: "",
     },
   ];
   return (
     <>
-      <Banner menu={options} title="Category Details Page" />
-      <BlogDetails id={id} />
+      <Banner menu={options} title="Blog Details Page" />
+      <div className="bg-slate-100">
+        <BlogDetails id={id} />
+      </div>
     </>
   );
 };

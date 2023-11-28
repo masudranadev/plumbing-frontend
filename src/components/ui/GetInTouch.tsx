@@ -19,17 +19,14 @@ const GetInTouch = () => {
       <div className="bg-[#F4F5F8] h-[250px]">
         <div className="container  relative space-y-5 flex flex-col h-full justify-center">
           <h3 className="text-xl md:text-3xl font-bold">
-            Cant find your desired service? Let us know 24/7 in +88063456364
+            Cant find your desired service? Let us know 24/7
           </h3>
           <div className="flex flex-col lg:flex-row gap-5">
-            <button
-              onClick={openModal}
-              className="btn btn-accent"
-            >
+            <button onClick={openModal} className="btn btn-accent">
               Request a service
             </button>
             <button className="btn btn-outline">
-              <MdOutlinePhone className="w-5 h-5 inline-block" /> +880654
+              <MdOutlinePhone className="w-5 h-5 inline-block" /> +8801796682951
             </button>
           </div>
           <Image

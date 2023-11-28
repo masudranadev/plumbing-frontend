@@ -12,6 +12,7 @@ const CategoryPage = () => {
   const handleService = (id: string) => {
     router.push(`/category/service/${id}`);
   };
+  if (isLoading) return null;
   return (
     <div className="container pt-16 md:pt-32 pb-5">
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8">

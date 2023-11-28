@@ -47,13 +47,15 @@ const LatestNews = () => {
                   />
                 </figure>
                 <div className="card-body">
-                  <p className="font-semibold text-primary">
+                  <p className="text-primary">
                     {format(parseISO(blog?.createdAt), "PP")}
                   </p>
                   <h2 className="card-title">
-                    <span>{blog?.title}</span>
+                    <button className="hover:underline hover:text-blue-500">
+                      {blog?.title}
+                    </button>
                   </h2>
-                  <div className="flex gap-8 my-3 items-center">
+                  {/* <div className="flex gap-8 my-3 items-center">
                     <div className="avatar">
                       <div className="w-[50px] rounded-full ring ring-primary ring-offset-base-100 ring-offset-2">
                         <Image
@@ -68,10 +70,12 @@ const LatestNews = () => {
                       <h1>{blog?.author?.fullName}</h1>
                       <address>{blog?.author?.address}</address>
                     </div>
-                  </div>
+                  </div> */}
                   <div className="flex justify-end">
+                    <p>{blog?.author?.fullName}</p>
+                    <div className="divider divider-horizontal"></div>
                     <div className="">Comments</div>
-                    <div className="divider divider-horizontal"></div> 
+                    <div className="divider divider-horizontal"></div>
                     <div className="">Likes</div>
                   </div>
                 </div>
