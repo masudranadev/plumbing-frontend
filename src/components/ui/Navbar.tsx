@@ -113,7 +113,7 @@ const Navbar = () => {
             </label>
             <ul
               className={`${
-                open ? "opacity-100" : "opacity-0"
+                open ? "block" : "hidden"
               } menu menu-sm mt-3 z-[1] p-2 shadow bg-base-100 rounded-sm w-52 absolute top-10`}
             >
               {menu}

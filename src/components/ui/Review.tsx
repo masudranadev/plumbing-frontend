@@ -1,29 +1,24 @@
 "use client";
-import { useGetReviewsByServiceIdQuery } from "@/redux/api/reviewApi";
 import { format, parseISO } from "date-fns";
 import Image from "next/image";
-import ServiceCardLoader from "../common/ServiceCardLoader";
 
-const Review = ({ serviceId }: { serviceId: string }) => {
-  const { data: reviews, isLoading } = useGetReviewsByServiceIdQuery(serviceId);
-  if (isLoading) {
-    return <ServiceCardLoader />
-  }
+const Review = ({ reviews }: { reviews: any }) => {
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-2">
+    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
       {reviews?.map((review: any) => (
         <div
           key={review?.id}
           className="flex flex-col w-full max-w-lg p-6 divide-y rounded-md divide-gray-700 dark:bg-gray-50 dark:text-gray-900"
         >
           <div className="flex justify-between p-4">
-            <div className="flex space-x-4">
-              <div>
+            <div className="flex gap-x-3">
+              <div className="w-[50px] h-[50px]">
                 <Image
-                  src={review?.user?.profileImg as string}
+                  src={review?.user?.profileImg}
                   alt="Shoes"
                   width={50}
                   height={50}
+                  className="w-full h-full rounded-full ring"
                 />
               </div>
               <div>

@@ -26,7 +26,6 @@ export default function DashboardLayout({
   return (
     <div className="drawer lg:drawer-open">
       <input id="dashboard-drawer" type="checkbox" className="drawer-toggle" />
-      <div className=""></div>
       <div className="drawer-content">
         {/* Page content here */}
         <DashBoardNavbar />

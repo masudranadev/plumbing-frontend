@@ -4,7 +4,7 @@ import { tagTypes } from "../tag-types";
 
 const REVIEW_URL = "/reviewAndRating";
 
-export const buildingApi = baseApi.injectEndpoints({
+export const reviewApi = baseApi.injectEndpoints({
   endpoints: (build) => ({
     // get all services
     reviews: build.query({
@@ -75,4 +75,4 @@ export const {
   useReviewsQuery,
   useReviewQuery,
   useUpdateReviewMutation,
-} = buildingApi;
+} = reviewApi;

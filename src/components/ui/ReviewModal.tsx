@@ -5,10 +5,11 @@ import Form from "../forms/Form";
 import React, { useState } from "react";
 import LoadingButton from "../common/LoadingButton";
 import SmallSpinner from "../common/SmallSpinner";
-import { useAddReviewMutation } from "@/redux/api/reviewApi";
 import { getUserInfo } from "@/services/auth.service";
 import FormTextArea from "../forms/FormTextArea";
 import { ENUM_USER_ROLE } from "@/enums/user";
+import { useAddReviewMutation } from "@/redux/api/reviewApi";
+import Swal from "sweetalert2";
 
 const ReviewModal = ({
   serviceId,
@@ -18,30 +19,58 @@ const ReviewModal = ({
   setOpenModal: (isOpen: boolean | null) => void;
 }) => {
   const [rating, setRating] = useState<number>(0);
+  const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<string>("");
   const { userId, role } = getUserInfo() as any;
-  const [addReview, { isLoading: loading }] = useAddReviewMutation();
+  const [addReview, { isLoading }] = useAddReviewMutation();
 
   const handleSubmit = async (data: any) => {
-    if (!rating) {
-      setError("Must be give rating!");
-      return;
-    } else if (data.review === undefined) {
-      setError("Must write your review");
-      return;
-    } else {
-      setError("");
-    }
-    if (!!serviceId && !!userId && !!rating) {
-      data["serviceId"] = serviceId;
-      data["userId"] = userId;
-      data["rating"] = rating;
-    }
-    if (role === ENUM_USER_ROLE.USER) {
+    try {
+      setLoading(true);
+      if (!rating) {
+        setError("Must be give rating!");
+        return;
+      } else if (data.review === undefined) {
+        setError("Must write your review");
+        return;
+      } else {
+        setError("");
+      }
+
+      if (!!serviceId && !!userId && !!rating) {
+        data["serviceId"] = serviceId;
+        data["userId"] = userId;
+        data["rating"] = rating;
+      }
+
+      if (role !== ENUM_USER_ROLE.USER) {
+        Swal.fire({
+          position: "top-end",
+          icon: "error",
+          title: "You can't review because you are admin",
+          showConfirmButton: false,
+          timer: 1500,
+        });
+        setOpenModal(null);
+        return;
+      }
       const res = await addReview(data);
-      console.log(res);
+      if (res) {
+        Swal.fire({
+          position: "top-end",
+          icon: "success",
+          title: "your review post successfully",
+          showConfirmButton: false,
+          timer: 1500,
+        });
+        setOpenModal(null);
+      }
+    } catch (error) {
+      console.error("review post error", error);
+    } finally {
+      setOpenModal(null);
+      setLoading(false);
     }
-    setOpenModal(null);
   };
   return (
     <div>
@@ -84,7 +113,7 @@ const ReviewModal = ({
                       className="btn btn-accent mt-3 w-full"
                       value="Login"
                     >
-                      {loading ? <SmallSpinner /> : "leave review"}
+                      {loading || isLoading ? <SmallSpinner /> : "leave review"}
                     </LoadingButton>
                   </div>
                 </Form>

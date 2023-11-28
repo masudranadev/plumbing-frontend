@@ -114,8 +114,8 @@ const DashboardPage = () => {
     },
   };
   return (
-    <div className="min-h-screen bg-gray-200">
-      <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-10 p-5">
+    <div className="bg-gray-200">
+      <div className="grid grid-cols-1 md:grid-cols-3 xl:grid-cols-3 gap-10 p-5">
         <div className="bg-white py-4 px-10 rounded-md">
           <div className="flex items-center gap-6">
             <div className="w-16 h-16 rounded-full bg-gray-100 flex items-center justify-center">
@@ -144,7 +144,7 @@ const DashboardPage = () => {
           <p className="text-2xl font-semibold pt-5">100+</p>
         </div>
       </div>
-      <div className="w-[1560px] px-10 py-10 mx-5 bg-white dark:bg-darkblack-600 flex flex-col justify-between rounded-lg lg:px-8 lg:py-7 p-4 mb-[48px]">
+      <div className="lg:w-[1560px] px-10 py-10 mx-5 bg-white dark:bg-darkblack-600 flex flex-col justify-between rounded-lg lg:px-8 lg:py-7 p-4 mb-[48px]">
         <div className="flex justify-between items-center pb-2 mb-2">
           <div>
             <span className="text-sm font-medium text-bgray-600 dark:text-white">
@@ -160,7 +160,7 @@ const DashboardPage = () => {
             </div>
           </div>
         </div>
-        <div className="w-full h-[280px]">
+        <div className="w-[1000px] h-[280px]">
           <LineChart dataSet={data} option={options} plugins={plugins} />
         </div>
       </div>
