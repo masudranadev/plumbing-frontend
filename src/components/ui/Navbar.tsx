@@ -149,7 +149,7 @@ const Navbar = () => {
                       : "Item"}
                   </span>
                   <div className="card-actions">
-                    <Link href={"/carts"} className="btn btn-primary btn-block">
+                    <Link href={"/carts"} className="btn btn-sm rounded-full btn-secondary btn-block">
                       View cart
                     </Link>
                   </div>

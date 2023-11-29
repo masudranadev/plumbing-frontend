@@ -6,6 +6,7 @@ import {
 } from "@/redux/api/addToCartApi";
 import Loading from "../common/Loading";
 import Swal from "sweetalert2";
+import Link from "next/link";
 
 const Carts = () => {
   const arg: any = {};
@@ -61,14 +62,15 @@ const Carts = () => {
   }
   return (
     <div className="min-h-screen">
-      <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 gap-2 container py-10 lg:py-16">
+      <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-2 container py-10 lg:py-16">
         {data?.carts?.map((cart) => (
           <div key={cart?.id} className="card bg-neutral text-neutral-content">
             <div className="card-body items-center text-center">
-              <h2 className="card-title">{cart?.service?.title}</h2>
+              <h2 className="card-title text-slate-50">{cart?.service?.title}</h2>
+              <h2 className="card-title text-accent text-left">${cart?.service?.price}</h2>
               <p>{cart?.service?.description}</p>
               <div className="card-actions justify-end">
-                <button className="btn btn-accent btn-outline">Book now</button>
+                <Link href={`/booking/${cart?.service?.id}`} className="btn btn-accent btn-outline">Book now</Link>
                 <button
                   onClick={() => handleDelete(cart?.id)}
                   className="btn btn-error"

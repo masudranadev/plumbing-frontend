@@ -60,7 +60,7 @@ const SignupPage = () => {
     }
   };
   return (
-    <div className="container xl:w-[40%] px-20 py-5 mt-5 ring rounded">
+    <div className="mx-5 sm:mx-auto sm:w-[70%] md:w-[60%] lg:w-[50%] px-7 py-10 my-10 ring rounded">
       <Form submitHandler={handleSubmit}>
         <div className="space-y-12">
           <div className="border-b border-gray-900/10 pb-12">
@@ -110,13 +110,13 @@ const SignupPage = () => {
                   <FormInput
                     name="email"
                     type="email"
-                    label="Your email"
+                    label="Your Email"
                     placeholder="enter your email"
                     className="block w-full rounded-md border-0 py-1.5 px-2  text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                   />
                 </div>
               </div>
-              <div className="col-span-3">
+              <div className="sm:col-span-3">
                 <div className="mt-2">
                   <FormInput
                     name="address"
@@ -134,7 +134,7 @@ const SignupPage = () => {
                     name="contactNo"
                     type="text"
                     label="Number"
-                    placeholder="Your number"
+                    placeholder="Your Number"
                     className="block w-full rounded-md border-0 py-1.5 px-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                   />
                 </div>
@@ -146,7 +146,7 @@ const SignupPage = () => {
                     name="password"
                     type="password"
                     placeholder="*****"
-                    label="your password"
+                    label="Your Password"
                     className="block w-full rounded-md border-0 py-1.5 px-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                   />
                 </div>

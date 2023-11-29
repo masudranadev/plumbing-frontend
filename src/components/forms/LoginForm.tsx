@@ -9,7 +9,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import Swal from "sweetalert2";
-
+import Modal from "../common/Modal";
 
 const LoginForm = () => {
   const [check, setCheck] = useState<boolean>(true);
@@ -49,19 +49,27 @@ const LoginForm = () => {
     }
   };
   return (
-    <div className="flex justify-center items-center h-screen bg-[#F9FAFB]">
-      <div className="flex flex-col justify-center px-6 py-12 lg:px-8 w-[400px] mx-auto ring bg-white shadow rounded">
-        <div className="sm:mx-auto sm:w-full sm:max-w-sm">
+    <div className="flex justify-center items-center min-h-screen bg-[#F9FAFB]">
+      <div className="flex flex-col justify-center px-6 py-12 lg:px-8 w-[400px] mx-auto ring bg-white shadow rounded my-10">
+        <div className="sm:mx-auto sm:w-full sm:max-w-sm mx-auto">
           <Image
-            width={100}
-            height={100}
-            className="mx-auto h-10 w-auto"
+            width={50}
+            height={50}
+            className="mx-auto h-10 w-10 rounded-full ring"
             src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTe9USNOvH6lyjuI3qWA7NTqtJjA01Q8BPKiM3KhRitWGhbtligN3XKpUHsjLN_idjCj3U&usqp=CAU"
             alt="Your Company"
           />
           <h2 className="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">
-            Sign in to your account
+            Sign in to your Account
           </h2>
+          <p className="text-center mt-2">
+            Get Dashboard access Hits the Access Button
+          </p>
+          <div className="flex justify-center">
+            <label htmlFor="open-modal" className="btn btn-sm btn-error text-slate-50 mt-3 flex justify-center">
+              Access
+            </label>
+          </div>
         </div>
 
         <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
@@ -143,7 +151,7 @@ const LoginForm = () => {
           </form>
 
           <div className="mt-10 text-center text-sm text-gray-500">
-            not have your account?{" "}
+            Not have your account?{" "}
             <Link
               href="/signup"
               className="font-semibold leading-6 text-indigo-600 hover:text-indigo-500"
@@ -158,6 +166,7 @@ const LoginForm = () => {
           <ArrowLeftIcon className="w-6 h-5" />
         </Link>
       </div>
+      <Modal />
     </div>
   );
 };
