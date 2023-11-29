@@ -119,8 +119,8 @@ const Navbar = () => {
               {menu}
             </ul>
           </div>
-          <Link href={"/"} className="btn btn-ghost normal-case text-xl">
-            Plubming
+          <Link href={"/"} className="btn btn-secondary normal-case text-xl">
+            Plumbing
           </Link>
         </div>
         <div className="navbar-center hidden lg:flex">

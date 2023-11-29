@@ -14,7 +14,7 @@ const ServiceProvide = () => {
             </h1>
             <div className="bg-[#0D5BDC] p-3 rounded-md lg:w-1/2">
               <div className="flex justify-center items-center space-x-5">
-                <h2 className="text-2xl lg:text-5xl text-yellow-500 font-bold">90K</h2>
+                <h2 className="text-2xl lg:text-4xl text-yellow-500 font-bold">90K</h2>
                 <div>
                   <div className="flex justify-center mt-2 gap-0.5 ">
                     {Array(5)
@@ -30,7 +30,7 @@ const ServiceProvide = () => {
               </div>
             </div>
           </div>
-          <div className="bg-[#1b5ec9] flex items-center justify-center  rounded-full lg:w-[700px] lg:h-[600px] gap-5 py-5 md:py-0">
+          <div className="bg-[#1b5ec9] flex items-center justify-center  rounded-full lg:h-full w-full gap-5 py-5 md:py-0">
             <div className="grid grid-cols-1 lg:grid-cols-2 justify-center items-center gap-x-5 md:gap-x-10 lg:gap-x-16 gap-y-7 md:gap-y-12 lg:gap-y-24">
               <div className="flex items-center justify-end space-x-5">
                 <Image

@@ -176,7 +176,7 @@ const Services = () => {
                   href={`/service/${service?.id}`}
                   className="absolute top-[42%] scale-0 group-hover:scale-100 transition-all duration-500 ease-in-out"
                 >
-                  <button className="btn inline-block rounded bg-indigo-600 px-4 py-2 text-xs font-medium text-white hover:bg-indigo-700">
+                  <button className="btn inline-block rounded bg-secondary px-4 py-2 text-xs font-medium text-white hover:bg-accent">
                     <EyeIcon className="w-5 h-5" />
                   </button>
                 </Link>
@@ -201,7 +201,7 @@ const Services = () => {
                 </button>
                 <button
                   onClick={() => handleBook(service?.id)}
-                  className="btn btn-outline btn-accent"
+                  className="btn btn-secondary"
                   disabled={
                     role === ENUM_USER_ROLE.ADMIN ||
                     role === ENUM_USER_ROLE.SUPER_ADMIN

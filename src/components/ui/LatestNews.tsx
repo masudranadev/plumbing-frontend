@@ -47,7 +47,7 @@ const LatestNews = () => {
                   />
                 </figure>
                 <div className="card-body">
-                  <p className="text-primary">
+                  <p className="text-secondary">
                     {format(parseISO(blog?.createdAt), "PP")}
                   </p>
                   <h2 className="card-title">

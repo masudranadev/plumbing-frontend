@@ -4,11 +4,11 @@ import Image from "next/image";
 
 const Review = ({ reviews }: { reviews: any }) => {
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
+    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-2">
       {reviews?.map((review: any) => (
         <div
           key={review?.id}
-          className="flex flex-col w-full max-w-lg p-6 divide-y rounded-md divide-gray-700 dark:bg-gray-50 dark:text-gray-900"
+          className="flex flex-col w-full divide-y rounded-md divide-gray-300 dark:bg-gray-50 dark:text-gray-900 border shadow-sm"
         >
           <div className="flex justify-between p-4">
             <div className="flex gap-x-3">
@@ -18,7 +18,7 @@ const Review = ({ reviews }: { reviews: any }) => {
                   alt="Shoes"
                   width={50}
                   height={50}
-                  className="w-full h-full rounded-full ring"
+                  className="w-full h-full rounded-full ring object-fill"
                 />
               </div>
               <div>

@@ -22,11 +22,12 @@ const GetInTouch = () => {
             Cant find your desired service? Let us know 24/7
           </h3>
           <div className="flex flex-col lg:flex-row gap-5">
-            <button onClick={openModal} className="btn btn-accent">
+            <button onClick={openModal} className="btn btn-secondary">
               Request a service
             </button>
-            <button className="btn btn-outline">
-              <MdOutlinePhone className="w-5 h-5 inline-block" /> +8801796682951
+            <button className="btn btn-outline btn-accent group">
+              <MdOutlinePhone className="w-5 h-5 inline-block group-hover:text-slate-50" /> 
+              <span className="group-hover:text-slate-50">+8801796682951</span>
             </button>
           </div>
           <Image

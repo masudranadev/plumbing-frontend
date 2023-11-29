@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { isLoggedin } from "@/services/auth.service";
 import dynamic from "next/dynamic";
 import { useRouter } from "next/navigation";
@@ -12,8 +12,8 @@ export default function DashboardLayout({
 }: {
   children: React.ReactNode;
 }) {
-  const [close, setClose] = useState<boolean>(false);
-  
+  // const [close, setClose] = useState<boolean>(false);
+
   const router = useRouter();
 
   useEffect(() => {
@@ -22,23 +22,14 @@ export default function DashboardLayout({
       router.push("/login");
     }
   }, [router]);
-
   return (
-    <div className="drawer lg:drawer-open">
-      <input id="dashboard-drawer" type="checkbox" className="drawer-toggle" />
-      <div className="drawer-content">
-        {/* Page content here */}
+    <div className="flex h-screen">
+      <Sidebar />
+      <div className="flex-1 flex flex-col overflow-hidden">
         <DashBoardNavbar />
-        <div className="overflow-auto">{children}</div>
-      </div>
-      <div className="drawer-side">
-        <label
-          htmlFor={"dashboard-drawer"}
-          aria-label={`${close && "close"} sidebar`}
-          className="drawer-overlay"
-        ></label>
-        {/* Sidebar content here */}
-        <Sidebar setClose={setClose} />
+        <main className="flex-1 overflow-x-hidden overflow-y-auto bg-slate-200">
+          {children}
+        </main>
       </div>
     </div>
   );

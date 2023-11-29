@@ -59,7 +59,7 @@ const Header = () => {
               <p className="mb-5">
                 {banner?.descripttion}
               </p>
-              <button onClick={openModal} className="btn btn-primary">
+              <button onClick={openModal} className="btn btn-secondary">
                 Online Book
               </button>
             </div>

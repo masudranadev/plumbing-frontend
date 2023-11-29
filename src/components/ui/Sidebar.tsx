@@ -20,22 +20,19 @@ import { FaBlogger } from "react-icons/fa";
 import { FcFeedback } from "react-icons/fc";
 import { RiReservedFill } from "react-icons/ri";
 
-const Sidebar = ({setClose}: any) => {
+const Sidebar = () => {
   
   const { role, userId } = getUserInfo() as any;
   const { data, isLoading } = useProfileQuery(userId);
   const router = useRouter();
   const pathname = usePathname();
-  const handleClose = () => {
-    setClose(true);
-  };
   const logout = () => {
     removeUserInfo(authKey);
     router.push("/login");
   };
 
   return (
-    <div className={`p-4 w-[80vw] md:w-80 min-h-full bg-base-200`}>
+    <div className={`p-4 w-[80vw] md:w-80 min-h-full bg-slate-300`}>
       <Link
         href={"/"}
         role="button"
@@ -84,7 +81,7 @@ const Sidebar = ({setClose}: any) => {
       <ul className="menu text-base-content">
         {role === ENUM_USER_ROLE.USER ? (
           <>
-            <li onClick={handleClose}>
+            <li>
               <Link
               className={`${pathname === "/dashboard" ? "active" : ""}`}
                 href="/dashboard"
@@ -105,7 +102,7 @@ const Sidebar = ({setClose}: any) => {
           </>
         ) : (
           <>
-            <li onClick={handleClose}>
+            <li>
               <Link
                className={`${pathname === "/dashboard" ? "active" : ""}`}
                 href="/dashboard"
@@ -169,7 +166,6 @@ const Sidebar = ({setClose}: any) => {
                className={`${pathname === "/dashboard/users" ? "active" : ""}`}
                 href="/dashboard/users"
               >
-                {" "}
                 <UsersIcon className="w-6 h-6" />
                 Users
               </Link>
@@ -179,7 +175,6 @@ const Sidebar = ({setClose}: any) => {
                className={`${pathname === "/dashboard/category" ? "active" : ""}`}
                 href="/dashboard/category"
               >
-                {" "}
                 <Square3Stack3DIcon className="w-6 h-6" />
                 Category
               </Link>
@@ -192,7 +187,6 @@ const Sidebar = ({setClose}: any) => {
              className={`${pathname === "/dashboard/admin/create" ? "active" : ""}`}
               href="/dashboard/admin/create"
             >
-              {" "}
               <UserPlusIcon className="w-6 h-6" />
               Create Admin
             </Link>

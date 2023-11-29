@@ -33,7 +33,6 @@ const BlogDetails = ({ id }: { id: string }) => {
       return dateB - dateA;
     });
   }
-  console.log(services);
 
   return (
     <div className="container mx-auto min-h-[70vh] py-12">

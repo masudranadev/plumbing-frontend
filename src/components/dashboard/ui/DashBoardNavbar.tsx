@@ -1,7 +1,6 @@
-
 const DashBoardNavbar = () => {
   return (
-    <div className="navbar bg-base-100 lg:hidden">
+    <div className="navbar bg-slate-50 shadow-lg shadow-slate-900">
       <div className="flex-none">
         <label htmlFor="dashboard-drawer" className="btn btn-square btn-ghost">
           <svg

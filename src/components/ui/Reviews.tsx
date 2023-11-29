@@ -174,10 +174,10 @@ const Reviews = () => {
           )}
         </div>
         <div className="absolute right-20 bottom-3 hidden md:flex gap-5">
-          <button className="prev z-10 w-10 h-10 rounded-full bg-blue-500 shadow-xl flex items-center hover:-translate-x-1 transition-all duration-300 justify-center group">
+          <button className="prev z-10 w-10 h-10 rounded-full bg-secondary shadow-xl flex items-center hover:-translate-x-1 transition-all duration-300 justify-center group">
             <AiOutlineLeft className="w-6 h-6 text-white" />
           </button>
-          <button className="next z-10 w-10 h-10 rounded-full bg-blue-500 shadow-xl flex items-center hover:translate-x-1 transition-all duration-300 justify-center group">
+          <button className="next z-10 w-10 h-10 rounded-full bg-secondary shadow-xl flex items-center hover:translate-x-1 transition-all duration-300 justify-center group">
             <AiOutlineRight className="w-6 h-6 text-white" />
           </button>
         </div>

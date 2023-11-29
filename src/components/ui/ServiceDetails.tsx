@@ -16,6 +16,15 @@ import { useServiceQuery, useServicesQuery } from "@/redux/api/serviceApi";
 import { useCategoriesQuery } from "@/redux/api/categoryApi";
 import Review from "./Review";
 import ReviewModal from "./ReviewModal";
+import {
+  ClipboardDocumentCheckIcon,
+  ShoppingBagIcon,
+} from "@heroicons/react/24/solid";
+import { ENUM_USER_ROLE } from "@/enums/user";
+import { getUserInfo, isLoggedin } from "@/services/auth.service";
+import { useRouter } from "next/navigation";
+import Swal from "sweetalert2";
+import { useAddToCartMutation } from "@/redux/api/addToCartApi";
 
 const ServiceDetails = ({ id }: { id: string }) => {
   const [tab, setTab] = useState<string>("details");
@@ -25,6 +34,10 @@ const ServiceDetails = ({ id }: { id: string }) => {
   const { data: reviews, isLoading } = useGetReviewsByServiceIdQuery(id);
   const { data: categoriesData } = useCategoriesQuery({ ...query });
   const { data: serviceData } = useServicesQuery({ ...query });
+  const [addToCart] = useAddToCartMutation();
+  const { role } = getUserInfo() as any;
+  const router = useRouter();
+  const isLoggedIn: boolean = isLoggedin();
   if (isLoading || loading || !serviceData) {
     return <Loading />;
   }
@@ -38,6 +51,40 @@ const ServiceDetails = ({ id }: { id: string }) => {
       return dateB - dateA;
     });
   }
+
+  const handleAddToCart = async (id: string) => {
+    if (!isLoggedIn) {
+      router.push("/login");
+    } else {
+      if (id) {
+        const res: any = await addToCart({ serviceId: id });
+        if (res.data) {
+          Swal.fire({
+            position: "top-end",
+            icon: "success",
+            title: "Service is Added!",
+            showConfirmButton: false,
+            timer: 1500,
+          });
+        } else {
+          Swal.fire({
+            position: "top-end",
+            icon: "error",
+            title: "This service Already Added!",
+            showConfirmButton: false,
+            timer: 1500,
+          });
+        }
+      }
+    }
+  };
+  const handleBook = (id: string) => {
+    if (!isLoggedIn) {
+      router.push("/login");
+    } else {
+      router.push(`/booking/${id}`);
+    }
+  };
 
   return (
     <div className="container mx-auto min-h-[70vh] py-12">
@@ -109,78 +156,52 @@ const ServiceDetails = ({ id }: { id: string }) => {
         {/* right section */}
         <aside className="col-span-4 bg-slate-50 rounded">
           {/* profile or author section */}
-          <div className="m-5 bg-slate-200 rounded">
-            <div className="avatar flex flex-col items-center justify-center">
-              <div className="w-full h-[150px] ring ring-slate-50 focus:ring-2">
+          <div className="m-5 bg-slate-200 rounded pb-5">
+            <div className="flex flex-col justify-center">
+              <div className="h-[150px] w-full">
                 <Image
                   src={data?.image}
-                  alt="Shoes"
+                  alt={data?.title}
                   width={300}
-                  height={100}
-                  className="object-cover object-top w-full h-[150px]"
+                  height={150}
+                  className="w-full h-full"
                 />
               </div>
-              <h2 className="text-3xl font-semibold mt-5">
-                {data?.author?.fullName}
+              <h2 className="text-3xl px-4 font-semibold mt-5">
+                ${data?.price}
               </h2>
-              <p className="px-4 text-justify mt-3">
-                I am Masud Rana. as a full stact developer. I am from
-                bangladesh. I love coding very much. I Looing for a job for my
-                best this industries
+              <h2 className="text-2xl px-4 font-semibold mt-3">
+                {data?.title}
+              </h2>
+              <p className="px-4 text-justify mt-2">
+                Do you want to get service now hits the booking button. or you
+                need to another time so hits the add to cart button. Thank you.
               </p>
-              <nav className="flex gap-x-2 mt-5">
-                <a
-                  href="http://www.facebook.com/masudranawebdev"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="group"
-                >
-                  <span
-                    className="w-10 h-10 rounded-full bg-[#1877f2] group-hover:bg-slate-50 transition-all duration-500 flex items-center justify-center tooltip"
-                    data-tip="facebook"
+              <nav className="flex gap-x-2 mt-5 px-4">
+                <div className="flex flex-col md:flex-row justify-center gap-3">
+                  <button
+                    onClick={() => handleAddToCart(data?.id)}
+                    className="btn btn-outline btn-accent group"
+                    disabled={
+                      role === ENUM_USER_ROLE.ADMIN ||
+                      role === ENUM_USER_ROLE.SUPER_ADMIN
+                    }
                   >
-                    <FaFacebookF className="text-slate-50 group-hover:text-[#1877f2] transition-all duration-500" />
-                  </span>
-                </a>
-                <a
-                  href="http://www.linkedin.com/in/masudranawebdev"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="group"
-                >
-                  <span
-                    className="w-10 h-10 rounded-full bg-[#1877f2] group-hover:bg-slate-50 transition-all duration-500 flex items-center justify-center tooltip"
-                    data-tip="linkedin"
+                    <ShoppingBagIcon className="w-6 h-6 inline-block group-hover:text-slate-50" />
+                    <span className="group-hover:text-slate-50"> Add To Cart</span>
+                  </button>
+                  <button
+                    onClick={() => handleBook(data?.id)}
+                    className="btn btn-secondary group"
+                    disabled={
+                      role === ENUM_USER_ROLE.ADMIN ||
+                      role === ENUM_USER_ROLE.SUPER_ADMIN
+                    }
                   >
-                    <FaLinkedinIn className="text-slate-50 group-hover:text-[#1877f2] transition-all duration-500" />
-                  </span>
-                </a>
-                <a
-                  href="http://www.github.com/masudranawebdev"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="group"
-                >
-                  <span
-                    className="w-10 h-10 rounded-full bg-slate-900 group-hover:bg-slate-50 transition-all duration-500 flex items-center justify-center tooltip"
-                    data-tip="github"
-                  >
-                    <FaGithub className="text-slate-50 group-hover:text-slate-900 transition-all duration-500" />
-                  </span>
-                </a>
-                <a
-                  href="http://mrmasud.netlify.app"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="group"
-                >
-                  <span
-                    className="w-10 h-10 rounded-full bg-slate-900 group-hover:bg-slate-50 transition-all duration-500 flex items-center justify-center tooltip"
-                    data-tip="portfolio"
-                  >
-                    <FaBriefcase className="text-slate-50 group-hover:text-slate-900 transition-all duration-500" />
-                  </span>
-                </a>
+                    <ClipboardDocumentCheckIcon className="w-6 h-6 inline-block group-hover:text-slate-50" />{" "}
+                    <span className="group-hover:text-slate-50">Book now</span>
+                  </button>
+                </div>
               </nav>
             </div>
           </div>
@@ -204,7 +225,7 @@ const ServiceDetails = ({ id }: { id: string }) => {
             </div>
           </div>
           {/* recent blog */}
-          <div className="m-5 rounded">
+          <div className="m-5 rounded mb-16">
             <h2 className="text-2xl font-normal">Best Services</h2>
             <div className="flex gap-x-1 mt-2">
               <span className="w-[100px] h-[5px] bg-primary inline-block rounded-full"></span>
