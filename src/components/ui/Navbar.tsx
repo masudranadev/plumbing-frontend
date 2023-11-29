@@ -14,7 +14,7 @@ const Navbar = () => {
   const router = useRouter();
   const pathname = usePathname();
 
-  const { userId } = getUserInfo() as any;
+  const { userId, role } = getUserInfo() as any;
   const { data, isLoading } = useProfileQuery(userId);
   const arg: any = {};
   const { data: getCarts } = useGetCartsQuery({ ...arg });
@@ -79,14 +79,16 @@ const Navbar = () => {
           Contact
         </Link>
       </li>
-      <li>
-        <Link
-          className={`${pathname === "/dashboard" ? "active" : ""}`}
-          href="/dashboard"
-        >
-          Dashboard
-        </Link>
-      </li>
+      {(role === "admin" || role === "super-admin") && (
+        <li>
+          <Link
+            className={`${pathname === "/dashboard" ? "active" : ""}`}
+            href="/dashboard"
+          >
+            Dashboard
+          </Link>
+        </li>
+      )}
     </>
   );
 
@@ -149,7 +151,10 @@ const Navbar = () => {
                       : "Item"}
                   </span>
                   <div className="card-actions">
-                    <Link href={"/carts"} className="btn btn-sm rounded-full btn-secondary btn-block">
+                    <Link
+                      href={"/carts"}
+                      className="btn btn-sm rounded-full btn-secondary btn-block"
+                    >
                       View cart
                     </Link>
                   </div>
@@ -195,6 +200,16 @@ const Navbar = () => {
                     </Link>
                   </li>
                 )}
+                {role === "user" && (
+                  <li>
+                    <Link
+                      href={"/dashboard/booking"}
+                      className="justify-between"
+                    >
+                      My Booking
+                    </Link>
+                  </li>
+                )}
                 {!userId ? (
                   <>
                     <li>
@@ -205,7 +220,10 @@ const Navbar = () => {
                     </li>
                   </>
                 ) : (
-                  <li onClick={logout} className="btn btn-error text-white">
+                  <li
+                    onClick={logout}
+                    className="btn btn-sm btn-error text-white"
+                  >
                     Logout
                   </li>
                 )}

@@ -114,7 +114,7 @@ const DashboardPage = () => {
     },
   };
   return (
-    <div className="bg-gray-200 min-h-screen py-10 w-full">
+    <div className="bg-gray-200 min-h-screen pb-5 w-full">
       <div className="grid grid-cols-1 md:grid-cols-3 xl:grid-cols-3 gap-5 p-5">
         <div className="bg-white py-4 px-5 rounded-md">
           <div className="flex items-center gap-6">

@@ -14,7 +14,7 @@ const BlogPage = () => {
     },
     {
       label: "Blog",
-      link: "#",
+      link: "",
       active: ""
     },
   ];

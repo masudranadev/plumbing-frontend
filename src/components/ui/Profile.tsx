@@ -14,7 +14,7 @@ const Profile = () => {
 
   return (
     <div className="min-h-screen px-2">
-      <div className="w-full lg:w-[700px] mx-auto flex flex-col lg:flex-row my-10 ring p-5 rounded space-y-4">
+      <div className="w-full lg:w-[700px] mx-auto flex flex-col lg:flex-row my-10 ring p-5 rounded gap-x-3 space-y-4">
         <Image
           src={profile?.profileImg as string}
           alt={profile?.fullName}

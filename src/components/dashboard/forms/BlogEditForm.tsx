@@ -1,13 +1,10 @@
 "use client";
+import BreadCrumbs from "@/components/common/BreadCrumbs";
 import LoadingButton from "@/components/common/LoadingButton";
 import SmallSpinner from "@/components/common/SmallSpinner";
 import Form from "@/components/forms/Form";
 import FormInput from "@/components/forms/FormInput";
-import {
-  useBlogPostMutation,
-  useBlogQuery,
-  useUpdateBlogMutation,
-} from "@/redux/api/blogApi";
+import { useBlogQuery, useUpdateBlogMutation } from "@/redux/api/blogApi";
 import { modules } from "@/utils/modules";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
@@ -15,6 +12,21 @@ import { useState } from "react";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
 import Swal from "sweetalert2";
+
+const items = [
+  {
+    label: "Home",
+    link: "/",
+  },
+  {
+    label: "Blog",
+    link: "/dashboard/blog",
+  },
+  {
+    label: "Update Blog",
+    link: "",
+  },
+];
 
 const BlogEditForm = ({ id }: { id: string }) => {
   const [loading, setLoading] = useState<boolean>(false);
@@ -95,19 +107,20 @@ const BlogEditForm = ({ id }: { id: string }) => {
   };
   if (blogLoading) return null;
   return (
-    <div className="container w-full xl:w-[80%] md:px-20 py-5 mt-5 ring rounded">
+    <div className="p-5">
+      <BreadCrumbs items={items} />
+      <div className="w-full border-b-2 border-slate-300 mt-3 mb-3">
+        <h2 className="text-2xl sm:text-3xl font-bold mb-2">Update Blog</h2>
+      </div>
       <Form submitHandler={handleSubmit} defaultValues={defaultValues}>
-        <div className="space-y-12">
-          <div className="border-b border-gray-900/10 pb-6">
-            <h2 className="text-base font-semibold leading-7 text-gray-900">
-              Update Blog Post
-            </h2>
-            <p className="mt-1 text-sm leading-6 text-gray-600">
+        <div className="bg-slate-50 rounded p-5">
+          <div className="">
+            <p className="text-sm leading-6 text-gray-600">
               Provide all information for blog
             </p>
-
-            <div className="col-span-2 flex flex-col gap-7">
-              <div className="mt-2 flex gap-5 items-center justify-center rounded-lg border border-dashed border-gray-900/25 px-6 py-10 w-full md:w-1/2">
+            <div className="col-span-2">
+              <label htmlFor="image">Thumbnail</label>
+              <div className="mt-1 flex gap-5 items-center justify-center rounded-lg border border-dashed border-gray-900/25 px-3 py-3 w-full md:w-1/2">
                 <input
                   type="file"
                   accept="image/*"
@@ -117,7 +130,7 @@ const BlogEditForm = ({ id }: { id: string }) => {
                 />
                 {data?.thumbnail && (
                   <div className="avatar">
-                    <div className="w-24 rounded-xl">
+                    <div className="w-24 rounded">
                       <Image
                         width={100}
                         height={100}
@@ -128,8 +141,8 @@ const BlogEditForm = ({ id }: { id: string }) => {
                   </div>
                 )}
               </div>
-              <div className="col-span-3 w-full md:w-1/2">
-                <div className="mt-2 w-full">
+              <div className="col-span-3 w-full md:w-1/2 mt-3">
+                <div className="w-full">
                   <FormInput
                     type="text"
                     name="title"
@@ -142,32 +155,31 @@ const BlogEditForm = ({ id }: { id: string }) => {
             </div>
           </div>
 
-          <div className="border-gray-900/10 pb-6">
+          <div className="mt-3">
             <h2 className="text-base font-semibold leading-7 text-gray-900">
               Blog post Content
             </h2>
-
-            <div className="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6 h-auto">
-              <div className="col-span-6 min-h-[300px]">
+            <div className="grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6 h-auto mt-2">
+              <div className="col-span-6">
                 <ReactQuill
                   modules={modules}
                   theme="snow"
                   onChange={handleContentChange}
                   defaultValue={data?.content}
+                  className="rounded"
                 />
               </div>
             </div>
           </div>
-        </div>
-
-        <div className="flex items-center justify-end gap-x-6">
-          <LoadingButton
-            type="submit"
-            className="btn btn-accent mt-3 w-full"
-            value="updating..."
-          >
-            {loading || isLoading ? <SmallSpinner /> : "Update"}
-          </LoadingButton>
+          <div className="flex justify-end mt-3">
+            <LoadingButton
+              type="submit"
+              className="btn btn-accent mt-3 w-full"
+              value="updating..."
+            >
+              {loading || isLoading ? <SmallSpinner /> : "Update"}
+            </LoadingButton>
+          </div>
         </div>
       </Form>
     </div>

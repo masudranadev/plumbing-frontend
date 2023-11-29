@@ -11,6 +11,17 @@ import {
 import { getUserInfo } from "@/services/auth.service";
 import { ENUM_USER_ROLE } from "@/enums/user";
 import { ENUM_STATUS } from "@/enums/status";
+import BreadCrumbs from "@/components/common/BreadCrumbs";
+const items = [
+  {
+    label: "Home",
+    link: "/",
+  },
+  {
+    label: "Booking",
+    link: "",
+  },
+];
 
 const DashboardBooking = () => {
   const arg: any = {};
@@ -166,11 +177,12 @@ const DashboardBooking = () => {
     return <Loading />;
   }
   return (
-    <div className="px-5 py-10">
+    <div className="px-5 py-2">
+      <BreadCrumbs items={items} />
       <div className="flex justify-between border-b-2 pb-1">
         <h1 className="text-4xl font-bold">Booking List</h1>
       </div>
-      <div className="overflow-x-auto mt-10">
+      <div className="overflow-x-auto mt-5 rounded">
         <table className="min-w-full divide-y-2 divide-gray-200 bg-white text-sm">
           <thead className="text-left">
             <tr>
@@ -181,12 +193,12 @@ const DashboardBooking = () => {
                 Title
               </th>
               <th className="whitespace-nowrap px-4 py-2 font-medium text-gray-900">
-                Created Date
+                Booking Date
               </th>
               <th className="whitespace-nowrap px-4 py-2 font-medium text-gray-900">
                 Status
               </th>
-              <th className="px-4 py-2"></th>
+              <th className="px-4 py-2">Action</th>
             </tr>
           </thead>
 
@@ -226,7 +238,7 @@ const DashboardBooking = () => {
                     <button
                       onClick={() => handleCancel(booking?.id)}
                       disabled={booking?.status === ENUM_STATUS.APPROVED}
-                      className="btn btn-error inline-block rounded px-4 py-2 text-xs font-medium text-white "
+                      className="btn btn-sm btn-error inline-block rounded px-4 py-2 text-xs font-medium text-white "
                     >
                       Cancel
                     </button>

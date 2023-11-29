@@ -10,7 +10,17 @@ import { format, parseISO } from "date-fns";
 import { TrashIcon } from "@heroicons/react/20/solid";
 import { EyeIcon, PencilSquareIcon } from "@heroicons/react/24/solid";
 import Swal from "sweetalert2";
-
+import BreadCrumbs from "@/components/common/BreadCrumbs";
+const items = [
+  {
+    label: "Home",
+    link: "/",
+  },
+  {
+    label: "Service",
+    link: "",
+  },
+];
 const DashboardService = () => {
   const arg: any = {};
   const { data, isLoading } = useServicesQuery({ ...arg });
@@ -68,14 +78,15 @@ const DashboardService = () => {
     return <Loading />;
   }
   return (
-    <div className="px-5 py-10 ">
-      <div className="flex justify-between border-b-2 pb-1">
-        <h1 className="text-4xl font-bold">Service List</h1>
-        <Link href="/dashboard/service/create" className="btn btn-accent">
+    <div className="px-5 py-5">
+      <BreadCrumbs items={items} />
+      <div className="flex justify-between border-b-2 border-slate-300 pb-3">
+        <h1 className="text-3xl font-bold">Service List</h1>
+        <Link href="/dashboard/service/create" className="btn btn-sm btn-accent text-slate-50">
           Add Service
         </Link>
       </div>
-      <div className="mt-10 overflow-x-auto">
+      <div className="mt-5 overflow-x-auto rounded">
         <table className="min-w-full divide-y-2 divide-gray-200 bg-white text-sm">
           <thead className="text-left">
             <tr>
@@ -91,7 +102,7 @@ const DashboardService = () => {
               <th className="whitespace-nowrap px-4 py-2 font-medium text-gray-900">
                 Price
               </th>
-              <th className="px-4 py-2"></th>
+              <th className="px-4 py-2 text-center">Action</th>
             </tr>
           </thead>
 
@@ -119,20 +130,23 @@ const DashboardService = () => {
                 <td className="whitespace-nowrap px-4 py-2 text-primary">
                   {service?.price} ৳
                 </td>
-                <td className="whitespace-nowrap px-4 py-2 space-x-1">
-                  <button className="btn inline-block rounded bg-indigo-600 px-4 py-2 text-xs font-medium text-white hover:bg-indigo-700">
-                    <Link href={`/dashboard/service/edit/${service?.id}`}>
-                      <PencilSquareIcon className="w-5 h-5" />
-                    </Link>
-                  </button>
-                  <button className="btn inline-block rounded bg-indigo-600 px-4 py-2 text-xs font-medium text-white hover:bg-indigo-700">
-                    <Link href={`/service/${service?.id}`}>
-                      <EyeIcon className="w-5 h-5" />
-                    </Link>
-                  </button>
+                <td className="whitespace-nowrap px-4 py-2 space-x-1 flex justify-center">
+                  <Link
+                    className="btn btn-sm btn-accent text-slate-50"
+                    href={`/dashboard/service/edit/${service?.id}`}
+                  >
+                    <PencilSquareIcon className="w-5 h-5" />
+                  </Link>
+
+                  <Link
+                    className="btn btn-sm btn-accent text-slate-50"
+                    href={`/service/${service?.id}`}
+                  >
+                    <EyeIcon className="w-5 h-5" />
+                  </Link>
                   <button
                     onClick={() => handleDelete(service?.id)}
-                    className="btn btn-error inline-block rounded px-4 py-2 text-xs font-medium text-white "
+                    className="btn btn-sm btn-error text-slate-50"
                   >
                     <TrashIcon className="w-5 h-5" />
                   </button>

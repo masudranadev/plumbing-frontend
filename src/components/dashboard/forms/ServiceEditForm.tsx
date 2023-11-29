@@ -15,6 +15,21 @@ import Swal from "sweetalert2";
 import { toast } from "react-toastify";
 import Loading from "@/components/common/Loading";
 import Image from "next/image";
+import BreadCrumbs from "@/components/common/BreadCrumbs";
+const items = [
+  {
+    label: "Home",
+    link: "/",
+  },
+  {
+    label: "Service",
+    link: "/dashboard/service",
+  },
+  {
+    label: "Update Service",
+    link: "",
+  },
+];
 
 const ServiceEditForm = ({ id }: { id: string }) => {
   const [image, setImage] = useState<File | null>(null);
@@ -25,7 +40,7 @@ const ServiceEditForm = ({ id }: { id: string }) => {
     title: data?.title,
     description: data?.description,
   };
-  const [updateService, {isLoading: loading}] = useUpdateServiceMutation();
+  const [updateService, { isLoading: loading }] = useUpdateServiceMutation();
   const router = useRouter();
 
   const handleImageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -70,10 +85,10 @@ const ServiceEditForm = ({ id }: { id: string }) => {
     } catch (error) {
       console.error("Error uploading image:", error);
     }
-    
+
     const res: any = await updateService({ id, body: values });
     console.log(res);
-        
+
     if (res.data as any) {
       Swal.fire("service updated Successfully!");
       router.push("/dashboard/service");
@@ -86,23 +101,18 @@ const ServiceEditForm = ({ id }: { id: string }) => {
     return <Loading />;
   }
   return (
-    <div className="bg-white max-w-[1020px] mx-auto my-24">
-      <div className="flex flex-wrap">
-        <div className="w-full px-4">
-          <div className="mx-auto mb-12 max-w-[510px] text-center lg:mb-20">
-            <h2 className="mb-4 text-3xl font-bold text-dark sm:text-4xl md:text-[40px]">
-              Service updated
-            </h2>
-          </div>
-        </div>
+    <div className="p-5">
+      <BreadCrumbs items={items} />
+      <div className="w-full border-b-2 border-slate-300 mt-3 mb-3">
+        <h2 className="text-2xl sm:text-3xl font-bold mb-2">Update Service</h2>
       </div>
       <Form submitHandler={handleSubmit} defaultValues={defaultValues}>
-        <div className="p-10 shadow-md">
+        <div className="bg-slate-50 rounded p-5 shadow-md">
           <label
             htmlFor="image"
             className="block text-sm font-medium leading-6 text-gray-900"
           >
-            Image
+            Thumbnail
           </label>
 
           <div className="mt-2 flex items-center w-1/2 justify-between gap-5 rounded-lg border border-dashed border-gray-900/25 px-6 py-10">

@@ -16,11 +16,25 @@ import SelectFormField, {
 } from "@/components/forms/SelectFormField";
 import { useCategoriesQuery } from "@/redux/api/categoryApi";
 import Loading from "@/components/common/Loading";
-
+import BreadCrumbs from "@/components/common/BreadCrumbs";
+const items = [
+  {
+    label: "Home",
+    link: "/",
+  },
+  {
+    label: "service",
+    link: "/dashboard/service",
+  },
+  {
+    label: "Add Service",
+    link: "",
+  },
+];
 const ServiceAddForm = () => {
   const [image, setImage] = useState<File | null>(null);
   const [imagePreview, setImagePreview] = useState(null);
-  const [addService, {isLoading: loading}] = useAddServiceMutation();
+  const [addService, { isLoading: loading }] = useAddServiceMutation();
   const query: Record<string, any> = {};
   const { data, isLoading } = useCategoriesQuery({ ...query });
   const router = useRouter();
@@ -95,18 +109,13 @@ const ServiceAddForm = () => {
     return <Loading />;
   }
   return (
-    <div className="bg-white max-w-[1020px] mx-auto my-24">
-      <div className="flex flex-wrap">
-        <div className="w-full px-4">
-          <div className="mx-auto mb-12 max-w-[510px] text-center lg:mb-20">
-            <h2 className="mb-4 text-3xl font-bold text-dark sm:text-4xl md:text-[40px]">
-              Service add
-            </h2>
-          </div>
-        </div>
+    <div className="p-5">
+      <BreadCrumbs items={items} />
+      <div className="w-full border-b-2 border-slate-300 mt-3 mb-3">
+        <h2 className="text-2xl sm:text-3xl font-bold mb-2">Add Service</h2>
       </div>
       <Form submitHandler={handleSubmit}>
-        <div className="p-10 shadow-md">
+        <div className="shadow-md px-5 py-2 bg-slate-50 rounded">
           <label
             htmlFor="image"
             className="block text-sm font-medium leading-6 text-gray-900"
