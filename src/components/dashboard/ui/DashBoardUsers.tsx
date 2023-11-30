@@ -8,8 +8,39 @@ import Swal from "sweetalert2";
 import { useMakeAdminMutation, useUsersQuery } from "@/redux/api/userApi";
 import { ENUM_USER_ROLE } from "@/enums/user";
 import { getUserInfo } from "@/services/auth.service";
-
+import { useState } from "react";
+import { IUserProfile } from "@/types";
+import BreadCrumbs from "@/components/common/BreadCrumbs";
+const tabs = [
+  {
+    label: "All",
+    role: "All",
+  },
+  {
+    label: "User",
+    role: "user",
+  },
+  {
+    label: "Admin",
+    role: "admin",
+  },
+  {
+    label: "Super-Admin",
+    role: "super_admin",
+  },
+];
+const items = [
+  {
+    label: "Dashboard",
+    link: "/dashboard",
+  },
+  {
+    label: "Users",
+    link: "",
+  },
+];
 const DashboardUsers = () => {
+  const [status, setStatus] = useState<string>("All");
   const arg: any = {};
   const { data, isLoading } = useUsersQuery({ ...arg });
   const [makeAdmin] = useMakeAdminMutation();
@@ -70,37 +101,65 @@ const DashboardUsers = () => {
         }
       });
   };
+  let users: IUserProfile[] | undefined = [];
+  if (status === "user") {
+    users = data?.users?.filter((user) => user.role === status);
+  } else if (status === "admin") {
+    users = data?.users?.filter((user) => user.role === status);
+  } else if (status === "super_admin") {
+    users = data?.users?.filter((user) => user.role === status);
+  } else {
+    users = data?.users;
+  }
 
   if (isLoading) {
     return <Loading />;
   }
   return (
-    <div className="px-5 py-10">
-      <div className="flex justify-between border-b-2 pb-1">
-        <h1 className="text-4xl font-bold">Users List</h1>
+    <div className="p-5">
+      <BreadCrumbs items={items} />
+      <div className="border-b-2 border-slate-300 pb-2 mb-3">
+        <h1 className="text-3xl font-semibold">Users List</h1>
       </div>
-      <div className="overflow-x-auto mt-10">
+      <div role="tablist" className="tabs tabs-boxed">
+        {tabs?.map((tab, i) => (
+          <a
+            key={i}
+            role="tab"
+            onClick={() => setStatus(tab?.role)}
+            className={`tab text-slate-900 ${
+              tab?.role === status && "tab-active"
+            }`}
+          >
+            {tab.label}
+          </a>
+        ))}
+      </div>
+      <div className="overflow-x-auto mt-5 rounded">
         <table className="min-w-full divide-y-2 divide-gray-200 bg-white text-sm">
           <thead className="text-left">
             <tr>
               <th className="whitespace-nowrap px-4 py-2 font-medium text-gray-900">
-                Image
+                Avater
               </th>
               <th className="whitespace-nowrap px-4 py-2 font-medium text-gray-900">
-                Name
+                User Name
               </th>
               <th className="whitespace-nowrap px-4 py-2 font-medium text-gray-900">
-                Created Date
+                Email
+              </th>
+              <th className="whitespace-nowrap px-4 py-2 font-medium text-gray-900">
+                Account Date
               </th>
               <th className="whitespace-nowrap px-4 py-2 font-medium text-gray-900">
                 Role
               </th>
-              <th className="px-4 py-2"></th>
+              <th className="px-4 py-2">Action</th>
             </tr>
           </thead>
 
           <tbody className="divide-y divide-gray-200">
-            {data?.users?.map((user: any) => (
+            {users?.map((user: any) => (
               <tr key={user?.id}>
                 <td className="whitespace-nowrap px-4 py-2 font-medium text-gray-900">
                   <div className="avatar">
@@ -118,15 +177,28 @@ const DashboardUsers = () => {
                   {user?.fullName}
                 </td>
                 <td className="whitespace-nowrap px-4 py-2 text-gray-700">
+                  {user?.email}
+                </td>
+                <td className="whitespace-nowrap px-4 py-2 text-gray-700">
                   {format(parseISO(user?.createdAt), "PP")}
                 </td>
                 <td className="whitespace-nowrap px-4 py-2 text-primary">
-                  {user?.role}
+                  <span
+                    className={`border px-3 py-1 rounded-full ${
+                      user?.role === "user"
+                        ? "border-yellow-500 bg-yellow-600 text-yellow-200"
+                        : user?.role === "admin"
+                        ? "border-green-500 bg-green-600 text-green-200"
+                        : "border-red-500 bg-red-600 text-red-200"
+                    }`}
+                  >
+                    {user?.role}
+                  </span>
                 </td>
-                <td className="whitespace-nowrap px-4 py-2 items-center flex space-x-2">
+                <td className="whitespace-nowrap px-4 py-2 flex items-center space-x-2">
                   <Link
                     href={`/dashboard/profile/${user?.id}`}
-                    className="btn btn-info flex items-center justify-center roundedpx-4 py-2 text-xs font-medium text-white "
+                    className="btn btn-sm btn-info text-slate-50 font-medium"
                   >
                     <EyeIcon className="w-5 h-5" />
                   </Link>
@@ -135,7 +207,7 @@ const DashboardUsers = () => {
                       onClick={() =>
                         handleMakeAdmin({ id: user?.id, role: "admin" })
                       }
-                      className="btn btn-success inline-block rounded px-4 py-2 text-xs font-medium text-white "
+                      className="btn btn-sm btn-success text-slate-50 font-medium "
                     >
                       Make-admin
                     </button>
@@ -146,7 +218,7 @@ const DashboardUsers = () => {
                         onClick={() =>
                           handleMakeAdmin({ id: user?.id, role: "user" })
                         }
-                        className="btn btn-error inline-block rounded px-4 py-2 text-xs font-medium text-white "
+                        className="btn btn-sm btn-error text-slate-50 font-medium"
                       >
                         Make-user
                       </button>

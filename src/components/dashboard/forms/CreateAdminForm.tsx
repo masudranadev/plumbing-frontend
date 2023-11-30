@@ -1,15 +1,29 @@
 "use client";
+import BreadCrumbs from "@/components/common/BreadCrumbs";
 import LoadingButton from "@/components/common/LoadingButton";
 import SmallSpinner from "@/components/common/SmallSpinner";
 import Form from "@/components/forms/Form";
 import FormInput from "@/components/forms/FormInput";
-import SelectFormField, { SelectOptions } from "@/components/forms/SelectFormField";
+import SelectFormField, {
+  SelectOptions,
+} from "@/components/forms/SelectFormField";
 import { useCreateAdminMutation } from "@/redux/api/adminApi";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { toast } from "react-toastify";
 import Swal from "sweetalert2";
+
+const items = [
+  {
+    label: "Dashboard",
+    link: "/dashboard",
+  },
+  {
+    label: "Make Admin",
+    link: "",
+  },
+];
 
 const CreateAdminForm = () => {
   const [image, setImage] = useState<File | null>(null);
@@ -21,8 +35,8 @@ const CreateAdminForm = () => {
     {
       label: "অ্যাডমিন",
       value: "admin",
-    }
-  ]
+    },
+  ];
 
   const handleImageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files && event.target.files[0];
@@ -62,7 +76,7 @@ const CreateAdminForm = () => {
           //akhane api call hobe
           const res: any = await createAdmin(data);
           if (res.data as any) {
-            router.push("/dashboard/users")
+            router.push("/dashboard/users");
             Swal.fire({
               position: "top-end",
               icon: "success",
@@ -87,129 +101,125 @@ const CreateAdminForm = () => {
   };
 
   return (
-    <div className="container xl:w-[40%] px-20 py-5 mt-5 ring rounded">
+    <div className="p-5">
+      <BreadCrumbs items={items} />
+      <h2 className="text-3xl font-medium leading-7 pb-2 my-3 border-b-2 border-slate-300">
+        অ্যাডমিন তৈরী করুন
+      </h2>
       <Form submitHandler={handleSubmit}>
-        <div className="space-y-12">
-          <div className="border-b border-gray-900/10 pb-12">
-            <h2 className="text-base font-semibold leading-7 text-gray-900">
-            অ্যাডমিন তৈরী করুন
-            </h2>
+        <div className="p-5 rounded bg-slate-50">
+          <div className="">
             <p className="mt-1 text-sm leading-6 text-gray-600">
               আপনি অ্যাডমিন এর সকল তথ্য সঠিক ভাবে দিন ।
             </p>
-
-            <div className="col-span-2">
-              <div className="mt-2 flex w-full gap-5 items-center justify-center rounded-lg border border-dashed border-gray-900/25 px-6 py-10">
-                <input
-                  type="file"
-                  accept="image/*"
-                  id="image"
-                  onChange={handleImageChange}
-                  className="file-input file-input-bordered w-full"
-                  required
-                />
-                {imagePreview && (
-                  <div className="avatar">
-                    <div className="w-24 rounded-xl">
-                      <Image
-                        width={100}
-                        height={100}
-                        alt="image"
-                        src={imagePreview}
-                      />
+            <div className="mt-5 border px-1 rounded py-2">
+              <div className="col-span-2">
+                <label htmlFor="image">প্রোফাইল ছবি</label>
+                <div className="mt-2 flex lg:w-1/2 gap-5 items-center justify-center rounded-lg border border-dashed border-gray-900/25 px-6 py-10">
+                  <input
+                    type="file"
+                    accept="image/*"
+                    id="image"
+                    onChange={handleImageChange}
+                    className="file-input file-input-bordered w-full"
+                    required
+                  />
+                  {imagePreview && (
+                    <div className="avatar">
+                      <div className="w-24 rounded-xl">
+                        <Image
+                          width={100}
+                          height={100}
+                          alt="image"
+                          src={imagePreview}
+                        />
+                      </div>
                     </div>
+                  )}
+                </div>
+              </div>
+            </div>
+
+            <div className="mt-5 border px-1 rounded py-2">
+              <h2 className="text-base font-semibold leading-7 border-b border-slate-300">
+                ব্যক্তিগত তথ্য
+              </h2>
+
+              <div className="mt-5 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
+                <div className="sm:col-span-3">
+                  <div className="mt-2">
+                    <FormInput
+                      type="text"
+                      name="fullName"
+                      placeholder="নাম লিখুন"
+                      label="নাম"
+                      className="block w-full rounded-md border-0 py-1.5 px-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                    />
                   </div>
-                )}
-              </div>
-            </div>
-          </div>
-
-          <div className="border-b border-gray-900/10 pb-12">
-            <h2 className="text-base font-semibold leading-7 text-gray-900">
-              ব্যক্তিগত তথ্য
-            </h2>
-
-            <div className="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
-              <div className="sm:col-span-3">
-                <div className="mt-2">
-                  <FormInput
-                    type="text"
-                    name="fullName"
-                    placeholder="নাম লিখুন"
-                    label="নাম"
-                    className="block w-full rounded-md border-0 py-1.5 px-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                  />
                 </div>
-              </div>
 
-              <div className="sm:col-span-3">
-                <div className="mt-2">
-                  <FormInput
-                    name="email"
-                    type="email"
-                    label="ইমেইল"
-                    placeholder="ইমেইল লিখুন"
-                    className="block w-full rounded-md border-0 py-1.5 px-2  text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                  />
+                <div className="sm:col-span-3">
+                  <div className="mt-2">
+                    <FormInput
+                      name="email"
+                      type="email"
+                      label="ইমেইল"
+                      placeholder="ইমেইল লিখুন"
+                      className="block w-full rounded-md border-0 py-1.5 px-2  text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                    />
+                  </div>
                 </div>
-              </div>
-              <div className="col-span-3">
-                <div className="mt-2">
-                  <FormInput
-                    name="address"
-                    label="ঠিকানা"
-                    type="text"
-                    placeholder="ঠিকানা লিখুন"
-                    className="block w-full rounded-md border-0 py-1.5 px-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                  />
+                <div className="col-span-3">
+                  <div className="mt-2">
+                    <FormInput
+                      name="address"
+                      label="ঠিকানা"
+                      type="text"
+                      placeholder="ঠিকানা লিখুন"
+                      className="block w-full rounded-md border-0 py-1.5 px-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                    />
+                  </div>
                 </div>
-              </div>
 
-              <div className="sm:col-span-3">
-                <div className="mt-2">
-                  <FormInput
-                    name="contactNo"
-                    type="text"
-                    label="নম্বর"
-                    placeholder="নম্বর লিখুন"
-                    className="block w-full rounded-md border-0 py-1.5 px-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                  />
+                <div className="sm:col-span-3">
+                  <div className="mt-2">
+                    <FormInput
+                      name="contactNo"
+                      type="text"
+                      label="নম্বর"
+                      placeholder="নম্বর লিখুন"
+                      className="block w-full rounded-md border-0 py-1.5 px-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                    />
+                  </div>
                 </div>
-              </div>
 
-              <div className="sm:col-span-3">
-                <div className="mt-2">
-                  <SelectFormField
-                    name="role"
-                    options={roles as SelectOptions[]}
-                    placeholder="নির্বাচন করুন"
-                    label="ভূমিকা"
-                    className="block w-full rounded-md border-0 py-1.5 px-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                  />
+                <div className="sm:col-span-3">
+                  <div className="mt-2">
+                    <SelectFormField
+                      name="role"
+                      options={roles as SelectOptions[]}
+                      placeholder="নির্বাচন করুন"
+                      label="ভূমিকা"
+                      className="block w-full rounded-md border-0 py-1.5 px-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                    />
+                  </div>
                 </div>
-              </div>
-              <div className="sm:col-span-3">
-                <div className="mt-2">
-                  <FormInput
-                    name="password"
-                    type="password"
-                    placeholder="*****"
-                    label="পাসওয়ার্ড"
-                    className="block w-full rounded-md border-0 py-1.5 px-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                  />
+                <div className="sm:col-span-3">
+                  <div className="mt-2">
+                    <FormInput
+                      name="password"
+                      type="password"
+                      placeholder="*****"
+                      label="পাসওয়ার্ড"
+                      className="block w-full rounded-md border-0 py-1.5 px-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                    />
+                  </div>
                 </div>
               </div>
             </div>
           </div>
-        </div>
-
-        <div className="mt-6 flex items-center justify-end gap-x-6">
-          <div className="mt-4">
-            <LoadingButton
-              type="submit"
-              className="btn btn-accent mt-3 w-full"
-              value="Login"
-            >
+          <div className="mt-4 flex items-center justify-end gap-x-6">
+            <LoadingButton type="submit">
               {loading ? <SmallSpinner /> : "তৈরী করুন"}
             </LoadingButton>
           </div>

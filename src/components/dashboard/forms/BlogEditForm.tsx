@@ -15,8 +15,8 @@ import Swal from "sweetalert2";
 
 const items = [
   {
-    label: "Home",
-    link: "/",
+    label: "Dashboard",
+    link: "/dashboard",
   },
   {
     label: "Blog",

@@ -79,7 +79,7 @@ const Navbar = () => {
           Contact
         </Link>
       </li>
-      {(role === "admin" || role === "super-admin") && (
+      {(role === "admin" || role === "super_admin") && (
         <li>
           <Link
             className={`${pathname === "/dashboard" ? "active" : ""}`}

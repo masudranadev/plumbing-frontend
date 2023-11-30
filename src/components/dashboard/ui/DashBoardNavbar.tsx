@@ -1,15 +1,15 @@
 import { authKey } from "@/constants/storageKey";
 import { useProfileQuery } from "@/redux/api/profileApi";
 import { getUserInfo, removeUserInfo } from "@/services/auth.service";
+import { Bars4Icon } from "@heroicons/react/24/solid";
 import Image from "next/image";
 import Link from "next/link";
-import { usePathname, useRouter } from "next/navigation";
+import { useRouter } from "next/navigation";
 
 const DashBoardNavbar = () => {
-  const { role, userId } = getUserInfo() as any;
+  const { userId } = getUserInfo() as any;
   const { data, isLoading } = useProfileQuery(userId);
   const router = useRouter();
-  const pathname = usePathname();
   const logout = () => {
     removeUserInfo(authKey);
     router.push("/login");
@@ -18,6 +18,7 @@ const DashBoardNavbar = () => {
   return (
     <div className="navbar bg-base-100 pr-10">
       <div className="flex-1">
+        <Bars4Icon className="w-6 h-6 lg:hidden" />
         <a className="text-xl">Welcome to our dashboard</a>
       </div>
       <div className="flex-none gap-2">
@@ -64,7 +65,7 @@ const DashBoardNavbar = () => {
           </div>
           <ul className="mt-3 z-[1] p-2 shadow menu menu-sm dropdown-content bg-base-100 rounded-box w-52">
             <li>
-              <Link href={"/profile"} className="justify-between">
+              <Link  href={`/dashboard/profile/${userId}`} className="justify-between">
                 My Profile
               </Link>
             </li>

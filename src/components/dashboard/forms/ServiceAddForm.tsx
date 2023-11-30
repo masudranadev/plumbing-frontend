@@ -19,8 +19,8 @@ import Loading from "@/components/common/Loading";
 import BreadCrumbs from "@/components/common/BreadCrumbs";
 const items = [
   {
-    label: "Home",
-    link: "/",
+    label: "Dashboard",
+    link: "/dashboard",
   },
   {
     label: "service",

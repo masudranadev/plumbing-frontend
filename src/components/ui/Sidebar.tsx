@@ -1,34 +1,23 @@
 "use client";
-import { authKey } from "@/constants/storageKey";
 import { ENUM_USER_ROLE } from "@/enums/user";
-import { useProfileQuery } from "@/redux/api/profileApi";
-import { getUserInfo, removeUserInfo } from "@/services/auth.service";
+import { getUserInfo } from "@/services/auth.service";
 import { Square3Stack3DIcon } from "@heroicons/react/24/outline";
 import {
-  Bars4Icon,
   HomeIcon,
   QuestionMarkCircleIcon,
   UserPlusIcon,
   UsersIcon,
   WrenchScrewdriverIcon,
 } from "@heroicons/react/24/solid";
-import Image from "next/image";
 import Link from "next/link";
-import { usePathname, useRouter } from "next/navigation";
-import { useState } from "react";
+import { usePathname } from "next/navigation";
 import { FaBlogger } from "react-icons/fa";
 import { FcFeedback } from "react-icons/fc";
 import { RiReservedFill } from "react-icons/ri";
 
 const Sidebar = () => {
-  const { role, userId } = getUserInfo() as any;
-  const { data, isLoading } = useProfileQuery(userId);
-  const router = useRouter();
+  const { role } = getUserInfo() as any;
   const pathname = usePathname();
-  const logout = () => {
-    removeUserInfo(authKey);
-    router.push("/login");
-  };
 
   return (
     <div className={`p-4 w-[80vw] md:w-80 min-h-full bg-slate-300`}>
@@ -38,8 +27,7 @@ const Sidebar = () => {
             href={"/"}
             className="w-full text-xl px-3 text-left bg-slate-400 text-slate-100"
           >
-            <HomeIcon className="w-6 h-6" />
-            Home
+            Plumbing
           </Link>
         </li>
       </ul>
@@ -65,7 +53,7 @@ const Sidebar = () => {
                 className={`${pathname === "/dashboard" ? "active" : ""}`}
                 href="/dashboard"
               >
-                <Bars4Icon className="w-6 h-6" />
+                <HomeIcon className="w-6 h-6" />
                 Dashboard
               </Link>
             </li>

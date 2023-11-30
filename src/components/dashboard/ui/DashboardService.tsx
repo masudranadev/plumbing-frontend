@@ -13,8 +13,8 @@ import Swal from "sweetalert2";
 import BreadCrumbs from "@/components/common/BreadCrumbs";
 const items = [
   {
-    label: "Home",
-    link: "/",
+    label: "Dashboard",
+    link: "/dashboard",
   },
   {
     label: "Service",
@@ -131,7 +131,7 @@ const DashboardService = () => {
                   {format(parseISO(service?.createdAt), "PP")}
                 </td>
                 <td className="whitespace-nowrap px-4 py-2 text-primary">
-                  {service?.price} ৳
+                  ${service?.price}
                 </td>
                 <td className="whitespace-nowrap px-4 py-2 space-x-1 flex justify-center">
                   <Link

@@ -9,7 +9,16 @@ import {
   useCategoriesQuery,
   useDeleteCategoryMutation,
 } from "@/redux/api/categoryApi";
-
+import BreadCrumbs from "@/components/common/BreadCrumbs";
+const items = [
+  {
+    label: "Dashboard",
+    link: "/dashboard",
+  },{
+    label: "Category",
+    link: ""
+  }
+]
 const DashboardCategory = () => {
   const arg: any = {};
   const { data, isLoading } = useCategoriesQuery({ ...arg });
@@ -68,14 +77,15 @@ const DashboardCategory = () => {
     return <Loading />;
   }
   return (
-    <div className="px-5 py-10">
-      <div className="flex justify-between border-b-2 pb-1">
-        <h1 className="text-4xl font-bold">Categories List</h1>
-        <Link href="/dashboard/category/create" className="btn btn-accent">
+    <div className="p-5">
+      <BreadCrumbs items={items}/>
+      <div className="flex justify-between border-b-2 border-slate-300 pb-2 my-3">
+        <h1 className="text-3xl font-semibold">Categories List</h1>
+        <Link href="/dashboard/category/create" className="btn btn-sm btn-accent text-slate-50">
           Add Category
         </Link>
       </div>
-      <div className="overflow-x-auto mt-10">
+      <div className="overflow-x-auto mt-5 rounded">
         <table className="min-w-full divide-y-2 divide-gray-200 bg-white text-sm">
           <thead className="text-left">
             <tr>
@@ -83,10 +93,10 @@ const DashboardCategory = () => {
                 Title
               </th>
               <th className="whitespace-nowrap px-4 py-2 font-medium text-gray-900">
-                Created Date
+                Publish Date
               </th>
 
-              <th className="px-4 py-2"></th>
+              <th className="px-4 py-2 text-center">Action</th>
             </tr>
           </thead>
 
@@ -99,15 +109,13 @@ const DashboardCategory = () => {
                 <td className="whitespace-nowrap px-4 py-2 text-gray-700">
                   {format(parseISO(category?.createdAt), "PP")}
                 </td>
-                <td className="whitespace-nowrap px-4 py-2 space-x-1">
-                  <button className="btn inline-block rounded bg-indigo-600 px-4 py-2 text-xs font-medium text-white hover:bg-indigo-700">
-                    <Link href={`/dashboard/category/edit/${category?.id}`}>
+                <td className="whitespace-nowrap px-4 py-2 flex justify-center space-x-1">
+                    <Link className="btn btn-sm btn-accent text-slate-50 font-medium" href={`/dashboard/category/edit/${category?.id}`}>
                       <PencilSquareIcon className="w-5 h-5" />
                     </Link>
-                  </button>
                   <button
                     onClick={() => handleDelete(category?.id)}
-                    className="btn btn-error inline-block rounded px-4 py-2 text-xs font-medium text-white "
+                    className="btn btn-sm btn-error text-slate-50 font-medium"
                   >
                     <TrashIcon className="w-5 h-5" />
                   </button>

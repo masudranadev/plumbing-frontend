@@ -16,8 +16,8 @@ import { useState } from "react";
 import { IBookingData } from "@/types";
 const items = [
   {
-    label: "Home",
-    link: "/",
+    label: "Dashboard",
+    link: "/dashboard",
   },
   {
     label: "Booking",
