@@ -12,6 +12,8 @@ import { getUserInfo } from "@/services/auth.service";
 import { ENUM_USER_ROLE } from "@/enums/user";
 import { ENUM_STATUS } from "@/enums/status";
 import BreadCrumbs from "@/components/common/BreadCrumbs";
+import { useState } from "react";
+import { IBookingData } from "@/types";
 const items = [
   {
     label: "Home",
@@ -23,7 +25,27 @@ const items = [
   },
 ];
 
+const tabs = [
+  {
+    label: "All",
+    status: "All",
+  },
+  {
+    label: "Pending",
+    status: "pending",
+  },
+  {
+    label: "Approved",
+    status: "Approved",
+  },
+  {
+    label: "Rejected",
+    status: "Rejected",
+  },
+];
+
 const DashboardBooking = () => {
+  const [status, setStatus] = useState<string>("All");
   const arg: any = {};
   const { data, isLoading } = useGetBookingsQuery({ ...arg });
   const [deleteBooking] = useDeleteBookingMutation();
@@ -173,14 +195,39 @@ const DashboardBooking = () => {
       });
   };
 
+  let bookings: IBookingData[] | undefined = [];
+
+  if (status === "pending") {
+    bookings = data?.bookings?.filter((book) => book.status === status);
+  } else if (status === "Approved") {
+    bookings = data?.bookings?.filter((book) => book.status === status);
+  } else if (status === "Rejected") {
+    bookings = data?.bookings?.filter((book) => book.status === status);
+  } else {
+    bookings = data?.bookings;
+  }
+
   if (isLoading) {
     return <Loading />;
   }
+
   return (
     <div className="px-5 py-2">
       <BreadCrumbs items={items} />
-      <div className="flex justify-between border-b-2 pb-1">
+      <div className="flex justify-between border-b-2 border-slate-300 pb-2 mb-2">
         <h1 className="text-4xl font-bold">Booking List</h1>
+      </div>
+      <div role="tablist" className="tabs tabs-boxed">
+        {tabs?.map((tab, i) => (
+          <a
+            key={i}
+            role="tab"
+            onClick={()=> setStatus(tab?.status)}
+            className={`tab ${tab?.status === status && "tab-active"}`}
+          >
+            {tab.label}
+          </a>
+        ))}
       </div>
       <div className="overflow-x-auto mt-5 rounded">
         <table className="min-w-full divide-y-2 divide-gray-200 bg-white text-sm">
@@ -198,12 +245,12 @@ const DashboardBooking = () => {
               <th className="whitespace-nowrap px-4 py-2 font-medium text-gray-900">
                 Status
               </th>
-              <th className="px-4 py-2">Action</th>
+              <th className="px-4 py-2 text-center">Action</th>
             </tr>
           </thead>
 
           <tbody className="divide-y divide-gray-200">
-            {data?.bookings?.map((booking) => (
+            {bookings?.map((booking) => (
               <tr key={booking?.id}>
                 <td className="whitespace-nowrap px-4 py-2 font-medium text-gray-900">
                   {booking?.user?.fullName}
@@ -215,21 +262,31 @@ const DashboardBooking = () => {
                   {format(parseISO(booking?.createdAt), "PP")}
                 </td>
                 <td className="whitespace-nowrap px-4 py-2 text-primary">
-                  {booking?.status}
+                  <span
+                    className={`border px-3 py-1 rounded-full ${
+                      booking?.status === "pending"
+                        ? "border-yellow-500 bg-yellow-600 text-yellow-200"
+                        : booking?.status === "Approved"
+                        ? "border-green-500 bg-green-600 text-green-200"
+                        : "border-red-500 bg-red-600 text-red-200"
+                    }`}
+                  >
+                    {booking?.status}
+                  </span>
                 </td>
-                <td className="whitespace-nowrap px-4 py-2">
+                <td className="whitespace-nowrap flex justify-center py-2 gap-1">
                   {role !== ENUM_USER_ROLE.USER ? (
                     <>
                       <button
                         onClick={() => handleAccept(booking?.id)}
-                        className="btn inline-block rounded bg-indigo-600 px-4 py-2 text-xs font-medium text-white hover:bg-indigo-700"
+                        className="btn btn-sm btn-accent font-medium"
                       >
                         accept
                       </button>
                       <button
                         onClick={() => handleReject(booking?.id)}
                         disabled={booking?.status === ENUM_STATUS.APPROVED}
-                        className="btn btn-error inline-block rounded px-4 py-2 text-xs font-medium text-white mx-2"
+                        className="btn btn-sm btn-error font-medium"
                       >
                         Reject
                       </button>
@@ -238,7 +295,7 @@ const DashboardBooking = () => {
                     <button
                       onClick={() => handleCancel(booking?.id)}
                       disabled={booking?.status === ENUM_STATUS.APPROVED}
-                      className="btn btn-sm btn-error inline-block rounded px-4 py-2 text-xs font-medium text-white "
+                      className="btn btn-sm btn-error font-medium"
                     >
                       Cancel
                     </button>

@@ -10,15 +10,25 @@ import { useState } from "react";
 import Swal from "sweetalert2";
 import { toast } from "react-toastify";
 import { useAddFaqMutation } from "@/redux/api/faqApi";
-
+import BreadCrumbs from "@/components/common/BreadCrumbs";
+const items = [
+  {
+    label: "Dashboard",
+    link: "/dashboard"
+  },{
+    label: "Faq",
+    link: "/dashboard/faq",
+  },{
+    label: "Add Faq",
+    link: ""
+  }
+]
 const FaqAddForm = () => {
   const [loading, setLoading] = useState<boolean>(false);
-  const [addFaq] = useAddFaqMutation();
+  const [addFaq, { isLoading }] = useAddFaqMutation();
   const router = useRouter();
 
   const handleSubmit = async (data: any) => {
-    console.log(data);
-    
     setLoading(true);
     const res: any = await addFaq(data);
     if (res.data as any) {
@@ -29,20 +39,16 @@ const FaqAddForm = () => {
       toast.error("There was an error!");
     }
   };
+
   return (
-    <div className="bg-white max-w-[1020px] mx-auto my-24">
-      <div className="flex flex-wrap">
-        <div className="w-full px-4">
-          <div className="mx-auto mb-12 max-w-[510px] text-center lg:mb-20">
-            <h2 className="mb-4 text-3xl font-bold text-dark sm:text-4xl md:text-[40px]">
-              Faq add
-            </h2>
-          </div>
-        </div>
-      </div>
+    <div className="p-5">
+      <BreadCrumbs items={items}/>
+      <h2 className="text-3xl font-medium border-b-2 border-slate-300 pb-2 mb-3">
+        Faq Add
+      </h2>
       <Form submitHandler={handleSubmit}>
-        <div className="p-10 shadow-md">
-          <div className="flex gap-3 pt-5">
+        <div className="p-5 bg-slate-50 rounded shadow-md">
+          <div className="flex gap-3">
             <div className="w-full md:w-1/2 mb-6 md:mb-0">
               <FormInput
                 name="question"
@@ -69,7 +75,7 @@ const FaqAddForm = () => {
               className="btn btn-accent mt-3 w-full"
               value="Login"
             >
-              {loading ? <SmallSpinner /> : "Add Faq"}
+              {loading || isLoading ? <SmallSpinner /> : "Publish"}
             </LoadingButton>
           </div>
         </div>

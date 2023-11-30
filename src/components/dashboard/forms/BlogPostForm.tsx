@@ -1,4 +1,5 @@
 "use client";
+import BreadCrumbs from "@/components/common/BreadCrumbs";
 import LoadingButton from "@/components/common/LoadingButton";
 import SmallSpinner from "@/components/common/SmallSpinner";
 import Form from "@/components/forms/Form";
@@ -13,11 +14,27 @@ import "react-quill/dist/quill.snow.css";
 import { toast } from "react-toastify";
 import Swal from "sweetalert2";
 
+const items = [
+  {
+    label: "Home",
+    link: "/",
+  },
+  {
+    label: "Blog",
+    link: "/dashboard/blog",
+  },
+  {
+    label: "Blog Post",
+    link: "",
+  },
+];
+
 const BlogPostForm = () => {
   const [image, setImage] = useState<File | null>(null);
+  const [loading, setLoading] = useState<boolean>(false);
   const [content, setContent] = useState("");
   const [imagePreview, setImagePreview] = useState(null);
-  const [blogPost, { isLoading: loading }] = useBlogPostMutation();
+  const [blogPost, { isLoading}] = useBlogPostMutation();
   const router = useRouter();
 
   const handleContentChange = (value: string) => {
@@ -85,18 +102,19 @@ const BlogPostForm = () => {
   };
 
   return (
-    <div className="container w-full xl:w-[80%] md:px-20 py-5 mt-5 ring rounded">
+    <div className="p-5">
+      <BreadCrumbs items={items} />
+      <div className="w-full border-b-2 border-slate-300 mt-3 mb-3">
+        <h2 className="text-2xl sm:text-3xl font-bold mb-2">Blog Post</h2>
+      </div>
       <Form submitHandler={handleSubmit}>
-        <div className="space-y-12">
-          <div className="border-b border-gray-900/10 pb-6">
-            <h2 className="text-base font-semibold leading-7 text-gray-900">
-              Blog Post
-            </h2>
+        <div className="p-5 bg-slate-50 rounded">
+          <div>
             <p className="mt-1 text-sm leading-6 text-gray-600">
               Provide all information for blog
             </p>
-
-            <div className="col-span-2 flex flex-col gap-7">
+            <div className="col-span-2 flex flex-col">
+              <label htmlFor="image">Thumbnail</label>
               <div className="mt-2 flex gap-5 items-center justify-center rounded-lg border border-dashed border-gray-900/25 px-6 py-10 w-full md:w-1/2">
                 <input
                   type="file"
@@ -120,7 +138,7 @@ const BlogPostForm = () => {
                 )}
               </div>
               <div className="col-span-3 w-full md:w-1/2">
-                <div className="mt-2 w-full">
+                <div className="my-4 w-full">
                   <FormInput
                     type="text"
                     name="title"
@@ -133,31 +151,26 @@ const BlogPostForm = () => {
             </div>
           </div>
 
-          <div className="border-gray-900/10 pb-6">
-            <h2 className="text-base font-semibold leading-7 text-gray-900">
-              Blog post Content
-            </h2>
-
-            <div className="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6 h-auto">
+          <div>
+            <label htmlFor="content">Content</label>
+            <div className="h-auto">
               <div className="col-span-6">
                 <ReactQuill
                   modules={modules}
                   theme="snow"
+                  id="content"
                   onChange={handleContentChange}
                 />
               </div>
             </div>
           </div>
-        </div>
-
-        <div className="flex items-center justify-end gap-x-6">
-          <div className="">
+          <div className="flex justify-end mt-3">
             <LoadingButton
               type="submit"
               className="btn btn-accent mt-3 w-full"
               value="Login"
             >
-              {loading ? <SmallSpinner /> : "Post"}
+              {loading || isLoading ? <SmallSpinner /> : "Publish"}
             </LoadingButton>
           </div>
         </div>

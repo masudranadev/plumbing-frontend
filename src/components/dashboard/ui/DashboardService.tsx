@@ -82,7 +82,10 @@ const DashboardService = () => {
       <BreadCrumbs items={items} />
       <div className="flex justify-between border-b-2 border-slate-300 pb-3">
         <h1 className="text-3xl font-bold">Service List</h1>
-        <Link href="/dashboard/service/create" className="btn btn-sm btn-accent text-slate-50">
+        <Link
+          href="/dashboard/service/create"
+          className="btn btn-sm btn-accent text-slate-50"
+        >
           Add Service
         </Link>
       </div>
@@ -91,13 +94,13 @@ const DashboardService = () => {
           <thead className="text-left">
             <tr>
               <th className="whitespace-nowrap px-4 py-2 font-medium text-gray-900">
-                Image
+                Thumbnail
               </th>
               <th className="whitespace-nowrap px-4 py-2 font-medium text-gray-900">
                 Title
               </th>
               <th className="whitespace-nowrap px-4 py-2 font-medium text-gray-900">
-                Created Date
+                Publish Date
               </th>
               <th className="whitespace-nowrap px-4 py-2 font-medium text-gray-900">
                 Price

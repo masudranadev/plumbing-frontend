@@ -120,7 +120,7 @@ const ServiceAddForm = () => {
             htmlFor="image"
             className="block text-sm font-medium leading-6 text-gray-900"
           >
-            Image
+            Thumbnail
           </label>
           <div className="mt-2 flex w-1/2 gap-5 items-center justify-center rounded-lg border border-dashed border-gray-900/25 px-6 py-10">
             <input

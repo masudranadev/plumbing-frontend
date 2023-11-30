@@ -9,7 +9,17 @@ import {
   useFeedbacksQuery,
 } from "@/redux/api/feedbackApi";
 import Link from "next/link";
-
+import BreadCrumbs from "@/components/common/BreadCrumbs";
+const items = [
+  {
+    label: "Dashboard",
+    link: "/dashboard",
+  },
+  {
+    label: "Feedback",
+    link: "",
+  },
+];
 const DashboardFeedback = () => {
   const arg: any = {};
   const { data, isLoading } = useFeedbacksQuery({ ...arg });
@@ -68,11 +78,12 @@ const DashboardFeedback = () => {
     return <Loading />;
   }
   return (
-    <div className="px-5 py-10">
-      <div className="flex justify-between border-b-2 pb-1">
-        <h1 className="text-4xl font-bold">Feedback List</h1>
+    <div className="p-5">
+      <BreadCrumbs items={items} />
+      <div className="border-b-2 border-slate-300 pb-2 mb-3">
+        <h1 className="text-3xl font-medium">Feedback List</h1>
       </div>
-      <div className="overflow-x-auto mt-10">
+      <div className="overflow-x-auto mt-5 rounded">
         <table className="min-w-full divide-y-2 divide-gray-200 bg-white text-sm">
           <thead className="text-left">
             <tr>
@@ -83,12 +94,12 @@ const DashboardFeedback = () => {
                 Service
               </th>
               <th className="whitespace-nowrap px-4 py-2 font-medium text-gray-900">
-                Create Date
+                Publish Date
               </th>
               <th className="whitespace-nowrap px-4 py-2 font-medium text-gray-900">
                 Comments
               </th>
-              <th className="px-4 py-2"></th>
+              <th className="px-4 py-2 text-center">Action</th>
             </tr>
           </thead>
 
@@ -107,15 +118,16 @@ const DashboardFeedback = () => {
                 <td className="whitespace-nowrap px-4 py-2 text-primary">
                   {feedback?.comments}
                 </td>
-                <td className="whitespace-nowrap px-4 py-2 space-x-1">
-                  <button className="btn inline-block rounded bg-indigo-600 px-4 py-2 text-xs font-medium text-white hover:bg-indigo-700">
-                    <Link href={`/dashboard/feedback/${feedback?.id}`}>
-                      <EyeIcon className="w-5 h-5" />
-                    </Link>
-                  </button>
+                <td className="whitespace-nowrap px-4 py-2 space-x-1 flex justify-center">
+                  <Link
+                    className="btn btn-sm btn-accent text-slate-50"
+                    href={`/dashboard/feedback/${feedback?.id}`}
+                  >
+                    <EyeIcon className="w-5 h-5" />
+                  </Link>
                   <button
                     onClick={() => handleDelete(feedback?.id)}
-                    className="btn btn-error inline-block rounded px-4 py-2 text-xs font-medium text-white "
+                    className="btn btn-sm btn-error text-slate-50"
                   >
                     <TrashIcon className="w-5 h-5" />
                   </button>
